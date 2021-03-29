@@ -1,0 +1,10 @@
+export const ENDPOINT = "http://localhost:4000";
+export const REG_URL = "/api/v1/register";
+export const LOGIN_URL = "/api/v1/login";
+export const SEARCH_UTL = "/api/v1/search";
+export const UPDATE_PROFILE_URL = "/api/v1/profile/updateProfile";
+export const GET_PROFILE_INFO = "/api/v1/profile/getProfileInfo";
+export const SLIDER_MAX = 100;
+export const SLIDER_MIN = 0;
+export const EYE_COLORS = ["Amber", "Blue", "Brown", "Grey", "Green", "Hazel"];
+export const HAIR_COLORS = ["Black", "Brown", "Red", "Blond", "Grey", "White"];
