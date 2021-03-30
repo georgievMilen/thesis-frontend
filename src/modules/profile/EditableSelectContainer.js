@@ -4,7 +4,7 @@ function EditableSelectContainer({
   initialValue = "",
   onSave,
   onCancel,
-  colors
+  optionsArr
 }) {
   const [newValue, setValue] = useState(initialValue);
 
@@ -16,13 +16,12 @@ function EditableSelectContainer({
   };
 
   const handleInput = ({ target }) => {
-    console.log(target.value);
     setValue(target.value);
   };
 
   return (
     <>
-      <Select onChange={handleInput} optionsArr={colors} />
+      <Select onChange={handleInput} optionsArr={optionsArr} />
 
       <SaveButton onClick={handleSave} />
 

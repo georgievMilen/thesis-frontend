@@ -21,6 +21,9 @@ const ProfileContainer = () => {
   // Age state
   const [age, setAge] = useState(0);
   const [ageIsEditable, setAgeIsEditable] = useState(false);
+  // Gender state
+  const [gender, setGender] = useState("");
+  const [genderIsEditable, setGenderIsEditable] = useState(false);
   // Weight state
   const [weight, setWeight] = useState(0);
   const [weightIsEditable, setWeightIsEditable] = useState(false);
@@ -53,29 +56,25 @@ const ProfileContainer = () => {
         checked: relation.checked ? true : false
       };
     });
-    console.log(newRelationArr);
-    if (
-      newRelationArr[0].checked !== arrOfRelationships[0].checked ||
-      newRelationArr[1].checked !== arrOfRelationships[1].checked ||
-      newRelationArr[2].checked !== arrOfRelationships[2].checked ||
-      newRelationArr[3].checked !== arrOfRelationships[3].checked
-    )
-      setArrOfRelationships(newRelationArr);
+
+    setArrOfRelationships(newRelationArr);
     handleStringOfRelationships(newRelationArr);
   };
 
   const setProfileDetails = ({
     age: resAge,
+    gender: resGender,
     eye_colour,
     hair_colour,
     weight: resWeight,
     height: resHeight
   }) => {
-    if (age === 0) setAge(resAge);
-    if (eyeColor === "") setEyeColor(eye_colour);
-    if (hairColor === "") setHairColor(hair_colour);
-    if (height === 0) setHeight(resHeight);
-    if (weight === 0) setWeight(resWeight);
+    setAge(resAge);
+    setGender(resGender);
+    setEyeColor(eye_colour);
+    setHairColor(hair_colour);
+    setHeight(resHeight);
+    setWeight(resWeight);
   };
 
   const handleProfileInfo = ({ first_name, last_name, email: resEmail }) => {
@@ -91,10 +90,11 @@ const ProfileContainer = () => {
     getProfileInfo(localStorageEmail)
       .then((res) => {
         console.log("get info");
+        console.log(res);
         if (res.status === 200) {
-          handleProfileInfo(res.data[0][0]);
-          setProfileDetails(res.data[1][0]);
-          setRelationshipInfo(res.data[2]);
+          handleProfileInfo(res.data.profileInfo);
+          setProfileDetails(res.data.profileDetails);
+          setRelationshipInfo(res.data.profileRelationship);
         }
       })
       .catch((error) => {
@@ -197,6 +197,21 @@ const ProfileContainer = () => {
   const handleAgeEditCancel = (e) => {
     e.preventDefault();
     setAgeIsEditable(false);
+  };
+
+  // Gender handlers
+  const handleGenderEditBtn = (e) => {
+    e.preventDefault();
+    setGenderIsEditable(true);
+  };
+  const handleGenderEditSave = ({ e, newValue }) => {
+    e.preventDefault();
+    setGender(newValue);
+    setGenderIsEditable(false);
+  };
+  const handleGenderEditCancel = (e) => {
+    e.preventDefault();
+    setGenderIsEditable(false);
   };
 
   // Weight handlers
@@ -355,6 +370,12 @@ const ProfileContainer = () => {
       handleAgeEditBtn={handleAgeEditBtn}
       handleAgeEditSave={handleAgeEditSave}
       handleAgeEditCancel={handleAgeEditCancel}
+      // gender
+      gender={gender}
+      genderIsEditable={genderIsEditable}
+      handleGenderEditBtn={handleGenderEditBtn}
+      handleGenderEditSave={handleGenderEditSave}
+      handleGenderEditCancel={handleGenderEditCancel}
       // weight
       weight={weight}
       weightIsEditable={weightIsEditable}

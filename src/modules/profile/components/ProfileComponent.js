@@ -1,5 +1,5 @@
 import React from "react";
-import { HAIR_COLORS, EYE_COLORS } from "../../../constants";
+import { HAIR_COLORS, EYE_COLORS, GENDERS } from "../../../constants";
 import { EditableInputContainer } from "../EditableInputContainer";
 import { EditableSelectContainer } from "../EditableSelectContainer";
 import { EditablePasswordContainer } from "../EditablePasswordContainer";
@@ -41,6 +41,12 @@ const ProfileComponent = ({
   handleAgeEditBtn,
   handleAgeEditSave,
   handleAgeEditCancel,
+  // gender
+  gender,
+  genderIsEditable,
+  handleGenderEditBtn,
+  handleGenderEditSave,
+  handleGenderEditCancel,
   // weight
   weight,
   weightIsEditable,
@@ -182,6 +188,27 @@ const ProfileComponent = ({
             </span>
           )}
         </div>
+        {/* Gender */}
+        <div className="form-group">
+          {!genderIsEditable ? (
+            <div className="profile_info_holder">
+              <DoubleLabel first="Gender" second={gender} />
+
+              <EditButton onClick={handleGenderEditBtn} />
+            </div>
+          ) : (
+            <span className="profile_edit_wrapper">
+              <DoubleLabel first="Gender" second={gender} />
+
+              <EditableSelectContainer
+                initialValue={gender}
+                onSave={handleGenderEditSave}
+                onCancel={handleGenderEditCancel}
+                optionsArr={GENDERS}
+              />
+            </span>
+          )}
+        </div>
         {/* Weight */}
         <div className="form-group">
           {!weightIsEditable ? (
@@ -240,7 +267,7 @@ const ProfileComponent = ({
                 initialValue={eyeColor}
                 onSave={handleEyeColorEditSave}
                 onCancel={handleEyeColorEditCancel}
-                colors={EYE_COLORS}
+                optionsArr={EYE_COLORS}
               />
             </span>
           )}
@@ -261,7 +288,7 @@ const ProfileComponent = ({
                 initialValue={hairColor}
                 onSave={handleHairColorEditSave}
                 onCancel={handleHairColorEditCancel}
-                colors={HAIR_COLORS}
+                optionsArr={HAIR_COLORS}
               />
             </span>
           )}
