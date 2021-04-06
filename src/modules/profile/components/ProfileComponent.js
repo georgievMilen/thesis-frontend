@@ -1,5 +1,21 @@
 import React from "react";
-import { HAIR_COLORS, EYE_COLORS, GENDERS } from "../../../constants";
+import {
+  HAIR_COLORS,
+  EYE_COLORS,
+  GENDERS,
+  FIRST_NAME,
+  LAST_NAME,
+  EMAIL_ADDRESS,
+  PASSWORD,
+  AGE,
+  GENDER,
+  WEIGHT,
+  HEIGHT,
+  EYE_COLOR,
+  HAIR_COLOR,
+  RELATIONSHIP_TYPE,
+  INTERESTED_GENDER
+} from "../../../constants";
 import { EditableInputContainer } from "../EditableInputContainer";
 import { EditableSelectContainer } from "../EditableSelectContainer";
 import { EditablePasswordContainer } from "../EditablePasswordContainer";
@@ -47,6 +63,13 @@ const ProfileComponent = ({
   handleGenderEditBtn,
   handleGenderEditSave,
   handleGenderEditCancel,
+  // interest in gender
+  interestGender,
+  interestGenderIsEditable,
+  stringInterestGender,
+  handleIntGenderEditBtn,
+  handleIntGenderEditSave,
+  handleIntGenderEditCancel,
   // weight
   weight,
   weightIsEditable,
@@ -84,6 +107,8 @@ const ProfileComponent = ({
   logoutProfile
 }) => {
   const cpArrOfRels = JSON.parse(JSON.stringify(arrOfRelationships));
+  const cpIntGender = JSON.parse(JSON.stringify(interestGender));
+
   return (
     <div className="form_wrapper">
       <form>
@@ -92,13 +117,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!firstNameIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="First name" second={firstName} />
+              <DoubleLabel first={FIRST_NAME} second={firstName} />
 
               <EditButton onClick={handleFirstNameEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="First name" second={firstName} />
+              <DoubleLabel first={FIRST_NAME} second={firstName} />
 
               <EditableInputContainer
                 initialValue={firstName}
@@ -112,13 +137,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!lastNameIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Last name" second={lastName} />
+              <DoubleLabel first={LAST_NAME} second={lastName} />
 
               <EditButton onClick={handleLastNameEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Last name" second={lastName} />
+              <DoubleLabel first={LAST_NAME} second={lastName} />
 
               <EditableInputContainer
                 initialValue={lastName}
@@ -132,13 +157,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!emailIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Email address" second={email} />
+              <DoubleLabel first={EMAIL_ADDRESS} second={email} />
 
               <EditButton onClick={handleEmailEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Email address" second={email} />
+              <DoubleLabel first={EMAIL_ADDRESS} second={email} />
 
               <EditableInputContainer
                 initialValue={email}
@@ -152,13 +177,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!passwordIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Password" second="" />
+              <DoubleLabel first={PASSWORD} second="" />
 
               <EditButton onClick={handlePasswordEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Password" second="" />
+              <DoubleLabel first={PASSWORD} second="" />
 
               <EditablePasswordContainer
                 onSave={handlePasswordEditSave}
@@ -171,13 +196,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!ageIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Age" second={`${age} years old.`} />
+              <DoubleLabel first={AGE} second={`${age} years old.`} />
 
               <EditButton onClick={handleAgeEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Age" second={`${age} years old.`} />
+              <DoubleLabel first={AGE} second={`${age} years old.`} />
 
               <EditableInputContainer
                 initialValue={age}
@@ -192,13 +217,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!genderIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Gender" second={gender} />
+              <DoubleLabel first={GENDER} second={gender} />
 
               <EditButton onClick={handleGenderEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Gender" second={gender} />
+              <DoubleLabel first={GENDER} second={gender} />
 
               <EditableSelectContainer
                 initialValue={gender}
@@ -213,13 +238,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!weightIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Weight" second={`${weight} kg.`} />
+              <DoubleLabel first={WEIGHT} second={`${weight} kg.`} />
 
               <EditButton onClick={handleWeightEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Weight" second={`${weight} kg.`} />
+              <DoubleLabel first={WEIGHT} second={`${weight} kg.`} />
 
               <EditableInputContainer
                 initialValue={weight}
@@ -234,13 +259,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!heightIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Height" second={`${height} cm.`} />
+              <DoubleLabel first={HEIGHT} second={`${height} cm.`} />
 
               <EditButton onClick={handleHeightEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Height" second={`${height} cm.`} />
+              <DoubleLabel first={HEIGHT} second={`${height} cm.`} />
 
               <EditableInputContainer
                 initialValue={height}
@@ -255,13 +280,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!eyeColorIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Eye Color" second={eyeColor} />
+              <DoubleLabel first={EYE_COLOR} second={eyeColor} />
 
               <EditButton onClick={handleEyeColorEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Eye Color" second={eyeColor} />
+              <DoubleLabel first={EYE_COLOR} second={eyeColor} />
 
               <EditableSelectContainer
                 initialValue={eyeColor}
@@ -276,13 +301,13 @@ const ProfileComponent = ({
         <div className="form-group">
           {!hairColorIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first="Hair Color" second={hairColor} />
+              <DoubleLabel first={HAIR_COLOR} second={hairColor} />
 
               <EditButton onClick={handleHairColorEditBtn} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Hair Color" second={hairColor} />
+              <DoubleLabel first={HAIR_COLOR} second={hairColor} />
 
               <EditableSelectContainer
                 initialValue={hairColor}
@@ -298,20 +323,46 @@ const ProfileComponent = ({
           {!relationshipIsEditable ? (
             <div className="profile_info_holder">
               <DoubleLabel
-                first="Type of Relationship"
+                first={RELATIONSHIP_TYPE}
                 second={stringOfRelationships}
               />
               <EditButton onClick={handleRelationshipEditBnt} />
             </div>
           ) : (
             <span className="profile_edit_wrapper">
-              <DoubleLabel first="Hair Color" second={stringOfRelationships} />
+              <DoubleLabel first="" second="" />
 
               <EditableInputContainer
                 initialValue={cpArrOfRels}
                 type="checkbox"
                 onSave={handleRelationshipEditSave}
                 onCancel={handleRelationshipEditCancel}
+              />
+            </span>
+          )}
+        </div>
+        {/* Interest in Gender */}
+        <div className="from-group">
+          {!interestGenderIsEditable ? (
+            <div className="profile_info_holder">
+              <DoubleLabel
+                first={INTERESTED_GENDER}
+                second={stringInterestGender}
+              />
+              <EditButton onClick={handleIntGenderEditBtn} />
+            </div>
+          ) : (
+            <span className="profile_edit_wrapper">
+              <DoubleLabel
+                first={INTERESTED_GENDER}
+                second={stringInterestGender}
+              />
+
+              <EditableInputContainer
+                initialValue={cpIntGender}
+                type="checkbox"
+                onSave={handleIntGenderEditSave}
+                onCancel={handleIntGenderEditCancel}
               />
             </span>
           )}

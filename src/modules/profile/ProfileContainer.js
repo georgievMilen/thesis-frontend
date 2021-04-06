@@ -24,6 +24,14 @@ const ProfileContainer = () => {
   // Gender state
   const [gender, setGender] = useState("");
   const [genderIsEditable, setGenderIsEditable] = useState(false);
+  // Interested in Gender state
+  const [interestGender, setInterestGender] = useState([
+    { name: "Male", checked: false },
+    { name: "Female", checked: false },
+    { name: "Other", checked: false }
+  ]);
+  const [interestGenderIsEditable, setIntGenIsEditable] = useState(false);
+  const [stringInterestGender, setStringInterestGender] = useState("");
   // Weight state
   const [weight, setWeight] = useState(0);
   const [weightIsEditable, setWeightIsEditable] = useState(false);
@@ -37,8 +45,6 @@ const ProfileContainer = () => {
   const [hairColor, setHairColor] = useState("");
   const [hairColorIsEditable, setHairColorIsEditable] = useState(false);
 
-  // Add gender state
-
   // Relationship state
   const [arrOfRelationships, setArrOfRelationships] = useState([
     { name: "family", checked: false },
@@ -46,7 +52,7 @@ const ProfileContainer = () => {
     { name: "romantic", checked: false },
     { name: "with benefits", checked: false }
   ]);
-  const [stringOfRelationships, setStringOfRelationships] = useState([]);
+  const [stringOfRelationships, setStringOfRelationships] = useState("");
   const [relationshipIsEditable, setRelationshipIsEditable] = useState(false);
 
   const setRelationshipInfo = (relationInfo) => {
@@ -58,7 +64,8 @@ const ProfileContainer = () => {
     });
 
     setArrOfRelationships(newRelationArr);
-    handleStringOfRelationships(newRelationArr);
+    const rString = arrOfObjsToString(newRelationArr);
+    setStringOfRelationships(rString);
   };
 
   const setProfileDetails = ({
@@ -214,6 +221,23 @@ const ProfileContainer = () => {
     setGenderIsEditable(false);
   };
 
+  // Interest In Gender handlers
+  const handleIntGenderEditBtn = (e) => {
+    e.preventDefault();
+    setIntGenIsEditable(true);
+  };
+  const handleIntGenderEditSave = ({ e, newValue }) => {
+    e.preventDefault();
+    setInterestGender(newValue);
+    const rString = arrOfObjsToString(newValue);
+    setStringInterestGender(rString);
+    setIntGenIsEditable(false);
+  };
+  const handleIntGenderEditCancel = (e) => {
+    e.preventDefault();
+    setIntGenIsEditable(false);
+  };
+
   // Weight handlers
   const handleWeightEditBtn = (e) => {
     e.preventDefault();
@@ -284,16 +308,17 @@ const ProfileContainer = () => {
   const handleRelationshipEditSave = ({ e, newValue }) => {
     e.preventDefault();
     setArrOfRelationships(newValue);
-    handleStringOfRelationships(newValue);
+    const rString = arrOfObjsToString(newValue);
+    setStringOfRelationships(rString);
     setRelationshipIsEditable(false);
   };
 
-  function handleStringOfRelationships(relationArr) {
+  function arrOfObjsToString(relationArr) {
     let rString = "";
     relationArr.forEach((e) => {
       if (e.checked === true) rString += `${e.name}; `;
     });
-    setStringOfRelationships(rString);
+    return rString;
   }
 
   const handleRelationshipEditCancel = (e) => {
@@ -305,9 +330,9 @@ const ProfileContainer = () => {
   const saveProfileInfo = (e) => {
     e.preventDefault();
     const localStorageEmail = authenticationService.currentUserValue;
-    const relArrForDB = arrOfRelationships.map((relation) => {
-      return { name: relation.name, checked: relation.checked ? 1 : 0 };
-    });
+    const relArrForDB = prepareArrForDB(arrOfRelationships);
+    const interestGenderForDB = prepareArrForDB(interestGender);
+
     updateProfile(
       {
         email: localStorageEmail,
@@ -318,7 +343,8 @@ const ProfileContainer = () => {
         height,
         eyeColor,
         hairColor,
-        relArrForDB
+        relArrForDB,
+        interestGenderForDB
       },
       (res) => {
         console.log(res);
@@ -326,6 +352,12 @@ const ProfileContainer = () => {
       }
     );
   };
+
+  function prepareArrForDB(arr) {
+    return arr.map((e) => {
+      return { name: e.name, checked: e.checked ? 1 : 0 };
+    });
+  }
 
   // Logout Btn
   const logoutProfile = (e) => {
@@ -376,6 +408,13 @@ const ProfileContainer = () => {
       handleGenderEditBtn={handleGenderEditBtn}
       handleGenderEditSave={handleGenderEditSave}
       handleGenderEditCancel={handleGenderEditCancel}
+      // interest in gender
+      interestGender={interestGender}
+      interestGenderIsEditable={interestGenderIsEditable}
+      stringInterestGender={stringInterestGender}
+      handleIntGenderEditBtn={handleIntGenderEditBtn}
+      handleIntGenderEditSave={handleIntGenderEditSave}
+      handleIntGenderEditCancel={handleIntGenderEditCancel}
       // weight
       weight={weight}
       weightIsEditable={weightIsEditable}
