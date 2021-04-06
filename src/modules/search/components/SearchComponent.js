@@ -2,7 +2,8 @@ import React from "react";
 import {
   Select,
   RangeInput,
-  ImportanceLabel
+  ImportanceLabel,
+  Error
 } from "../../../components/common";
 import { EYE_COLORS, HAIR_COLORS } from "../../../constants/index";
 
@@ -33,7 +34,9 @@ const SearchComponent = ({
   handleHairColor,
   handleHairColorImp,
   // button on click
-  onClickSearch
+  onClickSearch,
+  // error
+  error
 }) => {
   return (
     <div className="form_wrapper">
@@ -114,6 +117,9 @@ const SearchComponent = ({
         >
           Search
         </button>
+        <div style={{ margin: "0 auto", marginTop: "10px" }}>
+          {error ? <Error>Select all fields!</Error> : <></>}
+        </div>
       </form>
     </div>
   );

@@ -218,6 +218,7 @@ p {
 
 .error {
   color: red;
+  text-align: center;
 }
 
 /* Chat */

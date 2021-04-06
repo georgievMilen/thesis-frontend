@@ -4,7 +4,7 @@ import { SearchResultList } from "./components/SearchResultList";
 import { searchForPeople } from "./services/SearchService";
 const SearchContainer = () => {
   // Max age state
-  const [maxAge, setMaxAge] = useState(50);
+  const [maxAge, setMaxAge] = useState(0);
   const [maxAgeImp, setMaxAgeImp] = useState(50);
   // Weight state
   const [weight, setWeight] = useState(0);
@@ -20,38 +20,40 @@ const SearchContainer = () => {
   const [hairColorImp, setHairColorImp] = useState(50);
 
   const [tempResultArr, setTempResultArr] = useState([]);
-  const resultArr = [
-    {
-      first_name: "Donka",
-      last_name: "Marieva",
-      age: "20",
-      gender: "female",
-      weight: 58,
-      height: 175,
-      eye_color: "brown",
-      hair_color: "blond"
-    },
-    {
-      first_name: "Deni",
-      last_name: "Ilchava",
-      age: "20",
-      gender: "female",
-      weight: 58,
-      height: 175,
-      eye_color: "dark",
-      hair_color: "black"
-    },
-    {
-      first_name: "Desi",
-      last_name: "Ruseva",
-      age: "20",
-      gender: "female",
-      weight: 58,
-      height: 175,
-      eye_color: "blue",
-      hair_color: "blond"
-    }
-  ];
+  // const resultArr = [
+  //   {
+  //     first_name: "Donka",
+  //     last_name: "Marieva",
+  //     age: "20",
+  //     gender: "female",
+  //     weight: 58,
+  //     height: 175,
+  //     eye_color: "brown",
+  //     hair_color: "blond"
+  //   },
+  //   {
+  //     first_name: "Deni",
+  //     last_name: "Ilchava",
+  //     age: "20",
+  //     gender: "female",
+  //     weight: 58,
+  //     height: 175,
+  //     eye_color: "dark",
+  //     hair_color: "black"
+  //   },
+  //   {
+  //     first_name: "Desi",
+  //     last_name: "Ruseva",
+  //     age: "20",
+  //     gender: "female",
+  //     weight: 58,
+  //     height: 175,
+  //     eye_color: "blue",
+  //     hair_color: "blond"
+  //   }
+  // ];
+
+  const [error, setError] = useState(0);
 
   // Max Age handlers
   const handleMaxAge = ({ target }) => {
@@ -91,9 +93,19 @@ const SearchContainer = () => {
     setHairColorImp(target.value);
   };
 
+  const checkForCorrectness = () => {
+    if (maxAge && weight && height && eyeColor && hairColor) {
+      setError(0);
+      return 0;
+    }
+    setError(1);
+    return 1;
+  };
+
   const onClickSearch = (e) => {
     e.preventDefault();
-
+    const check = checkForCorrectness();
+    if (check) return;
     searchForPeople(
       {
         maxAge,
@@ -113,7 +125,7 @@ const SearchContainer = () => {
             "Shown 'No match found message' where results should be",
             { tempResultArr }
           );
-        setTempResultArr(resultArr);
+        // setTempResultArr(resultArr);
       }
     );
   };
@@ -148,9 +160,11 @@ const SearchContainer = () => {
         handleHairColorImp={handleHairColorImp}
         // button on click
         onClickSearch={onClickSearch}
+        // error
+        error={error}
       />
       <div className="search_result_list_wrapper">
-        <SearchResultList resultArr={resultArr} />
+        <SearchResultList resultArr={[]} />
       </div>
     </>
   );

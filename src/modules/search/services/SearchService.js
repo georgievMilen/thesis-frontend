@@ -1,10 +1,9 @@
 import axios from "axios";
-import { ENDPOINT, SEARCH_UTL } from "../../../constants";
+import { ENDPOINT, SEARCH_URL } from "../../../constants";
 
 const searchForPeople = (props, callback) => {
-  console.log(props);
   axios
-    .post(ENDPOINT + SEARCH_UTL, props)
+    .post(ENDPOINT + SEARCH_URL, props)
     .then((res) => {
       return callback(res);
     })

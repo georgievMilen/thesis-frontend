@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { authenticationService } from "../../utils";
 import { ProfileComponent } from "./components/ProfileComponent";
-import { updateProfile, getProfileInfo } from "./services/profileService";
+import { GET_PROFILE_INFO, SEARCH_URL } from "../../constants";
+import { get, post } from "../services";
 
 const ProfileContainer = () => {
   // First name state
@@ -94,7 +95,7 @@ const ProfileContainer = () => {
     // Get profile info from db
     const localStorageEmail = authenticationService.currentUserValue;
 
-    getProfileInfo(localStorageEmail)
+    get({ params: localStorageEmail, url: GET_PROFILE_INFO })
       .then((res) => {
         console.log("get info");
         console.log(res);
@@ -333,8 +334,9 @@ const ProfileContainer = () => {
     const relArrForDB = prepareArrForDB(arrOfRelationships);
     const interestGenderForDB = prepareArrForDB(interestGender);
 
-    updateProfile(
-      {
+    post({
+      url: SEARCH_URL,
+      data: {
         email: localStorageEmail,
         firstName,
         lastName,
@@ -345,12 +347,16 @@ const ProfileContainer = () => {
         hairColor,
         relArrForDB,
         interestGenderForDB
-      },
-      (res) => {
+      }
+    })
+      .then((res) => {
         console.log(res);
         // Change state and display "Changes made" text under the save button.
-      }
-    );
+      })
+      .catch((err) => {
+        console.log(err);
+        // Handle error
+      });
   };
 
   function prepareArrForDB(arr) {
