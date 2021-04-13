@@ -6,7 +6,7 @@ import {
   SearchPage,
   ChatPage
 } from "../Pages";
-export const ROUTES = [
+export const LOGGED_IN_ROUTES = [
   {
     path: "/",
     key: "HOME",
@@ -14,21 +14,6 @@ export const ROUTES = [
     private: true,
     component: HomePage
   },
-  {
-    path: "/login",
-    key: "LOGIN",
-    exact: true,
-    private: false,
-    component: LoginPage
-  },
-  {
-    path: "/signup",
-    key: "SIGNUP",
-    exact: true,
-    private: false,
-    component: SignupPage
-  },
-
   {
     path: "/profile",
     key: "PROFILE",
@@ -48,5 +33,21 @@ export const ROUTES = [
     key: "CHAT",
     private: true,
     component: ChatPage
+  }
+];
+export const ROUTES = [
+  {
+    path: "/login",
+    key: "LOGIN",
+    exact: true,
+    private: false,
+    component: LoginPage
+  },
+  {
+    path: "/signup",
+    key: "SIGNUP",
+    exact: true,
+    private: false,
+    component: SignupPage
   }
 ];

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { SearchComponent } from "./components/SearchComponent";
 import { SearchResultList } from "./components/SearchResultList";
-import { searchForPeople } from "./services/SearchService";
+import { SEARCH_URL } from "../../constants";
+import { get } from "../services";
+
 const SearchContainer = () => {
   // Max age state
   const [maxAge, setMaxAge] = useState(0);
@@ -19,39 +21,7 @@ const SearchContainer = () => {
   const [hairColor, setHairColor] = useState("");
   const [hairColorImp, setHairColorImp] = useState(50);
 
-  const [tempResultArr, setTempResultArr] = useState([]);
-  // const resultArr = [
-  //   {
-  //     first_name: "Donka",
-  //     last_name: "Marieva",
-  //     age: "20",
-  //     gender: "female",
-  //     weight: 58,
-  //     height: 175,
-  //     eye_color: "brown",
-  //     hair_color: "blond"
-  //   },
-  //   {
-  //     first_name: "Deni",
-  //     last_name: "Ilchava",
-  //     age: "20",
-  //     gender: "female",
-  //     weight: 58,
-  //     height: 175,
-  //     eye_color: "dark",
-  //     hair_color: "black"
-  //   },
-  //   {
-  //     first_name: "Desi",
-  //     last_name: "Ruseva",
-  //     age: "20",
-  //     gender: "female",
-  //     weight: 58,
-  //     height: 175,
-  //     eye_color: "blue",
-  //     hair_color: "blond"
-  //   }
-  // ];
+  const [resultArr, setResultArr] = useState([]);
 
   const [error, setError] = useState(0);
 
@@ -93,41 +63,66 @@ const SearchContainer = () => {
     setHairColorImp(target.value);
   };
 
-  const checkForCorrectness = () => {
-    if (maxAge && weight && height && eyeColor && hairColor) {
-      setError(0);
-      return 0;
+  const countPoints = (arr) => {
+    let resWithPoints = [];
+    resWithPoints = arr.map((el) => {
+      let points = 0;
+      if (el.age <= maxAge) points += maxAgeImp;
+      if (el.eye_colour === eyeColor) points += eyeColorImp;
+      if (el.hair_colour === hairColor) points += hairColorImp;
+      if (el.height <= height) points += heightImp;
+      if (el.weight <= weight) points += weightImp;
+      return { ...el, points };
+    });
+    return resWithPoints;
+  };
+
+  const swap = (arr, leftIndex, rightIndex) => {
+    const temp = arr[leftIndex];
+    arr[leftIndex] = arr[rightIndex];
+    arr[rightIndex] = temp;
+  };
+
+  const partition = (arr, left, right) => {
+    let pivot = arr[right];
+    let i = left - 1;
+
+    for (let j = left; j <= right; j++) {
+      if (arr[j].points >= pivot.points) {
+        i++;
+        swap(arr, i, j);
+      }
     }
-    setError(1);
-    return 1;
+    console.log(arr);
+    swap(arr, i + 1, right);
+    return i + 1;
+  };
+
+  const quickSortPoints = (arr, p, r) => {
+    if (p < r) {
+      let q;
+      q = partition(arr, p, r);
+
+      // quickSortPoints(arr, p, q - 1);
+      // quickSortPoints(arr, q + 1, r);
+    }
   };
 
   const onClickSearch = (e) => {
     e.preventDefault();
-    const check = checkForCorrectness();
-    if (check) return;
-    searchForPeople(
-      {
-        maxAge,
-        maxAgeImp,
-        weight,
-        weightImp,
-        height,
-        heightImp,
-        eyeColor,
-        eyeColorImp,
-        hairColor,
-        hairColorImp
-      },
-      (resultArr, error) => {
-        if (resultArr.length < 1)
-          console.log(
-            "Shown 'No match found message' where results should be",
-            { tempResultArr }
-          );
-        // setTempResultArr(resultArr);
-      }
-    );
+
+    get({
+      url: SEARCH_URL
+    })
+      .then((res) => {
+        const resWithPoints = countPoints(res.data);
+
+        quickSortPoints(resWithPoints, 0, resWithPoints.length - 1);
+        setResultArr(resWithPoints);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -164,7 +159,7 @@ const SearchContainer = () => {
         error={error}
       />
       <div className="search_result_list_wrapper">
-        <SearchResultList resultArr={[]} />
+        <SearchResultList resultArr={resultArr} />
       </div>
     </>
   );

@@ -17,17 +17,17 @@ const ChatContainer = (props) => {
     setRoom(roomID);
     setName(name);
 
-    socket.emit("join", { name, roomID });
+    socket.current.emit("join", { name, roomID });
   }, [props.location]);
 
   useEffect(() => {
-    socket.on("message", (message) => {
+    socket.current.on("message", (message) => {
       setMessages((msgs) => [...msgs, message]);
     });
 
-    socket.on("loadMessages", (messages) => setMessages(messages));
+    socket.current.on("loadMessages", (messages) => setMessages(messages));
 
-    socket.on("roomData", ({ users }) => {
+    socket.current.on("roomData", ({ users }) => {
       setUsers(users);
     });
   }, []);

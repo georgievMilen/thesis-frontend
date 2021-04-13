@@ -10,8 +10,8 @@ const SearchResultElement = ({
     gender,
     weight,
     height,
-    eye_color,
-    hair_color
+    eye_colour,
+    hair_colour
   }
 }) => {
   return (
@@ -23,8 +23,8 @@ const SearchResultElement = ({
       <Label>Gender: {gender}</Label>
       <Label>Weight: {weight}</Label>
       <Label>Height: {height}</Label>
-      <Label>Eye color: {eye_color}</Label>
-      <Label>Hair color: {hair_color}</Label>
+      <Label>Eye color: {eye_colour}</Label>
+      <Label>Hair color: {hair_colour}</Label>
       <Link
         to={`chat?name=${first_name} ${last_name}&roomID=${
           age * weight + height

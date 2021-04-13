@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { authenticationService } from "../../utils";
 import { ProfileComponent } from "./components/ProfileComponent";
 import { GET_PROFILE_INFO, SEARCH_URL } from "../../constants";
 import { get, post } from "../services";
+import { Redirect } from "react-router-dom";
+import { Context } from "../../HOC/Store";
 
 const ProfileContainer = () => {
+  const [state, dispatch] = useContext(Context);
   // First name state
   const [firstName, setFirstName] = useState("");
   const [firstNameIsEditable, setFirstNameIsEditable] = useState(false);
@@ -56,6 +59,7 @@ const ProfileContainer = () => {
   const [stringOfRelationships, setStringOfRelationships] = useState("");
   const [relationshipIsEditable, setRelationshipIsEditable] = useState(false);
 
+  const [logout, setLogout] = useState(false);
   const setRelationshipInfo = (relationInfo) => {
     const newRelationArr = relationInfo.map((relation) => {
       return {
@@ -69,7 +73,10 @@ const ProfileContainer = () => {
     setStringOfRelationships(rString);
   };
 
-  const setProfileDetails = ({
+  const handleProfileInfo = ({
+    first_name,
+    last_name,
+    email: resEmail,
     age: resAge,
     gender: resGender,
     eye_colour,
@@ -77,6 +84,9 @@ const ProfileContainer = () => {
     weight: resWeight,
     height: resHeight
   }) => {
+    setFirstName(first_name);
+    setLastName(last_name);
+    setEmail(resEmail);
     setAge(resAge);
     setGender(resGender);
     setEyeColor(eye_colour);
@@ -85,23 +95,14 @@ const ProfileContainer = () => {
     setWeight(resWeight);
   };
 
-  const handleProfileInfo = ({ first_name, last_name, email: resEmail }) => {
-    if (firstName === "") setFirstName(first_name);
-    if (lastName === "") setLastName(last_name);
-    if (email === "") setEmail(resEmail);
-  };
-
   useEffect(() => {
     // Get profile info from db
     const localStorageEmail = authenticationService.currentUserValue;
 
     get({ params: localStorageEmail, url: GET_PROFILE_INFO })
       .then((res) => {
-        console.log("get info");
-        console.log(res);
         if (res.status === 200) {
           handleProfileInfo(res.data.profileInfo);
-          setProfileDetails(res.data.profileDetails);
           setRelationshipInfo(res.data.profileRelationship);
         }
       })
@@ -368,95 +369,99 @@ const ProfileContainer = () => {
   // Logout Btn
   const logoutProfile = (e) => {
     authenticationService.logout();
-    window.location.reload(false);
+    dispatch({ type: "logout", payload: false });
+    setLogout(true);
   };
 
   return (
-    <ProfileComponent
-      // first name
-      firstName={firstName}
-      firstNameIsEditable={firstNameIsEditable}
-      handleFirstNameEditBtn={handleFirstNameEditBtn}
-      handleFirstNameEditSave={handleFirstNameEditSave}
-      handleFirstNameEditCancel={handleFirstNameEditCancel}
-      // last name
-      lastName={lastName}
-      lastNameIsEditable={lastNameIsEditable}
-      handleLastNameEditBtn={handleLastNameEditBtn}
-      handleLastNameEditSave={handleLastNameEditSave}
-      handleLastNameEditCancel={handleLastNameEditCancel}
-      // email
-      email={email}
-      emailIsEditable={emailIsEditable}
-      handleEmailEditBtn={handleEmailEditBtn}
-      handleEmailEditSave={handleEmailEditSave}
-      handleEmailEditCancel={handleEmailEditCancel}
-      // password
-      password={password}
-      newPassword={newPassword}
-      newPasswordRepeated={newPasswordRepeated}
-      passwordIsEditable={passwordIsEditable}
-      handlePasswordEditBtn={handlePasswordEditBtn}
-      handlePasswordEdit={handlePasswordEdit}
-      handleNewPasswordEdit={handleNewPasswordEdit}
-      handleNewPasswordRepeatedEdit={handleNewPasswordRepeatedEdit}
-      handlePasswordEditOK={handlePasswordEditOK}
-      handlePasswordEditCancel={handlePasswordEditCancel}
-      // age
-      age={age}
-      ageIsEditable={ageIsEditable}
-      handleAgeEditBtn={handleAgeEditBtn}
-      handleAgeEditSave={handleAgeEditSave}
-      handleAgeEditCancel={handleAgeEditCancel}
-      // gender
-      gender={gender}
-      genderIsEditable={genderIsEditable}
-      handleGenderEditBtn={handleGenderEditBtn}
-      handleGenderEditSave={handleGenderEditSave}
-      handleGenderEditCancel={handleGenderEditCancel}
-      // interest in gender
-      interestGender={interestGender}
-      interestGenderIsEditable={interestGenderIsEditable}
-      stringInterestGender={stringInterestGender}
-      handleIntGenderEditBtn={handleIntGenderEditBtn}
-      handleIntGenderEditSave={handleIntGenderEditSave}
-      handleIntGenderEditCancel={handleIntGenderEditCancel}
-      // weight
-      weight={weight}
-      weightIsEditable={weightIsEditable}
-      handleWeightEditBtn={handleWeightEditBtn}
-      handleWeightEditSave={handleWeightEditSave}
-      handleWeightEditCancel={handleWeightEditCancel}
-      // height
-      height={height}
-      heightIsEditable={heightIsEditable}
-      handleHeightEditBtn={handleHeightEditBtn}
-      handleHeightEditSave={handleHeightEditSave}
-      handleHeightEditCancel={handleHeightEditCancel}
-      // eye color
-      eyeColor={eyeColor}
-      eyeColorIsEditable={eyeColorIsEditable}
-      handleEyeColorEditBtn={handleEyeColorEditBtn}
-      handleEyeColorEditSave={handleEyeColorEditSave}
-      handleEyeColorEditCancel={handleEyeColorEditCancel}
-      // hair color
-      hairColor={hairColor}
-      hairColorIsEditable={hairColorIsEditable}
-      handleHairColorEditBtn={handleHairColorEditBtn}
-      handleHairColorEditSave={handleHairColorEditSave}
-      handleHairColorEditCancel={handleHairColorEditCancel}
-      //relationship
-      arrOfRelationships={arrOfRelationships}
-      stringOfRelationships={stringOfRelationships}
-      relationshipIsEditable={relationshipIsEditable}
-      handleRelationshipEditBnt={handleRelationshipEditBnt}
-      handleRelationshipEditSave={handleRelationshipEditSave}
-      handleRelationshipEditCancel={handleRelationshipEditCancel}
-      // Save Btn
-      saveProfileInfo={saveProfileInfo}
-      // Logout Btn
-      logoutProfile={logoutProfile}
-    />
+    <>
+      <ProfileComponent
+        // first name
+        firstName={firstName}
+        firstNameIsEditable={firstNameIsEditable}
+        handleFirstNameEditBtn={handleFirstNameEditBtn}
+        handleFirstNameEditSave={handleFirstNameEditSave}
+        handleFirstNameEditCancel={handleFirstNameEditCancel}
+        // last name
+        lastName={lastName}
+        lastNameIsEditable={lastNameIsEditable}
+        handleLastNameEditBtn={handleLastNameEditBtn}
+        handleLastNameEditSave={handleLastNameEditSave}
+        handleLastNameEditCancel={handleLastNameEditCancel}
+        // email
+        email={email}
+        emailIsEditable={emailIsEditable}
+        handleEmailEditBtn={handleEmailEditBtn}
+        handleEmailEditSave={handleEmailEditSave}
+        handleEmailEditCancel={handleEmailEditCancel}
+        // password
+        password={password}
+        newPassword={newPassword}
+        newPasswordRepeated={newPasswordRepeated}
+        passwordIsEditable={passwordIsEditable}
+        handlePasswordEditBtn={handlePasswordEditBtn}
+        handlePasswordEdit={handlePasswordEdit}
+        handleNewPasswordEdit={handleNewPasswordEdit}
+        handleNewPasswordRepeatedEdit={handleNewPasswordRepeatedEdit}
+        handlePasswordEditOK={handlePasswordEditOK}
+        handlePasswordEditCancel={handlePasswordEditCancel}
+        // age
+        age={age}
+        ageIsEditable={ageIsEditable}
+        handleAgeEditBtn={handleAgeEditBtn}
+        handleAgeEditSave={handleAgeEditSave}
+        handleAgeEditCancel={handleAgeEditCancel}
+        // gender
+        gender={gender}
+        genderIsEditable={genderIsEditable}
+        handleGenderEditBtn={handleGenderEditBtn}
+        handleGenderEditSave={handleGenderEditSave}
+        handleGenderEditCancel={handleGenderEditCancel}
+        // interest in gender
+        interestGender={interestGender}
+        interestGenderIsEditable={interestGenderIsEditable}
+        stringInterestGender={stringInterestGender}
+        handleIntGenderEditBtn={handleIntGenderEditBtn}
+        handleIntGenderEditSave={handleIntGenderEditSave}
+        handleIntGenderEditCancel={handleIntGenderEditCancel}
+        // weight
+        weight={weight}
+        weightIsEditable={weightIsEditable}
+        handleWeightEditBtn={handleWeightEditBtn}
+        handleWeightEditSave={handleWeightEditSave}
+        handleWeightEditCancel={handleWeightEditCancel}
+        // height
+        height={height}
+        heightIsEditable={heightIsEditable}
+        handleHeightEditBtn={handleHeightEditBtn}
+        handleHeightEditSave={handleHeightEditSave}
+        handleHeightEditCancel={handleHeightEditCancel}
+        // eye color
+        eyeColor={eyeColor}
+        eyeColorIsEditable={eyeColorIsEditable}
+        handleEyeColorEditBtn={handleEyeColorEditBtn}
+        handleEyeColorEditSave={handleEyeColorEditSave}
+        handleEyeColorEditCancel={handleEyeColorEditCancel}
+        // hair color
+        hairColor={hairColor}
+        hairColorIsEditable={hairColorIsEditable}
+        handleHairColorEditBtn={handleHairColorEditBtn}
+        handleHairColorEditSave={handleHairColorEditSave}
+        handleHairColorEditCancel={handleHairColorEditCancel}
+        //relationship
+        arrOfRelationships={arrOfRelationships}
+        stringOfRelationships={stringOfRelationships}
+        relationshipIsEditable={relationshipIsEditable}
+        handleRelationshipEditBnt={handleRelationshipEditBnt}
+        handleRelationshipEditSave={handleRelationshipEditSave}
+        handleRelationshipEditCancel={handleRelationshipEditCancel}
+        // Save Btn
+        saveProfileInfo={saveProfileInfo}
+        // Logout Btn
+        logoutProfile={logoutProfile}
+      />
+      {logout && <Redirect to="/login" />}
+    </>
   );
 };
 
