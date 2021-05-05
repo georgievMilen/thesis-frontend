@@ -8,8 +8,8 @@ export function displayRouteMenu(routes) {
   function singleRoute(route) {
     return (
       <li key={route.key}>
-        <Link to={route.path}>
-          {route.key} ({route.path})
+        <Link className="text-link" id="bla" to={route.path}>
+          {route.key}
         </Link>
       </li>
     );

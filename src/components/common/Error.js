@@ -1,7 +1,7 @@
 import React from "react";
 
-const Error = (props) => {
-  return <p className="error">{props.children}</p>;
+const Error = ({ children }) => {
+  return <p className="error">{children}</p>;
 };
 
 export { Error };

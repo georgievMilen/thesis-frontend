@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { RenderRoutes } from "./routes/helpers/renderRoutes";
 import { ROUTES, LOGGED_IN_ROUTES } from "./routes/routes";
-import { Header } from "./components/common/Header";
-import { authenticationService } from "./utils";
-import { Context } from "./HOC/Store";
+import { Header, Footer } from "./components/common";
+import { Context } from "./HOC/AppHOC";
 
 function App() {
   const [state, dispatch] = useContext(Context);
   const [routes, setRoutes] = useState(ROUTES);
+
   useEffect(() => {
     if (state.logged) setRoutes(LOGGED_IN_ROUTES);
     else setRoutes(ROUTES);
@@ -20,6 +20,7 @@ function App() {
       </div>
 
       <RenderRoutes routes={routes} />
+      <Footer />
     </div>
   );
 }

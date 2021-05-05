@@ -1,11 +1,12 @@
 import React, { createContext, useReducer } from "react";
 import { Reducer } from "../utils/Reducer";
+import { authenticationService } from "../utils";
 
 const initialState = {
-  logged: false
+  logged: authenticationService.currentUserValue
 };
 
-const Store = ({ children }) => {
+const AppHOC = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState);
   return (
     <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
@@ -14,4 +15,4 @@ const Store = ({ children }) => {
 
 export const Context = createContext(initialState);
 
-export { Store };
+export { AppHOC };

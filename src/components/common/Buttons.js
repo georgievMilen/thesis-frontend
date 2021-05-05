@@ -23,6 +23,14 @@ const SaveButton = ({ onClick }) => {
   );
 };
 
+const FilterButton = ({ onClick }) => {
+  return (
+    <button className="btn btn-primary " onClick={onClick}>
+      Filter
+    </button>
+  );
+};
+
 const SubmitButton = ({ onClick }) => {
   return (
     <button
@@ -64,5 +72,6 @@ export {
   SaveButton,
   SubmitButton,
   ChatButton,
-  LogoutButton
+  LogoutButton,
+  FilterButton
 };

@@ -4,7 +4,7 @@ import { ProfileComponent } from "./components/ProfileComponent";
 import { GET_PROFILE_INFO, SEARCH_URL } from "../../constants";
 import { get, post } from "../services";
 import { Redirect } from "react-router-dom";
-import { Context } from "../../HOC/Store";
+import { Context } from "../../HOC/AppHOC";
 
 const ProfileContainer = () => {
   const [state, dispatch] = useContext(Context);
@@ -59,7 +59,6 @@ const ProfileContainer = () => {
   const [stringOfRelationships, setStringOfRelationships] = useState("");
   const [relationshipIsEditable, setRelationshipIsEditable] = useState(false);
 
-  const [logout, setLogout] = useState(false);
   const setRelationshipInfo = (relationInfo) => {
     const newRelationArr = relationInfo.map((relation) => {
       return {
@@ -370,7 +369,6 @@ const ProfileContainer = () => {
   const logoutProfile = (e) => {
     authenticationService.logout();
     dispatch({ type: "logout", payload: false });
-    setLogout(true);
   };
 
   return (
@@ -460,7 +458,7 @@ const ProfileContainer = () => {
         // Logout Btn
         logoutProfile={logoutProfile}
       />
-      {logout && <Redirect to="/login" />}
+      {!state.logged && <Redirect to="/login" />}
     </>
   );
 };

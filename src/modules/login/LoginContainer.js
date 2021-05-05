@@ -1,14 +1,16 @@
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { LoginComponent } from "./components/LoginComponent";
-import { login } from "./services/loginService";
-import { Context } from "../../HOC/Store";
+import { post } from "../services";
+import { LOGIN_URL } from "../../constants";
+import { authenticationService } from "../../utils";
+import { Context } from "../../HOC/AppHOC";
 
 const LoginContainer = () => {
-  const [successfulLogin, setSuccessfulLogin] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
+
   const [state, dispatch] = useContext(Context);
 
   const validateForm = () => {
@@ -18,11 +20,14 @@ const LoginContainer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    login({ email, password }, (response) => {
-      if (response.status !== 200) return setError({ msg: response.data });
-      dispatch({ type: "login", payload: true });
-      setSuccessfulLogin(true);
-    });
+    post({ url: LOGIN_URL, data: { email, password } })
+      .then((response) => {
+        authenticationService.login(email);
+        dispatch({ type: "login", payload: true });
+      })
+      .catch((err) => {
+        setError({ msg: err.data });
+      });
   };
 
   const handleEmailInput = ({ target }) => {
@@ -32,7 +37,7 @@ const LoginContainer = () => {
     setPassword(target.value);
   };
   return (
-    <div className="form_wrapper">
+    <div className="form_wrapper login_component">
       <LoginComponent
         handleEmailInput={handleEmailInput}
         hanglePasswordInput={hanglePasswordInput}
@@ -42,7 +47,7 @@ const LoginContainer = () => {
         error={error}
         email={email}
       />
-      {successfulLogin && <Redirect to="/profile" />}
+      {state.logged && <Redirect to="/posts" />}
     </div>
   );
 };

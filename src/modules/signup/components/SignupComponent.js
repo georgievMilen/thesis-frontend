@@ -1,5 +1,5 @@
 import React from "react";
-import { Error } from "../../../components/common";
+import { Error, SubmitButton, Label, Input } from "../../../components/common";
 
 const SignupComponent = ({
   handleEmail,
@@ -7,6 +7,7 @@ const SignupComponent = ({
   handleLastName,
   handlePassword,
   handleSubmit,
+  handleUsername,
   errors
 }) => {
   return (
@@ -14,52 +15,38 @@ const SignupComponent = ({
       <h3>Sign Up</h3>
 
       <div className="form-group">
-        <label>First name</label>
-        <input
+        <Label>First name</Label>
+        <Input
           type="text"
-          className="form-control"
           placeholder="First name"
           onChange={handleFirstName}
         />
       </div>
 
       <div className="form-group">
-        <label>Last name</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Last name"
-          onChange={handleLastName}
-        />
+        <Label>Last name</Label>
+        <Input type="text" placeholder="Last name" onChange={handleLastName} />
       </div>
 
       <div className="form-group">
-        <label>Email address</label>
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Enter email"
-          onChange={handleEmail}
-        />
+        <Label>Username</Label>
+        <Input type="text" placeholder="Username" onChange={handleUsername} />
+      </div>
+      <div className="form-group">
+        <Label>Email address</Label>
+        <Input type="email" placeholder="Enter email" onChange={handleEmail} />
       </div>
 
       <div className="form-group">
-        <label>Password</label>
-        <input
+        <Label>Password</Label>
+        <Input
           type="password"
-          className="form-control"
-          placeholder="Enter password"
+          placeholder="********"
           onChange={handlePassword}
         />
       </div>
-      {errors && <Error>{errors.msg}</Error>}
-      <button
-        type="submit"
-        className="btn btn-primary btn-block"
-        onClick={handleSubmit}
-      >
-        Sign Up
-      </button>
+      {errors && <Error>{errors}</Error>}
+      <SubmitButton onClick={handleSubmit}>Sign Up</SubmitButton>
       <p className="forgot-password text-right">
         Already registered <a href="/login">Login in?</a>
       </p>

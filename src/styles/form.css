@@ -1,0 +1,40 @@
+.form_wrapper {
+  /* width: 100%; */
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.form_wrapper form {
+  background: white;
+  padding: 20px;
+}
+
+.form_wrapper button {
+  width: 100%;
+  max-width: 150px;
+}
+
+.form-control:focus {
+  border-color: #167bff;
+  box-shadow: none;
+}
+
+.forgot-password,
+.forgot-password a {
+  text-align: right;
+  font-size: 13px;
+  padding-top: 10px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.forgot-password a {
+  color: #167bff;
+}
+
+.form-group button {
+  margin-top: 1.4em;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}

@@ -5,7 +5,7 @@ import { authenticationService } from "../../utils";
 
 export const PrivateRoute = ({ component, ...rest }) => {
   const currentUser = authenticationService.currentUserValue;
-
+  console.log(component);
   return (
     <>
       {currentUser ? (

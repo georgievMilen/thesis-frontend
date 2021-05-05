@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SearchComponent } from "./components/SearchComponent";
-import { SearchResultList } from "./components/SearchResultList";
+import { List } from "../../components/common/List";
 import { SEARCH_URL } from "../../constants";
 import { get } from "../services";
 
@@ -159,7 +159,7 @@ const SearchContainer = () => {
         error={error}
       />
       <div className="search_result_list_wrapper">
-        <SearchResultList resultArr={resultArr} />
+        <List resultArr={resultArr} />
       </div>
     </>
   );

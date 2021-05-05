@@ -1,11 +1,19 @@
 import React from "react";
 import paper_plane from "../../assets/images/paper_plane.png";
 import { SLIDER_MIN, SLIDER_MAX } from "../../constants/";
-const Input = ({ type, onChange, name, value, checked = false }) => {
+const Input = ({
+  placeholder,
+  type,
+  onChange,
+  name,
+  value,
+  checked = false
+}) => {
   return (
     <input
       className="form-control"
       type={type}
+      placeholder={placeholder}
       onChange={onChange}
       value={value}
       // for type == "checkbox"

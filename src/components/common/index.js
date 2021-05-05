@@ -1,32 +1,44 @@
 import { Header } from "./Header";
 import { Select } from "./Select";
 import { Label, ImportanceLabel } from "./Label";
+import { Textarea } from "./Textarea";
 import {
   EditButton,
   CancelButton,
   SaveButton,
   SubmitButton,
   ChatButton,
-  LogoutButton
+  LogoutButton,
+  FilterButton
 } from "./Buttons";
 import { Input, RangeInput, ChatInput } from "./Input";
 import { DoubleLabel } from "./DoubleLabel";
+import { Paragraph } from "./Paragraph";
+import { Image } from "./Image";
+import { List } from "./List";
 import { Error } from "./Error";
+import { Footer } from "./Footer";
 
 export {
   Header,
   Select,
+  Textarea,
   EditButton,
+  FilterButton,
   CancelButton,
   SaveButton,
   SubmitButton,
   ChatButton,
   LogoutButton,
   Input,
+  Image,
   RangeInput,
   ChatInput,
   Label,
+  List,
+  Paragraph,
   ImportanceLabel,
   DoubleLabel,
-  Error
+  Error,
+  Footer
 };

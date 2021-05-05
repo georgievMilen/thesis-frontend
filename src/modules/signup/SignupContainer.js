@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { SignupComponent } from "./components/SignupComponent";
-import { signup } from "./services/signupService";
+import { REG_URL } from "../../constants";
 import { validateSignin } from "../../utils/validateSignin";
 import { Redirect } from "react-router-dom";
+import { post } from "../services";
 
 const SignupContainer = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [errors, setErrors] = useState("");
   const [successfulReg, setSuccessfulReg] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const handleUsername = ({ target }) => {
+    setUsername(target.value);
+  };
 
   const handleEmail = ({ target }) => {
     setEmail(target.value);
@@ -29,16 +35,28 @@ const SignupContainer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errs = validateSignin({ firstName, lastName, password, email });
+    const userData = {
+      username,
+      password,
+      email,
+      first_name,
+      last_name
+    };
+    const errs = validateSignin(userData);
+
     if (errs) return setErrors(errs);
-    signup({ email, firstName, lastName, password }, (response) => {
-      if (response.status !== 200) return setErrors({ msg: response.data });
-      setSuccessfulReg(true);
-    });
+    post({ url: REG_URL, data: userData })
+      .then((response) => {
+        setSuccessfulReg(true);
+      })
+      .catch((err) => {
+        setErrors(err.data);
+      });
   };
   return (
-    <div>
+    <div className="form_wrapper signup_component">
       <SignupComponent
+        handleUsername={handleUsername}
         handleEmail={handleEmail}
         handleFirstName={handleFirstName}
         handleLastName={handleLastName}

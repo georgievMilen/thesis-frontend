@@ -1,125 +1,37 @@
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
 /* 
 * {
   box-sizing: border-box;
 } */
 body {
-  background: #1c8ef9 !important;
+  background: linear-gradient(
+    to bottom,
+    rgb(255, 255, 255),
+    rgba(117, 81, 184, 0.2)
+  );
   min-height: 100vh;
   display: block;
   font-weight: 400;
   font-family: "Fira Sans", sans-serif;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label,
-span {
-  font-weight: 500;
-  font-family: "Fira Sans", sans-serif;
-}
-
 body,
 html,
 .App,
-#root,
-.auth-wrapper {
+#root {
   width: 100%;
   height: 100%;
 }
 
-.app_wrapper {
-  display: block;
-  height: 100vh;
-  align-items: stretch;
-}
-
-.header_wrapper ul {
-  justify-content: center;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #ffffff;
-  flex: 0.3;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  list-style-type: none;
-  margin: 0px;
-  padding: 10px;
-}
-
-.header_wrapper li {
-  margin: 0 20px;
-}
-.auth-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: left;
-}
-
-.auth-inner {
-  width: 100%;
-  margin: auto;
-  background: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 40px 55px 45px 55px;
-  border-radius: 15px;
-  transition: all 0.3s;
-}
-
-.auth-wrapper .form-control:focus {
-  border-color: #167bff;
-  box-shadow: none;
-}
-
-.auth-wrapper h3 {
-  text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
-}
-
-.custom-control-label {
-  font-weight: 400;
-}
-
-.forgot-password,
-.forgot-password a {
-  text-align: right;
-  font-size: 13px;
-  padding-top: 10px;
-  color: #7f7d7d;
-  margin: 0;
-}
-
-.forgot-password a {
-  color: #167bff;
-}
-
-.form-group button {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  margin-left: 5px;
+.start-image {
+  width: 300px;
 }
 
 .form_wrapper {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  margin-top: 60px;
+  grid-area: form;
 }
 
-.form_wrapper form {
-  background: white;
-  padding: 20px;
-}
-
-.form_wrapper button {
-  width: 100%;
-  max-width: 150px;
+.start-image {
+  grid-area: image;
 }
 
 .profile_info_holder {
@@ -153,15 +65,18 @@ label {
 .importance_holder label {
   text-align: end;
 }
+
 .profile_edit_wrapper label,
 p {
   margin-right: auto;
 }
+
 .h_holder {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .h_holder h3 {
   justify-content: center;
 }
@@ -182,6 +97,7 @@ p {
   justify-content: space-between;
   align-items: center;
 }
+
 .search_info_holder div {
   display: flex;
   align-items: center;
@@ -191,6 +107,7 @@ p {
 .select {
   font-style: italic;
 }
+
 .profile_edit_wrapper {
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -221,7 +138,6 @@ p {
   text-align: center;
 }
 
-/* Chat */
 .outerChatContainer {
   display: flex;
   justify-content: center;
@@ -257,7 +173,6 @@ p {
   }
 }
 
-/* infoBar */
 .infoBar {
   display: flex;
   align-items: center;
@@ -287,7 +202,6 @@ p {
   margin-right: 5%;
 }
 
-/* chatInput */
 .form {
   display: flex;
   border-top: 2px solid #d3d3d3;
@@ -319,8 +233,6 @@ select:focus {
   border: none;
   width: 20%;
 }
-
-/* messages */
 
 .messages {
   padding: 5% 0;
@@ -395,9 +307,10 @@ select:focus {
 .backgroundLight {
   background: #f3f3f3;
 }
+*/
 
 /* text container */
-.textContainer {
+ .textContainer {
   display: flex;
   flex-direction: column;
   margin-right: 20px;
