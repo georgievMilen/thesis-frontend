@@ -94,8 +94,8 @@ p {
 
 .search_info_holder {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .search_info_holder div {
@@ -135,6 +135,10 @@ p {
 
 .error {
   color: red;
+  text-align: center;
+}
+.success {
+  color: green;
   text-align: center;
 }
 
@@ -348,4 +352,10 @@ select:focus {
   .textContainer {
     font-size: 20px;
   }
+}
+
+.post-wrapper {
+  margin: 10px;
+  border: #000;
+  border-style: solid;
 }

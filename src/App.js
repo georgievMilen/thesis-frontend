@@ -5,7 +5,7 @@ import { Header, Footer } from "./components/common";
 import { Context } from "./HOC/AppHOC";
 
 function App() {
-  const [state, dispatch] = useContext(Context);
+  const [state] = useContext(Context);
   const [routes, setRoutes] = useState(ROUTES);
 
   useEffect(() => {

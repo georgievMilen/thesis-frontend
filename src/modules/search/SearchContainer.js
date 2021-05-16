@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SearchComponent } from "./components/SearchComponent";
 import { List } from "../../components/common/List";
 import { SEARCH_URL } from "../../constants";
-import { get } from "../services";
+import { getAPI } from "../services";
 
 const SearchContainer = () => {
   // Max age state
@@ -63,65 +63,65 @@ const SearchContainer = () => {
     setHairColorImp(target.value);
   };
 
-  const countPoints = (arr) => {
-    let resWithPoints = [];
-    resWithPoints = arr.map((el) => {
-      let points = 0;
-      if (el.age <= maxAge) points += maxAgeImp;
-      if (el.eye_colour === eyeColor) points += eyeColorImp;
-      if (el.hair_colour === hairColor) points += hairColorImp;
-      if (el.height <= height) points += heightImp;
-      if (el.weight <= weight) points += weightImp;
-      return { ...el, points };
-    });
-    return resWithPoints;
-  };
+  // const countPoints = (arr) => {
+  //   let resWithPoints = [];
+  //   resWithPoints = arr.map((el) => {
+  //     let points = 0;
+  //     if (el.age <= maxAge) points += maxAgeImp;
+  //     if (el.eye_colour === eyeColor) points += eyeColorImp;
+  //     if (el.hair_colour === hairColor) points += hairColorImp;
+  //     if (el.height <= height) points += heightImp;
+  //     if (el.weight <= weight) points += weightImp;
+  //     return { ...el, points };
+  //   });
+  //   return resWithPoints;
+  // };
 
-  const swap = (arr, leftIndex, rightIndex) => {
-    const temp = arr[leftIndex];
-    arr[leftIndex] = arr[rightIndex];
-    arr[rightIndex] = temp;
-  };
+  // const swap = (arr, leftIndex, rightIndex) => {
+  //   const temp = arr[leftIndex];
+  //   arr[leftIndex] = arr[rightIndex];
+  //   arr[rightIndex] = temp;
+  // };
 
-  const partition = (arr, left, right) => {
-    let pivot = arr[right];
-    let i = left - 1;
+  // const partition = (arr, left, right) => {
+  //   let pivot = arr[right];
+  //   let i = left - 1;
 
-    for (let j = left; j <= right; j++) {
-      if (arr[j].points >= pivot.points) {
-        i++;
-        swap(arr, i, j);
-      }
-    }
-    console.log(arr);
-    swap(arr, i + 1, right);
-    return i + 1;
-  };
+  //   for (let j = left; j <= right; j++) {
+  //     if (arr[j].points >= pivot.points) {
+  //       i++;
+  //       swap(arr, i, j);
+  //     }
+  //   }
 
-  const quickSortPoints = (arr, p, r) => {
-    if (p < r) {
-      let q;
-      q = partition(arr, p, r);
+  //   swap(arr, i + 1, right);
+  //   return i + 1;
+  // };
 
-      // quickSortPoints(arr, p, q - 1);
-      // quickSortPoints(arr, q + 1, r);
-    }
-  };
+  // const quickSortPoints = (arr, p, r) => {
+  //   if (p < r) {
+  //     let q;
+  //     q = partition(arr, p, r);
+
+  //     // quickSortPoints(arr, p, q - 1);
+  //     // quickSortPoints(arr, q + 1, r);
+  //   }
+  // };
 
   const onClickSearch = (e) => {
     e.preventDefault();
 
-    get({
+    getAPI({
       url: SEARCH_URL
     })
       .then((res) => {
-        const resWithPoints = countPoints(res.data);
+        //   const resWithPoints = countPoints(res.data);
 
-        quickSortPoints(resWithPoints, 0, resWithPoints.length - 1);
-        setResultArr(resWithPoints);
+        //   quickSortPoints(resWithPoints, 0, resWithPoints.length - 1);
+        setResultArr(res);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 

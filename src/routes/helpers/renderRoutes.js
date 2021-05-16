@@ -30,9 +30,6 @@ export function RenderRoutes({ routes }) {
   return (
     <Switch>
       {routes.map((route, i) => {
-        {
-          console.log(route);
-        }
         return <RouteWithSubRoutes key={route.key} {...route} />;
       })}
       <Route component={NotFoundPage} />

@@ -1,72 +1,42 @@
 import React from "react";
-import { FilterButton, List } from "../../../components/common";
-import { Post } from "../../../components/post";
+import { List } from "../../../components/common";
 
-const PostsComponent = () => {
-  const postsArr = [
-    {
-      id: 1,
-      user: "Fists Last 5",
-      title: "post1",
-      image: "someURL",
-      type: "acquaintance",
-      text: "Text of post.",
-      ageFrom: null,
-      ageTo: 30
-    },
-    {
-      id: 2,
-      user: "Fists Last 5",
-      title: "post2",
-      image: "someURL",
-      type: "acquaintance",
-      text: "Text of post.",
-      ageFrom: null,
-      ageTo: 30
-    },
-    {
-      id: 3,
-      user: "Fists Last 5",
-      title: "post3",
-      image: "someURL",
-      type: "acquaintance",
-      text: "Text of post.",
-      ageFrom: null,
-      ageTo: 30
-    },
-    {
-      id: 4,
-      user: "Fists Last 5",
-      title: "post1",
-      image: "someURL",
-      type: "acquaintance",
-      text: "Text of post.",
-      ageFrom: null,
-      ageTo: 30
-    },
-    {
-      id: 5,
-      user: "Fists Last 5",
-      title: "post1",
-      image: "someURL",
-      type: "acquaintance",
-      text: "Text of post.",
-      ageFrom: null,
-      ageTo: 30
-    }
-  ];
+import { PostsMainFields } from "./PostsMainFields";
+import { FilterButton, SubmitButton } from "../../../components/common";
+
+const PostsComponent = ({
+  showFilter,
+  filterIsVisible,
+  filterPosts,
+  postInfo,
+  handleState,
+  handleArrState,
+  cities,
+  Element,
+  filtered,
+  ...other
+}) => {
   return (
-    <div className="posts-component-wrapper">
-      {/* <div className="posts-filter-bnt">
-        <FilterButton onClick={toggleFilter} />
-        <div className={postsClssName}>
-          <PostsFilter props={filterProps} />
+    <>
+      <FilterButton onClick={showFilter} />
+      {filterIsVisible && (
+        <div className="form_wrapper">
+          <form>
+            <div className="h_holder">
+              <h3>Filter posts</h3>
+            </div>
+            <PostsMainFields
+              postInfo={postInfo}
+              handleState={handleState}
+              handleArrState={handleArrState}
+              cities={cities}
+            />
+            <SubmitButton onClick={filterPosts}>Apply filter</SubmitButton>
+          </form>
         </div>
-      </div> */}
-      <div className="posts-list">
-        <List arr={postsArr} Element={Post} />
-      </div>
-    </div>
+      )}
+      <List arr={filtered} Element={Element} {...other} />
+    </>
   );
 };
 

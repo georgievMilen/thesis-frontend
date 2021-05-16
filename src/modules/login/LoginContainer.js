@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { LoginComponent } from "./components/LoginComponent";
-import { post } from "../services";
+import { postAPI } from "../services";
 import { LOGIN_URL } from "../../constants";
 import { authenticationService } from "../../utils";
 import { Context } from "../../HOC/AppHOC";
@@ -20,7 +20,7 @@ const LoginContainer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    post({ url: LOGIN_URL, data: { email, password } })
+    postAPI({ url: LOGIN_URL, data: { email, password } })
       .then((response) => {
         authenticationService.login(email);
         dispatch({ type: "login", payload: true });

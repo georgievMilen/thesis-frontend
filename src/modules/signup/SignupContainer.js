@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { SignupComponent } from "./components/SignupComponent";
 import { REG_URL } from "../../constants";
-import { validateSignin } from "../../utils/validateSignin";
+import { validateSignin } from "../../utils/validation";
 import { Redirect } from "react-router-dom";
-import { post } from "../services";
+import { postAPI } from "../services";
 
 const SignupContainer = () => {
   const [username, setUsername] = useState("");
@@ -45,7 +45,7 @@ const SignupContainer = () => {
     const errs = validateSignin(userData);
 
     if (errs) return setErrors(errs);
-    post({ url: REG_URL, data: userData })
+    postAPI({ url: REG_URL, data: userData })
       .then((response) => {
         setSuccessfulReg(true);
       })

@@ -6,7 +6,8 @@ import {
   SignupPage,
   SearchPage,
   ChatPage,
-  CreatePostPage
+  CreatePostPage,
+  MyPostsPage
 } from "../Pages";
 export const LOGGED_IN_ROUTES = [
   {
@@ -15,6 +16,13 @@ export const LOGGED_IN_ROUTES = [
     exact: true,
     private: true,
     component: PostsPage
+  },
+  {
+    path: "/my-posts",
+    key: "MY POSTS",
+    exact: true,
+    private: true,
+    component: MyPostsPage
   },
   {
     path: "/profile",

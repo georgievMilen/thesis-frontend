@@ -7,18 +7,18 @@ const CancelButton = ({ onClick }) => {
     </button>
   );
 };
-const EditButton = ({ onClick }) => {
+const EditButton = ({ onClick, children = "Edit" }) => {
   return (
     <button className="btn btn-outline-dark btn-sm" onClick={onClick}>
-      Edit
+      {children}
     </button>
   );
 };
 
-const SaveButton = ({ onClick }) => {
+const SaveButton = ({ onClick, children = "Save" }) => {
   return (
     <button className="btn btn-primary " onClick={onClick}>
-      Save
+      {children}
     </button>
   );
 };
@@ -31,7 +31,7 @@ const FilterButton = ({ onClick }) => {
   );
 };
 
-const SubmitButton = ({ onClick }) => {
+const SubmitButton = ({ onClick, children = "Save" }) => {
   return (
     <button
       style={{ margin: "0 auto", marginTop: "50px" }}
@@ -39,12 +39,12 @@ const SubmitButton = ({ onClick }) => {
       className="btn btn-primary btn-block"
       onClick={onClick}
     >
-      Save
+      {children}
     </button>
   );
 };
 
-const LogoutButton = ({ onClick }) => {
+const LogoutButton = ({ onClick, children = "Log out" }) => {
   return (
     <button
       style={{ margin: "0 auto", marginTop: "50px", marginBottom: "25px" }}
@@ -53,15 +53,15 @@ const LogoutButton = ({ onClick }) => {
       onClick={onClick}
     >
       <span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>{" "}
-      Log out
+      {children}
     </button>
   );
 };
 
-const ChatButton = ({ onClick }) => {
+const ChatButton = ({ onClick, children = "Chat" }) => {
   return (
     <button className="btn btn-primary btn-block" onClick={onClick}>
-      Chat
+      {children}
     </button>
   );
 };

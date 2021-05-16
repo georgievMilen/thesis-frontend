@@ -5,6 +5,7 @@ import {
   GENDERS,
   FIRST_NAME,
   LAST_NAME,
+  USERNAME,
   EMAIL_ADDRESS,
   PASSWORD,
   AGE,
@@ -12,9 +13,7 @@ import {
   WEIGHT,
   HEIGHT,
   EYE_COLOR,
-  HAIR_COLOR,
-  RELATIONSHIP_TYPE,
-  INTERESTED_GENDER
+  HAIR_COLOR
 } from "../../../constants";
 import { EditableInputContainer } from "../EditableInputContainer";
 import { EditableSelectContainer } from "../EditableSelectContainer";
@@ -24,8 +23,11 @@ import {
   EditButton,
   SubmitButton,
   DoubleLabel,
-  LogoutButton
+  LogoutButton,
+  Success,
+  Error
 } from "../../../components/common";
+import { isEmptyObj } from "../../../utils";
 
 const ProfileComponent = ({
   // first name
@@ -46,6 +48,12 @@ const ProfileComponent = ({
   handleEmailEditBtn,
   handleEmailEditSave,
   handleEmailEditCancel,
+  // username
+  username,
+  usernameIsEditable,
+  handleUsernameEditBtn,
+  handleUsernameEditSave,
+  handleUsernameEditCancel,
   // password
   passwordIsEditable,
   handlePasswordEditBtn,
@@ -63,13 +71,7 @@ const ProfileComponent = ({
   handleGenderEditBtn,
   handleGenderEditSave,
   handleGenderEditCancel,
-  // interest in gender
-  interestGender,
-  interestGenderIsEditable,
-  stringInterestGender,
-  handleIntGenderEditBtn,
-  handleIntGenderEditSave,
-  handleIntGenderEditCancel,
+
   // weight
   weight,
   weightIsEditable,
@@ -94,21 +96,13 @@ const ProfileComponent = ({
   handleHairColorEditBtn,
   handleHairColorEditSave,
   handleHairColorEditCancel,
-  // relationship
-  arrOfRelationships,
-  stringOfRelationships,
-  handleRelationshipEditBnt,
-  relationshipIsEditable,
-  handleRelationshipEditSave,
-  handleRelationshipEditCancel,
+
   // Save Btn
   saveProfileInfo,
   // Logout Btn
-  logoutProfile
+  logoutProfile,
+  response
 }) => {
-  const cpArrOfRels = JSON.parse(JSON.stringify(arrOfRelationships));
-  const cpIntGender = JSON.parse(JSON.stringify(interestGender));
-
   return (
     <div className="form_wrapper">
       <form>
@@ -169,6 +163,26 @@ const ProfileComponent = ({
                 initialValue={email}
                 onSave={handleEmailEditSave}
                 onCancel={handleEmailEditCancel}
+              />
+            </span>
+          )}
+        </div>
+        {/* Username */}
+        <div className="form-group">
+          {!usernameIsEditable ? (
+            <div className="profile_info_holder">
+              <DoubleLabel first={USERNAME} second={username} />
+
+              <EditButton onClick={handleUsernameEditBtn} />
+            </div>
+          ) : (
+            <span className="profile_edit_wrapper">
+              <DoubleLabel first={USERNAME} second={username} />
+
+              <EditableInputContainer
+                initialValue={username}
+                onSave={handleUsernameEditSave}
+                onCancel={handleUsernameEditCancel}
               />
             </span>
           )}
@@ -318,55 +332,11 @@ const ProfileComponent = ({
             </span>
           )}
         </div>
-        {/* Relationship  */}
-        <div className="from-group">
-          {!relationshipIsEditable ? (
-            <div className="profile_info_holder">
-              <DoubleLabel
-                first={RELATIONSHIP_TYPE}
-                second={stringOfRelationships}
-              />
-              <EditButton onClick={handleRelationshipEditBnt} />
-            </div>
-          ) : (
-            <span className="profile_edit_wrapper">
-              <DoubleLabel first="" second="" />
-
-              <EditableInputContainer
-                initialValue={cpArrOfRels}
-                type="checkbox"
-                onSave={handleRelationshipEditSave}
-                onCancel={handleRelationshipEditCancel}
-              />
-            </span>
-          )}
-        </div>
-        {/* Interest in Gender */}
-        <div className="from-group">
-          {!interestGenderIsEditable ? (
-            <div className="profile_info_holder">
-              <DoubleLabel
-                first={INTERESTED_GENDER}
-                second={stringInterestGender}
-              />
-              <EditButton onClick={handleIntGenderEditBtn} />
-            </div>
-          ) : (
-            <span className="profile_edit_wrapper">
-              <DoubleLabel
-                first={INTERESTED_GENDER}
-                second={stringInterestGender}
-              />
-
-              <EditableInputContainer
-                initialValue={cpIntGender}
-                type="checkbox"
-                onSave={handleIntGenderEditSave}
-                onCancel={handleIntGenderEditCancel}
-              />
-            </span>
-          )}
-        </div>
+        {isEmptyObj(response) === false && response.status === 200 ? (
+          <Success>{response.data}</Success>
+        ) : (
+          <Error>{response.data}</Error>
+        )}
         <SubmitButton onClick={saveProfileInfo} />
         <LogoutButton onClick={logoutProfile} />
       </form>

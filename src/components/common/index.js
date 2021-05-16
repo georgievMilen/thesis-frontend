@@ -2,6 +2,7 @@ import { Header } from "./Header";
 import { Select } from "./Select";
 import { Label, ImportanceLabel } from "./Label";
 import { Textarea } from "./Textarea";
+import { Success } from "./Success";
 import {
   EditButton,
   CancelButton,
@@ -40,5 +41,6 @@ export {
   ImportanceLabel,
   DoubleLabel,
   Error,
+  Success,
   Footer
 };

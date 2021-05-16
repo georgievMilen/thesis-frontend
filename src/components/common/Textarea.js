@@ -1,6 +1,14 @@
 import React from "react";
 
-const Textarea = () => {
-  return <textarea className="textarea" rows="4" cols="50"></textarea>;
+const Textarea = ({ onChange }) => {
+  return (
+    <textarea
+      className="textarea"
+      name="text"
+      rows="4"
+      cols="50"
+      onChange={onChange}
+    ></textarea>
+  );
 };
 export { Textarea };

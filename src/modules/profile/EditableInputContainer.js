@@ -22,7 +22,10 @@ function EditableInputContainer({
   };
 
   const handleInput = ({ target }) => {
-    setValue(target.value);
+    let value = target.value;
+    if (type === "number") value = parseInt(value);
+
+    setValue(value);
   };
 
   const handleCheckboxInput = ({ target }) => {
@@ -43,10 +46,9 @@ function EditableInputContainer({
 
   return (
     <>
-      {type === "text" ||
-        (type === "number" && (
-          <Input type={type} onChange={handleInput} value={newValue} />
-        ))}
+      {(type === "text" || type === "number") && (
+        <Input type={type} onChange={handleInput} value={newValue} />
+      )}
       {type === "checkbox" &&
         initialValue.map((value, i) => {
           const { name, checked } = value;

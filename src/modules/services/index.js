@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ENDPOINT } from "../../constants";
 
-const get = (props) => {
+const getAPI = (props) => {
   return new Promise((resolve, reject) => {
     axios
       .get(ENDPOINT + props.url, { params: props.params })
@@ -14,7 +14,7 @@ const get = (props) => {
   });
 };
 
-const post = (props) => {
+const postAPI = (props) => {
   return new Promise((resolve, reject) => {
     axios
       .post(ENDPOINT + props.url, props.data)
@@ -27,4 +27,17 @@ const post = (props) => {
   });
 };
 
-export { post, get };
+const deleteAPI = (props) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(ENDPOINT + props.url, { params: props.params })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        if (err.response) reject(err.response);
+      });
+  });
+};
+
+export { postAPI, getAPI, deleteAPI };
