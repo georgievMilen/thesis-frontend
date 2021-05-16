@@ -3,22 +3,20 @@ import io from "socket.io-client";
 import queryString from "query-string";
 import { ENDPOINT } from "../../constants/index.js";
 import { ChatComponent } from "./components/ChatComponent.js";
-const ChatContainer = (props) => {
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
+const ChatContainer = ({ name, roomID }) => {
+  const [room, setRoom] = useState("roomID");
   const [users, setUsers] = useState(["milen", "deni", "dancho"]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   let socket = useRef(io(ENDPOINT));
 
   useEffect(() => {
-    const { name, roomID } = queryString.parse(window.location.search);
+    // const { name, roomID } = queryString.parse(window.location.search);
 
-    setRoom(roomID);
-    setName(name);
+    // setRoom("roomID");
 
     socket.current.emit("join", { name, roomID });
-  }, [props.location]);
+  }, []);
 
   useEffect(() => {
     socket.current.on("message", (message) => {
@@ -44,7 +42,7 @@ const ChatContainer = (props) => {
     <>
       <ChatComponent
         users={users}
-        room={room}
+        room={roomID}
         name={name}
         message={message}
         messages={messages}

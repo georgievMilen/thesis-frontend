@@ -7,8 +7,10 @@ import {
   SearchPage,
   ChatPage,
   CreatePostPage,
-  MyPostsPage
+  MyPostsPage,
+  ConnectionsPage
 } from "../Pages";
+
 export const LOGGED_IN_ROUTES = [
   {
     path: "/posts",
@@ -33,7 +35,7 @@ export const LOGGED_IN_ROUTES = [
   },
   {
     path: "/search",
-    key: "SEARCH",
+    key: "FIND PEOPLE",
     exact: true,
     private: true,
     component: SearchPage
@@ -45,7 +47,13 @@ export const LOGGED_IN_ROUTES = [
     private: true,
     component: CreatePostPage
   },
-
+  {
+    path: "/connections",
+    key: "CONNECTIONS",
+    exact: true,
+    private: true,
+    component: ConnectionsPage
+  },
   {
     path: "/chat",
     key: "CHAT",

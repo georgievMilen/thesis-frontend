@@ -5,13 +5,13 @@ import { Header, Footer } from "./components/common";
 import { Context } from "./HOC/AppHOC";
 
 function App() {
-  const [state] = useContext(Context);
+  const [global] = useContext(Context);
   const [routes, setRoutes] = useState(ROUTES);
 
   useEffect(() => {
-    if (state.logged) setRoutes(LOGGED_IN_ROUTES);
+    if (global.logged) setRoutes(LOGGED_IN_ROUTES);
     else setRoutes(ROUTES);
-  }, [state]);
+  }, [global]);
 
   return (
     <div className="app_wrapper">

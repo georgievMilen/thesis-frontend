@@ -1,9 +1,9 @@
 import React from "react";
 
-const CancelButton = ({ onClick }) => {
+const CancelButton = ({ onClick, children = "Cancel" }) => {
   return (
     <button className="btn btn-secondary" onClick={onClick}>
-      Cancel
+      {children}
     </button>
   );
 };

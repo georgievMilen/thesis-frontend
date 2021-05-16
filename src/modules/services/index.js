@@ -27,6 +27,19 @@ const postAPI = (props) => {
   });
 };
 
+const putAPI = (props) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .put(ENDPOINT + props.url, props.data)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        if (err.response) reject(err.response);
+      });
+  });
+};
+
 const deleteAPI = (props) => {
   return new Promise((resolve, reject) => {
     axios
@@ -40,4 +53,4 @@ const deleteAPI = (props) => {
   });
 };
 
-export { postAPI, getAPI, deleteAPI };
+export { postAPI, getAPI, putAPI, deleteAPI };

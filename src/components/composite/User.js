@@ -1,14 +1,44 @@
 import React from "react";
-import { Label, Image } from "../common";
+import { Label, Image, ChatButton, SaveButton, CancelButton } from "../common";
 
-const User = ({ src, user_id, firstName, lastName }) => {
+const User = ({
+  element: {
+    first_name,
+    last_name,
+    id,
+    poster_image,
+    poster_title,
+    response,
+    user_id
+  },
+  handleRequest,
+  handleChat
+}) => {
   return (
-    <>
+    <div className="req_conn">
       <Label>
-        {firstName} {lastName}
+        {first_name} {last_name}
       </Label>
-      <Image src={src}></Image>
-    </>
+      <Label>About poster: {poster_title}</Label>
+      <Image src={poster_image}></Image>
+      {response === 1 && (
+        <ChatButton
+          onClick={() =>
+            handleChat({ name: first_name + " " + last_name, roomID: id })
+          }
+        />
+      )}
+      {response === -1 && (
+        <>
+          <SaveButton onClick={() => handleRequest({ id, response: 1 })}>
+            Accept
+          </SaveButton>
+          <CancelButton onClick={() => handleRequest({ id, response: 0 })}>
+            Decline
+          </CancelButton>
+        </>
+      )}
+    </div>
   );
 };
 
