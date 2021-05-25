@@ -11,6 +11,57 @@ import {
   ConnectionsPage
 } from "../Pages";
 
+export const LOGGED_IN_ROUTES_MENU = [
+  {
+    path: "/posts",
+    key: "POSTS",
+    exact: true,
+    private: true,
+    component: PostsPage
+  },
+  {
+    path: "/my-posts",
+    key: "MY POSTS",
+    exact: true,
+    private: true,
+    component: MyPostsPage
+  },
+  {
+    path: "/profile",
+    key: "PROFILE",
+    exact: true,
+    private: true,
+    component: ProfilePage
+  },
+  {
+    path: "/search",
+    key: "FIND PEOPLE",
+    exact: true,
+    private: true,
+    component: SearchPage
+  },
+  {
+    path: "/create-post",
+    key: "CREATE POST",
+    exact: true,
+    private: true,
+    component: CreatePostPage
+  },
+  {
+    path: "/connections",
+    key: "CONNECTIONS",
+    exact: true,
+    private: true,
+    component: ConnectionsPage
+  },
+  {
+    path: "/logout",
+    key: "LOGOUT",
+    private: true,
+    component: LogoutPage
+  }
+];
+
 export const LOGGED_IN_ROUTES = [
   {
     path: "/posts",
@@ -57,6 +108,7 @@ export const LOGGED_IN_ROUTES = [
   {
     path: "/chat",
     key: "CHAT",
+    exact: false,
     private: true,
     component: ChatPage
   },

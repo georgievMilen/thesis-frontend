@@ -31,9 +31,10 @@ const FilterButton = ({ onClick }) => {
   );
 };
 
-const SubmitButton = ({ onClick, children = "Save" }) => {
+const SubmitButton = ({ onClick, children = "Save", disabled }) => {
   return (
     <button
+      disabled={disabled}
       style={{ margin: "0 auto", marginTop: "50px" }}
       type="submit"
       className="btn btn-primary btn-block"

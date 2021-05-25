@@ -46,13 +46,8 @@ const ChatInput = ({ message, setMessage, sendMessage }) => {
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={(e) => (e.key === "Enter" ? sendMessage(e) : null)}
       />
-      <button className="sendButton">
-        <img
-          className="paperPlaneImage"
-          src={paper_plane}
-          alt="paper plane"
-          onClick={sendMessage}
-        />
+      <button className="sendButton" onClick={sendMessage}>
+        <img className="paperPlaneImage" src={paper_plane} alt="paper plane" />
       </button>
     </form>
   );

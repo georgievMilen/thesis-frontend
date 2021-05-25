@@ -1,6 +1,6 @@
 import React from "react";
 
-const Message = ({ message: { user, text }, name }) => {
+const Message = ({ message: { email, text, first_name, last_name }, name }) => {
   let isSentByCurrentUser = false;
 
   // const trimmedName = name.trim().toLowerCase();
@@ -8,7 +8,7 @@ const Message = ({ message: { user, text }, name }) => {
   // if (user === trimmedName) {
   //   isSentByCurrentUser = true;
   // }
-  const trimmedName = user;
+  const trimmedName = email;
   return isSentByCurrentUser ? (
     <div className="messageContainer justifyEnd">
       <p className="sentText pr-10">{trimmedName}</p>
@@ -21,7 +21,7 @@ const Message = ({ message: { user, text }, name }) => {
       <div className="messageBox backgroundLight">
         <p className="messageText colorDark">{text}</p>
       </div>
-      <p className="sentText pl-10">{user}</p>
+      <p className="sentText pl-10">{first_name + " " + last_name}</p>
     </div>
   );
 };

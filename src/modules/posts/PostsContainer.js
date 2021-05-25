@@ -37,6 +37,7 @@ const PostsContainer = ({ postInfo, cities, url, ...other }) => {
     getAPI({ url: url, params: localStorageEmail })
       .then((res) => {
         const data = [...res.data];
+
         handlePosts(data);
       })
       .catch((error) => {

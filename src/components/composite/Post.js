@@ -1,32 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Label, Image, Paragraph, SubmitButton, Error } from "../common";
 import { authenticationService } from "../../utils";
 import { postAPI, deleteAPI } from "../../modules/services";
-import { POSTER_CONNECTION_REQUEST, DELETE_POSTER } from "../../constants";
+import { CONNECTION_REQUEST, DELETE_POSTER } from "../../constants";
+import { Context } from "../../HOC/AppHOC";
 const Post = ({
   element: {
     id,
-    user_id,
-    first_name,
-    last_name,
     age_from,
     age_to,
+    user_id,
+    cities,
     country,
+    email,
+    first_name,
+    genders,
     image,
+    last_name,
     text,
     title,
-    type,
-    cities,
-    genders
+    type
   },
   dispatch,
   isMyPost
 }) => {
   const [error, setErr] = useState("");
+  const [state] = useContext(Context);
+
   const sendRequest = () => {
     const localStorageEmail = authenticationService.currentUserValue;
     const data = { email: localStorageEmail, postId: id };
-    postAPI({ url: POSTER_CONNECTION_REQUEST, data: data })
+    postAPI({ url: CONNECTION_REQUEST, data: data })
       .then((res) => {
         dispatch({
           type: "form/success",
@@ -78,7 +82,9 @@ const Post = ({
         </Label>
       )}
       {isMyPost === false && (
-        <SubmitButton onClick={sendRequest}>Send Request</SubmitButton>
+        <SubmitButton onClick={sendRequest} disabled={state.logged === email}>
+          Send Request
+        </SubmitButton>
       )}
       {isMyPost === true && (
         <SubmitButton onClick={deleteRequest}>Delete Request</SubmitButton>

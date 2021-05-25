@@ -1,6 +1,5 @@
 import React from "react";
 import { InfoBar } from "./InfoBar";
-import { TextComponent } from "./TextComponent";
 import { ChatInput } from "../../../components/common";
 import { Messages } from "./Messages";
 const ChatComponent = ({
@@ -14,7 +13,7 @@ const ChatComponent = ({
 }) => {
   return (
     <div className="outerChatContainer">
-      <TextComponent users={users} />
+      {/* <TextComponent users={users} /> */}
       <div className="innerChatContainer">
         <InfoBar name={name} />
         <Messages messages={messages} name={name} />

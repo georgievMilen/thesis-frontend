@@ -3,8 +3,7 @@ import { ChatContainer } from "../modules/chat/ChatContainer";
 const ChatPage = (props) => {
   return (
     <>
-      {console.log(props)}
-      <ChatContainer />
+      <ChatContainer {...props} />
     </>
   );
 };

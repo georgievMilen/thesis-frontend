@@ -1,22 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import io from "socket.io-client";
-import queryString from "query-string";
 import { ENDPOINT } from "../../constants/index.js";
 import { ChatComponent } from "./components/ChatComponent.js";
-const ChatContainer = ({ name, roomID }) => {
-  const [room, setRoom] = useState("roomID");
+import queryString from "query-string";
+import { Context } from "../../HOC/AppHOC";
+
+const ChatContainer = ({ location: { state, search } }) => {
+  const [global] = useContext(Context);
+  const [room, setRoom] = useState("");
+  const [name, setName] = useState("");
   const [users, setUsers] = useState(["milen", "deni", "dancho"]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   let socket = useRef(io(ENDPOINT));
 
   useEffect(() => {
-    // const { name, roomID } = queryString.parse(window.location.search);
+    const { name, room } = queryString.parse(search);
 
-    // setRoom("roomID");
-
-    socket.current.emit("join", { name, roomID });
-  }, []);
+    socket.current.emit("join", { name, room }, (error) => {
+      if (error) alert(error);
+    });
+  }, [ENDPOINT, search]);
 
   useEffect(() => {
     socket.current.on("message", (message) => {
@@ -32,18 +36,19 @@ const ChatContainer = ({ name, roomID }) => {
 
   const sendMessage = (event) => {
     event.preventDefault();
-
-    // if (message) {
-    //   socket.emit("sendMessage", message, () => setMessage(""));
-    // }
+    const data = { message, email: global.logged };
+    if (message) {
+      socket.current.emit("sendMessage", data, () => setMessage(""));
+    }
   };
 
   return (
     <>
+      {console.log(messages)}
       <ChatComponent
         users={users}
-        room={roomID}
-        name={name}
+        room={state.room}
+        name={state.name}
         message={message}
         messages={messages}
         setMessage={setMessage}

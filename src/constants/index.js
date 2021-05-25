@@ -11,7 +11,7 @@ export const CREATE_POSTER = "/api/v1/poster/createPoster";
 export const GET_ALL_POSTERS = "/api/v1/poster/getAllPosters";
 export const GET_MY_POSTERS = "/api/v1/poster/getMyPosters";
 export const DELETE_POSTER = "/api/v1/poster/deletePoster";
-export const POSTER_CONNECTION_REQUEST = "/api/v1/poster/sendConnectionRequest";
+export const CONNECTION_REQUEST = "/api/v1/connections/sendConnectionRequest";
 export const GET_CONNECTIONS = "/api/v1/connections/getConnections";
 export const UPDATE_REQUEST = "/api/v1/connections/updateConnection";
 

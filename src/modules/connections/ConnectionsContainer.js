@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Label, List, Error } from "../../components/common";
 import { Redirect } from "react-router-dom";
-
 import { User } from "../../components/composite";
 import { GET_CONNECTIONS, UPDATE_REQUEST } from "../../constants";
 import { getAPI, putAPI } from "../services";
@@ -15,52 +14,62 @@ const ConnectionsContainer = () => {
   const [connectionsArr, setConnectionsArr] = useState([]);
 
   const handleConnections = (data) => {
-    const reqArr = [];
-    const connArr = [];
-    data.forEach((el) => {
-      if (el[0].response === -1) reqArr.push(el[0]);
-      if (el[0].response === 1) connArr.push(el[0]);
-    });
+    const reqArr = [...data.populReq];
+    const connArr = [...data.populConn];
+
     setConnectionsArr(connArr);
     setRequestArr(reqArr);
   };
   useEffect(() => {
     getAPI({ url: GET_CONNECTIONS, params: state.logged })
       .then((res) => {
-        const data = [...res.data];
-        handleConnections(data);
+        if (res.data !== "No requests.") {
+          const data = { ...res.data };
+          handleConnections(data);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  const handleRequest = ({ id, response }) => {
-    console.log(id, response);
-    putAPI({ url: UPDATE_REQUEST, data: { id, response } })
+  const handleRequest = ({ connection_id, response }) => {
+    putAPI({ url: UPDATE_REQUEST, data: { connection_id, response } })
       .then(() => {
         window.location.reload();
       })
       .catch((err) => setError(err));
     setTimeout(() => {}, 3000);
   };
-  const handleChat = ({ _id, _roomID }) => {
-    setChat({ id: _id, roomID: _roomID });
+
+  const handleChat = ({ _name, _roomID }) => {
+    setChat({ name: _name, roomID: _roomID });
   };
 
   return (
     <>
       {isEmptyObj === false && <Error>{error.data}</Error>}
       <Label>Reqeusts:</Label>
-      <List arr={requestsArr} Element={User} handleRequest={handleRequest} />
+      <List
+        arr={requestsArr}
+        Element={User}
+        handleRequest={handleRequest}
+        type="request"
+      />
 
       <Label>Connections: </Label>
-      <List arr={connectionsArr} Element={User} handleChat={handleChat} />
-      {isEmptyObj(chat) === false && (
+      <List
+        arr={[...connectionsArr, ...requestsArr]}
+        Element={User}
+        handleChat={handleChat}
+        type="connection"
+      />
+      {chat.name !== undefined && chat.roomID !== undefined && (
         <Redirect
           to={{
-            pathname: "/chat",
-            state: { id: chat.id, roomID: chat.roomID }
+            pathname: `/chat`,
+            search: `?name=${chat.name}&room=${chat.roomID}`,
+            state: { name: chat.name, room: chat.roomID }
           }}
         />
       )}
