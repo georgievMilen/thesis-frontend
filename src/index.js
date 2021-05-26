@@ -9,6 +9,7 @@ import "./styles/header.css";
 import "./styles/font.css";
 import "./styles/form.css";
 import "./styles/page.css";
+import "./styles/message.css";
 
 import { AppHOC } from "./HOC/AppHOC";
 

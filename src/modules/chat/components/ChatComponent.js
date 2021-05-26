@@ -9,6 +9,7 @@ const ChatComponent = ({
   message,
   setMessage,
   sendMessage,
+  currUser,
   name
 }) => {
   return (
@@ -16,7 +17,9 @@ const ChatComponent = ({
       {/* <TextComponent users={users} /> */}
       <div className="innerChatContainer">
         <InfoBar name={name} />
-        <Messages messages={messages} name={name} />
+
+        <Messages messages={messages} currUser={currUser} />
+
         <ChatInput
           message={message}
           setMessage={setMessage}

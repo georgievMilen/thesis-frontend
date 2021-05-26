@@ -9,6 +9,7 @@ const ChatContainer = ({ location: { state, search } }) => {
   const [global] = useContext(Context);
   const [room, setRoom] = useState("");
   const [name, setName] = useState("");
+
   const [users, setUsers] = useState(["milen", "deni", "dancho"]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -16,18 +17,22 @@ const ChatContainer = ({ location: { state, search } }) => {
 
   useEffect(() => {
     const { name, room } = queryString.parse(search);
+    setRoom(room);
 
-    socket.current.emit("join", { name, room }, (error) => {
+    setName(name.replace("_", " "));
+
+    socket.current.emit("join", { name, room }, ({ error, mssgs }) => {
       if (error) alert(error);
+      setMessages(mssgs);
     });
   }, [ENDPOINT, search]);
 
+  socket.current.on("loadMessages", (mssgs) => setMessages(mssgs));
   useEffect(() => {
-    socket.current.on("message", (message) => {
-      setMessages((msgs) => [...msgs, message]);
+    socket.current.on("message", (mssg) => {
+      console.log({ mssg });
+      setMessages((msgs) => [...msgs, mssg]);
     });
-
-    socket.current.on("loadMessages", (messages) => setMessages(messages));
 
     socket.current.on("roomData", ({ users }) => {
       setUsers(users);
@@ -36,9 +41,11 @@ const ChatContainer = ({ location: { state, search } }) => {
 
   const sendMessage = (event) => {
     event.preventDefault();
-    const data = { message, email: global.logged };
+    const data = { message, email: global.logged, room };
     if (message) {
-      socket.current.emit("sendMessage", data, () => setMessage(""));
+      socket.current.emit("sendMessage", data, () => {
+        setMessage("");
+      });
     }
   };
 
@@ -48,7 +55,8 @@ const ChatContainer = ({ location: { state, search } }) => {
       <ChatComponent
         users={users}
         room={state.room}
-        name={state.name}
+        currUser={global.logged}
+        name={name}
         message={message}
         messages={messages}
         setMessage={setMessage}

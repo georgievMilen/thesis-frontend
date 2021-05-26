@@ -1,27 +1,26 @@
 import React from "react";
 
-const Message = ({ message: { email, text, first_name, last_name }, name }) => {
+const Message = ({
+  message: { email, text, first_name, last_name },
+  currUser
+}) => {
   let isSentByCurrentUser = false;
 
-  // const trimmedName = name.trim().toLowerCase();
-
-  // if (user === trimmedName) {
-  //   isSentByCurrentUser = true;
-  // }
-  const trimmedName = email;
+  if (currUser === email) isSentByCurrentUser = true;
+  console.log(currUser);
   return isSentByCurrentUser ? (
     <div className="messageContainer justifyEnd">
-      <p className="sentText pr-10">{trimmedName}</p>
+      <span className="sentText pr-10">{first_name + " " + last_name}</span>
       <div className="messageBox backgroundBlue">
-        <p className="messageText colorWhite">{text}</p>
+        <span className="messageText colorWhite">{text}</span>
       </div>
     </div>
   ) : (
     <div className="messageContainer justifyStart">
       <div className="messageBox backgroundLight">
-        <p className="messageText colorDark">{text}</p>
+        <span className="messageText colorDark">{text}</span>
       </div>
-      <p className="sentText pl-10">{first_name + " " + last_name}</p>
+      <span className="sentText pl-10">{first_name + " " + last_name}</span>
     </div>
   );
 };
