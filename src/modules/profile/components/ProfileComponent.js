@@ -25,7 +25,8 @@ import {
   DoubleLabel,
   LogoutButton,
   Success,
-  Error
+  Error,
+  FileInput
 } from "../../../components/common";
 import { isEmptyObj } from "../../../utils";
 
@@ -147,6 +148,27 @@ const ProfileComponent = ({
             </span>
           )}
         </div>
+        {/* Image */}
+        {/* <div className="form-group">
+          {!emailIsEditable ? (
+            <div className="profile_info_holder">
+              <DoubleLabel first={EMAIL_ADDRESS} second={email} />
+
+              <EditButton onClick={handleEmailEditBtn} />
+            </div>
+          ) : (
+            <span className="profile_edit_wrapper">
+              <DoubleLabel first={EMAIL_ADDRESS} second={email} />
+
+              <EditableInputContainer
+                initialValue={email}
+                onSave={handleEmailEditSave}
+                onCancel={handleEmailEditCancel}
+              />
+            </span>
+          )}
+        </div> */}
+
         {/* Email */}
         <div className="form-group">
           {!emailIsEditable ? (

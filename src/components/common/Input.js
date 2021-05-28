@@ -53,4 +53,8 @@ const ChatInput = ({ message, setMessage, sendMessage }) => {
   );
 };
 
-export { Input, RangeInput, ChatInput };
+const FileInput = ({ onChange }) => {
+  return <input className="form-control" type="file" onChange={onChange} />;
+};
+
+export { Input, RangeInput, ChatInput, FileInput };

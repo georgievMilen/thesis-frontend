@@ -7,7 +7,7 @@ const Message = ({
   let isSentByCurrentUser = false;
 
   if (currUser === email) isSentByCurrentUser = true;
-  console.log(currUser);
+
   return isSentByCurrentUser ? (
     <div className="messageContainer justifyEnd">
       <span className="sentText pr-10">{first_name + " " + last_name}</span>
