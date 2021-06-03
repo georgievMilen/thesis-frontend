@@ -3,12 +3,8 @@
   box-sizing: border-box;
 } */
 body {
-  background: linear-gradient(
-    to bottom,
-    rgb(255, 255, 255),
-    rgba(117, 81, 184, 0.2)
-  );
-  min-height: 100vh;
+  background: rgb(233, 233, 240);
+  margin: 0;
   display: block;
   font-weight: 400;
   font-family: "Fira Sans", sans-serif;

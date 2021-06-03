@@ -1,32 +1,32 @@
-import React, { useContext, useEffect, useState } from "react";
-import { RenderRoutes } from "./routes/helpers/renderRoutes";
-import {
-  ROUTES,
-  LOGGED_IN_ROUTES,
-  LOGGED_IN_ROUTES_MENU
-} from "./routes/routes";
-import { Header, Footer } from "./components/common";
-import { Context } from "./HOC/AppHOC";
+import React from "react";
+import { Layout } from "./containers/Layout";
+import { Route, Switch } from "react-router-dom";
+
+import { ROUTES } from "./routes/routes";
+
+import "./scss/style.scss";
+
+import { LoginPage, SignupPage, NotFoundPage } from "./Pages";
 
 function App() {
-  const [global] = useContext(Context);
-  const [routes, setRoutes] = useState({ menu: ROUTES, render: ROUTES });
-
-  useEffect(() => {
-    if (global.logged)
-      setRoutes({ menu: LOGGED_IN_ROUTES_MENU, render: LOGGED_IN_ROUTES });
-    else setRoutes({ menu: ROUTES, render: ROUTES });
-  }, [global]);
-
   return (
-    <div className="app_wrapper">
-      <div className="header_wrapper">
-        <Header routes={routes.menu} />
-      </div>
+    <Switch>
+      <Route path="/login" exact={true} component={LoginPage} />
+      <Route path="/signup" exact={true} component={SignupPage} />
+      <Route path="/" exact={false} render={() => <Layout routes={ROUTES} />} />
 
-      <RenderRoutes routes={routes.render} />
-      <Footer />
-    </div>
+      <Route component={NotFoundPage} />
+    </Switch>
+    // <div className="c-app c-default-layout">
+    //   <div className="c-wrapper">
+    //      <Header routes={routes.menu} />
+    //   </div>
+    //   <div className="c-body">
+    //     <RenderRoutes routes={routes.render} />
+    //   </div>
+
+    //   <Footer />
+    // </div>
   );
 }
 

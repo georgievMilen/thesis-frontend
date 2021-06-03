@@ -9,6 +9,7 @@ import { CreatePostPage } from "./createPostPage";
 import { LogoutPage } from "./logoutPage";
 import { MyPostsPage } from "./myPostsPage";
 import { ConnectionsPage } from "./connectionsPage";
+import { NotFoundPage } from "./notFoundPage";
 
 export {
   HomePage,
@@ -21,5 +22,6 @@ export {
   PostsPage,
   MyPostsPage,
   CreatePostPage,
-  ConnectionsPage
+  ConnectionsPage,
+  NotFoundPage
 };

@@ -53,8 +53,14 @@ const ChatInput = ({ message, setMessage, sendMessage }) => {
   );
 };
 
-const FileInput = ({ onChange }) => {
-  return <input className="form-control" type="file" onChange={onChange} />;
-};
+const FileInput = React.forwardRef((props, ref) => (
+  <input
+    type="file"
+    name="file"
+    ref={ref}
+    className="form-control"
+    onChange={props.onChange}
+  />
+));
 
 export { Input, RangeInput, ChatInput, FileInput };

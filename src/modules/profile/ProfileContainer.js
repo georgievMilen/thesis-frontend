@@ -1,10 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { authenticationService } from "../../utils";
 import { ProfileComponent } from "./components/ProfileComponent";
-import { GET_PROFILE_INFO, UPDATE_PROFILE_URL } from "../../constants";
+import {
+  GET_PROFILE_INFO,
+  UPDATE_PROFILE_URL,
+  UPDATE_PROF_IMG_URL
+} from "../../constants";
 import { getAPI, postAPI } from "../services";
 import { Redirect } from "react-router-dom";
 import { Context } from "../../HOC/AppHOC";
+import { CPagination } from "@coreui/react";
 
 const ProfileContainer = () => {
   const [state, dispatch] = useContext(Context);
@@ -14,6 +19,11 @@ const ProfileContainer = () => {
   // Last name state
   const [lastName, setLastName] = useState("");
   const [lastNameIsEditable, setLastNameIsEditable] = useState(false);
+  // Image
+  const [imageName, setImageName] = useState("");
+  // File
+  const fileRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   // Email state
   const [email, setEmail] = useState("");
   const [emailIsEditable, setEmailIsEditable] = useState(false);
@@ -45,6 +55,7 @@ const ProfileContainer = () => {
   const [hairColor, setHairColor] = useState("");
   const [hairColorIsEditable, setHairColorIsEditable] = useState(false);
   const [response, setResponse] = useState({});
+
   const handleProfileInfo = ({
     first_name,
     last_name,
@@ -55,13 +66,15 @@ const ProfileContainer = () => {
     eye_colour,
     hair_colour,
     weight: resWeight,
-    height: resHeight
+    height: resHeight,
+    image
   }) => {
     setFirstName(first_name);
     setLastName(last_name);
     setEmail(resEmail);
     setUsername(resUsername);
     resAge ? setAge(resAge) : setAge("");
+    image ? setImageName(image) : setImageName("");
     setGender(resGender);
     setEyeColor(eye_colour);
     setHairColor(hair_colour);
@@ -266,30 +279,67 @@ const ProfileContainer = () => {
     setHairColorIsEditable(false);
   };
 
+  // File handler
+
+  const fileSelect = (e) => {
+    e.preventDefault();
+
+    const imageFile = fileRef.current.files[0];
+    const localStorageEmail = authenticationService.currentUserValue;
+
+    if (!fileRef.current.files[0]) {
+      alert("Please select image.");
+      e.target.value = null;
+      return false;
+    }
+
+    if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      alert("Please select valid image.");
+      e.target.value = null;
+      return false;
+    }
+    setSelectedImage(imageFile);
+  };
   // Add gender handlers
 
   // Save Btn
   const saveProfileInfo = (e) => {
     e.preventDefault();
     const localStorageEmail = authenticationService.currentUserValue;
-    const data = {
-      email: localStorageEmail,
-      firstName,
-      lastName,
-      username,
-      age,
-      gender,
-      weight,
-      height,
-      eyeColor,
-      hairColor
-    };
+
+    const data = new FormData();
+    data.append("file", selectedImage);
+    data.append("email", localStorageEmail);
+    data.append("firstName", firstName);
+    data.append("lastName", lastName);
+    data.append("username", username);
+    data.append("age", age);
+    data.append("gender", gender);
+    data.append("weight", weight);
+    data.append("height", height);
+    data.append("eyeColor", eyeColor);
+    data.append("hairColor", hairColor);
+    data.append("imageName", imageName);
+
+    // const data = {
+    //   email: localStorageEmail,
+    //   firstName,
+    //   lastName,
+    //   username,
+    //   age,
+    //   gender,
+    //   weight,
+    //   height,
+    //   eyeColor,
+    //   hairColor
+    // };
     postAPI({
       url: UPDATE_PROFILE_URL,
       data: data
     })
       .then((res) => {
-        setResponse(res);
+        // setResponse(res);
+        window.location.reload();
       })
       .catch((err) => {
         setResponse(err);
@@ -317,6 +367,10 @@ const ProfileContainer = () => {
         handleLastNameEditBtn={handleLastNameEditBtn}
         handleLastNameEditSave={handleLastNameEditSave}
         handleLastNameEditCancel={handleLastNameEditCancel}
+        // file
+        fileRef={fileRef}
+        fileSelect={fileSelect}
+        imageName={imageName}
         // email
         email={email}
         emailIsEditable={emailIsEditable}

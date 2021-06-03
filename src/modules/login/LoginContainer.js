@@ -37,7 +37,7 @@ const LoginContainer = () => {
     setPassword(target.value);
   };
   return (
-    <div className="form_wrapper login_component">
+    <>
       <LoginComponent
         handleEmailInput={handleEmailInput}
         hanglePasswordInput={hanglePasswordInput}
@@ -48,7 +48,7 @@ const LoginContainer = () => {
         email={email}
       />
       {state.logged && <Redirect to="/posts" />}
-    </div>
+    </>
   );
 };
 

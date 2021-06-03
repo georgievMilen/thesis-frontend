@@ -13,7 +13,8 @@ import {
   WEIGHT,
   HEIGHT,
   EYE_COLOR,
-  HAIR_COLOR
+  HAIR_COLOR,
+  ENDPOINT
 } from "../../../constants";
 import { EditableInputContainer } from "../EditableInputContainer";
 import { EditableSelectContainer } from "../EditableSelectContainer";
@@ -26,7 +27,8 @@ import {
   LogoutButton,
   Success,
   Error,
-  FileInput
+  FileInput,
+  Image
 } from "../../../components/common";
 import { isEmptyObj } from "../../../utils";
 
@@ -43,6 +45,10 @@ const ProfileComponent = ({
   handleLastNameEditBtn,
   handleLastNameEditSave,
   handleLastNameEditCancel,
+  // file
+  fileRef,
+  fileSelect,
+  imageName,
   // email
   email,
   emailIsEditable,
@@ -149,25 +155,12 @@ const ProfileComponent = ({
           )}
         </div>
         {/* Image */}
-        {/* <div className="form-group">
-          {!emailIsEditable ? (
-            <div className="profile_info_holder">
-              <DoubleLabel first={EMAIL_ADDRESS} second={email} />
-
-              <EditButton onClick={handleEmailEditBtn} />
-            </div>
-          ) : (
-            <span className="profile_edit_wrapper">
-              <DoubleLabel first={EMAIL_ADDRESS} second={email} />
-
-              <EditableInputContainer
-                initialValue={email}
-                onSave={handleEmailEditSave}
-                onCancel={handleEmailEditCancel}
-              />
-            </span>
-          )}
-        </div> */}
+        {imageName && <Image src={`${ENDPOINT}/${imageName}`} />}
+        <div className="form-group">
+          <div className="profile_info_holder">
+            <FileInput ref={fileRef} onChange={fileSelect} />
+          </div>
+        </div>
 
         {/* Email */}
         <div className="form-group">

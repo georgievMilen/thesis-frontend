@@ -3,6 +3,8 @@ export const REG_URL = "/api/v1/register";
 export const LOGIN_URL = "/api/v1/login";
 export const SEARCH_URL = "/api/v1/search/";
 export const UPDATE_PROFILE_URL = "/api/v1/profile/updateProfile";
+export const UPDATE_PROF_IMG_URL = "/api/v1/profile/updateImage";
+
 export const GET_PROFILE_INFO = "/api/v1/profile/getProfileInfo";
 export const SLIDER_MAX = 100;
 export const SLIDER_MIN = 0;

@@ -1,0 +1,19 @@
+.c-sidebar {
+  color: #fff;
+  background: #3c4b64;
+}
+
+@media (max-width: 991.98px) {
+  .c-sidebar {
+    --is-mobile: true;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 1031;
+  }
+}
+
+.c-sidebar-nav-link,
+.c-sidebar-nav-dropdown-toggle {
+  color: var(--cui-link-color, #321f04);
+}
