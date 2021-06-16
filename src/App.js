@@ -14,19 +14,8 @@ function App() {
       <Route path="/login" exact={true} component={LoginPage} />
       <Route path="/signup" exact={true} component={SignupPage} />
       <Route path="/" exact={false} render={() => <Layout routes={ROUTES} />} />
-
       <Route component={NotFoundPage} />
     </Switch>
-    // <div className="c-app c-default-layout">
-    //   <div className="c-wrapper">
-    //      <Header routes={routes.menu} />
-    //   </div>
-    //   <div className="c-body">
-    //     <RenderRoutes routes={routes.render} />
-    //   </div>
-
-    //   <Footer />
-    // </div>
   );
 }
 

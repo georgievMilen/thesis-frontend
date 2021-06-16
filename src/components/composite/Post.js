@@ -4,23 +4,21 @@ import { authenticationService } from "../../utils";
 import { postAPI, deleteAPI } from "../../modules/services";
 import { CONNECTION_REQUEST, DELETE_POSTER } from "../../constants";
 import { Context } from "../../HOC/AppHOC";
+
 const Post = ({
-  element: {
-    id,
-    age_from,
-    age_to,
-    user_id,
-    cities,
-    country,
-    email,
-    first_name,
-    genders,
-    image,
-    last_name,
-    text,
-    title,
-    type
-  },
+  id,
+  ageFrom,
+  ageTo,
+  cities,
+  country,
+  email,
+  firstName,
+  genders,
+  image,
+  lastName,
+  text,
+  title,
+  type,
   dispatch,
   isMyPost
 }) => {
@@ -57,14 +55,15 @@ const Post = ({
     <div className="post-wrapper">
       <Error>{error}</Error>
       <Label>Title: {title}</Label>
+
       <Label>Type: {type}</Label>
       <Label>
-        From: {first_name} {last_name}
+        From: {firstName} {lastName}
       </Label>
       <Image src={image} />
       <Paragraph>Text: {text}</Paragraph>
-      {age_from && <Label>Age From: {age_from}</Label>}
-      {age_to && <Label>Age to: {age_to}</Label>}
+      {ageFrom && <Label>Age From: {ageFrom}</Label>}
+      {ageTo && <Label>Age to: {ageTo}</Label>}
       <Label>Country: {country}</Label>
 
       <Label>
@@ -87,7 +86,7 @@ const Post = ({
         </SubmitButton>
       )}
       {isMyPost === true && (
-        <SubmitButton onClick={deleteRequest}>Delete Request</SubmitButton>
+        <SubmitButton onClick={deleteRequest}>Delete</SubmitButton>
       )}
     </div>
   );

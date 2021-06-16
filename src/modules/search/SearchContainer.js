@@ -1,124 +1,97 @@
-import React, { useState } from "react";
-import { SearchComponent } from "./components/SearchComponent";
-import { List } from "../../components/common/List";
-import { SEARCH_URL } from "../../constants";
+import React, { useEffect, useState } from "react";
+import { PeopleFilter } from "./components/PeopleFilter";
+import { UserCard } from "../../components/composite/UserCard";
+import { List, FilterButton } from "../../components/common";
+import { GET_PEOPLE } from "../../constants";
+import { quickSort, comparator, authenticationService } from "../../utils/";
 import { getAPI } from "../services";
 
 const SearchContainer = () => {
-  // Max age state
-  const [maxAge, setMaxAge] = useState(0);
-  const [maxAgeImp, setMaxAgeImp] = useState(50);
+  const [filterIsShown, setShowFiilter] = useState(false);
+  // Age state
+  const [ageFrom, setAgeFrom] = useState(0);
+  const [ageTo, setAgeTo] = useState(0);
+  const [ageImp, setAgeImp] = useState(0);
   // Weight state
-  const [weight, setWeight] = useState(0);
-  const [weightImp, setWeightImp] = useState(50);
+  const [weightFrom, setWeightFrom] = useState(0);
+  const [weightTo, setWeightTo] = useState(0);
+  const [weightImp, setWeightImp] = useState(0);
   // Height state
-  const [height, setHeight] = useState(0);
-  const [heightImp, setHeightImp] = useState(50);
+  const [heightFrom, setHeightFrom] = useState(0);
+  const [heightTo, setHeightTo] = useState(0);
+  const [heightImp, setHeightImp] = useState(0);
   // Eye color state
   const [eyeColor, setEyeColor] = useState("");
-  const [eyeColorImp, setEyeColorImp] = useState(50);
+  const [eyeColorImp, setEyeColorImp] = useState(0);
   // Hair color state
   const [hairColor, setHairColor] = useState("");
-  const [hairColorImp, setHairColorImp] = useState(50);
+  const [hairColorImp, setHairColorImp] = useState(0);
 
   const [resultArr, setResultArr] = useState([]);
 
-  const [error, setError] = useState(0);
+  useEffect(() => {
+    const currUser = authenticationService.currentUserValue;
+    getAPI({
+      url: GET_PEOPLE,
+      params: currUser
+    })
+      .then((res) => {
+        const merged = mergeUsersConn(res.data.users, res.data.dirConnections);
+        setResultArr(merged);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
-  // Max Age handlers
-  const handleMaxAge = ({ target }) => {
-    setMaxAge(target.value);
-  };
-  const handleMaxAgeImp = ({ target }) => {
-    setMaxAgeImp(target.value);
-  };
-
-  // Weight handlers
-  const handleWeight = ({ target }) => {
-    setWeight(target.value);
-  };
-  const handleWeightImp = ({ target }) => {
-    setWeightImp(target.value);
-  };
-  // Height handlers
-  const handleHeight = ({ target }) => {
-    setHeight(target.value);
-  };
-  const handleHeightImp = ({ target }) => {
-    setHeightImp(target.value);
-  };
-
-  // Eye Color handlers
-  const handleEyeColor = ({ target }) => {
-    setEyeColor(target.value);
-  };
-  const handleEyeColorImp = ({ target }) => {
-    setEyeColorImp(target.value);
-  };
-  // Hair Color handlers
-  const handleHairColor = ({ target }) => {
-    setHairColor(target.value);
-  };
-  const handleHairColorImp = ({ target }) => {
-    setHairColorImp(target.value);
+  const mergeUsersConn = (users, connections) => {
+    const merged = users.map((user) => {
+      let newUser = { ...user, response: null };
+      if (connections.length !== 0)
+        connections.forEach((conn) => {
+          if (conn.userId === user.id) {
+            newUser.response = conn.response;
+            newUser.connectionId = conn.connectionId;
+          }
+        });
+      return newUser;
+    });
+    return merged;
   };
 
-  // const countPoints = (arr) => {
-  //   let resWithPoints = [];
-  //   resWithPoints = arr.map((el) => {
-  //     let points = 0;
-  //     if (el.age <= maxAge) points += maxAgeImp;
-  //     if (el.eye_colour === eyeColor) points += eyeColorImp;
-  //     if (el.hair_colour === hairColor) points += hairColorImp;
-  //     if (el.height <= height) points += heightImp;
-  //     if (el.weight <= weight) points += weightImp;
-  //     return { ...el, points };
-  //   });
-  //   return resWithPoints;
-  // };
+  const countPoints = (arr) => {
+    const resWithPoints = arr.filter((el) => {
+      let points = 0;
 
-  // const swap = (arr, leftIndex, rightIndex) => {
-  //   const temp = arr[leftIndex];
-  //   arr[leftIndex] = arr[rightIndex];
-  //   arr[rightIndex] = temp;
-  // };
-
-  // const partition = (arr, left, right) => {
-  //   let pivot = arr[right];
-  //   let i = left - 1;
-
-  //   for (let j = left; j <= right; j++) {
-  //     if (arr[j].points >= pivot.points) {
-  //       i++;
-  //       swap(arr, i, j);
-  //     }
-  //   }
-
-  //   swap(arr, i + 1, right);
-  //   return i + 1;
-  // };
-
-  // const quickSortPoints = (arr, p, r) => {
-  //   if (p < r) {
-  //     let q;
-  //     q = partition(arr, p, r);
-
-  //     // quickSortPoints(arr, p, q - 1);
-  //     // quickSortPoints(arr, q + 1, r);
-  //   }
-  // };
+      if (ageTo >= el.age && el.age >= ageFrom) points += ageImp;
+      if (heightTo >= el.height && el.height >= heightFrom) points += heightImp;
+      if (weightTo >= el.weight && el.weight >= el.weightFrom)
+        points += weightImp;
+      if (el.eyeColour === eyeColor) points += eyeColorImp;
+      if (el.hairColour === hairColor) points += hairColorImp;
+      el.points = points;
+      if (ageImp + heightImp + weightImp + eyeColorImp + hairColorImp < 1)
+        return el;
+      return el.points > 0;
+    });
+    return resWithPoints;
+  };
 
   const onClickSearch = (e) => {
     e.preventDefault();
+    const currUser = authenticationService.currentUserValue;
 
     getAPI({
-      url: SEARCH_URL
+      url: GET_PEOPLE,
+      params: currUser
     })
       .then((res) => {
-        //   const resWithPoints = countPoints(res.data);
+        const merged = mergeUsersConn(res.data.users, res.data.dirConnections);
 
-        //   quickSortPoints(resWithPoints, 0, resWithPoints.length - 1);
-        setResultArr(res);
+        const peopleWithPoints = countPoints(merged);
+        const sortedPeople = quickSort(peopleWithPoints, comparator);
+
+        setResultArr(sortedPeople);
       })
       .catch((err) => {
         console.error(err);
@@ -127,39 +100,62 @@ const SearchContainer = () => {
 
   return (
     <>
-      <SearchComponent
-        // max age
-        maxAge={maxAge}
-        handleMaxAge={handleMaxAge}
-        maxAgeImp={maxAgeImp}
-        handleMaxAgeImp={handleMaxAgeImp}
-        // weight
-        weight={weight}
-        weightImp={weightImp}
-        handleWeight={handleWeight}
-        handleWeightImp={handleWeightImp}
-        // height
-        height={height}
-        heightImp={heightImp}
-        handleHeight={handleHeight}
-        handleHeightImp={handleHeightImp}
-        // eye color
-        eyeColor={eyeColor}
-        eyeColorImp={eyeColorImp}
-        handleEyeColor={handleEyeColor}
-        handleEyeColorImp={handleEyeColorImp}
-        // hair color
-        hairColor={hairColor}
-        hairColorImp={hairColorImp}
-        handleHairColor={handleHairColor}
-        handleHairColorImp={handleHairColorImp}
-        // button on click
-        onClickSearch={onClickSearch}
-        // error
-        error={error}
+      <h3>Search for a match</h3>
+
+      <FilterButton
+        onClick={() => {
+          setShowFiilter((prev) => !prev);
+        }}
       />
+
+      {filterIsShown && (
+        <PeopleFilter
+          setShowFiilter={setShowFiilter}
+          // Age
+          ageFrom={ageFrom}
+          setAgeFrom={setAgeFrom}
+          ageTo={ageTo}
+          setAgeTo={setAgeTo}
+          ageImp={ageImp}
+          setAgeImp={setAgeImp}
+          // Weight
+          weightFrom={weightFrom}
+          setWeightFrom={setWeightFrom}
+          weightTo={weightTo}
+          setWeightTo={setWeightTo}
+          weightImp={weightImp}
+          setWeightImp={setWeightImp}
+          // Height
+          heightFrom={heightFrom}
+          setHeightFrom={setHeightFrom}
+          heightTo={heightTo}
+          setHeightTo={setHeightTo}
+          heightImp={heightImp}
+          setHeightImp={setHeightImp}
+          // Hair color
+          hairColor={hairColor}
+          setHairColor={setHairColor}
+          hairColorImp={hairColorImp}
+          setHairColorImp={setHairColorImp}
+          // Eye color
+          eyeColor={eyeColor}
+          setEyeColor={setEyeColor}
+          eyeColorImp={eyeColorImp}
+          setEyeColorImp={setEyeColorImp}
+          // Search
+          onClickSearch={onClickSearch}
+        />
+      )}
+      <button
+        onClick={onClickSearch}
+        style={{ margin: "0 auto", marginTop: "50px" }}
+        type="submit"
+        className="btn btn-primary btn-block"
+      >
+        Search
+      </button>
       <div className="search_result_list_wrapper">
-        <List resultArr={resultArr} />
+        <List arr={resultArr} Element={UserCard} />
       </div>
     </>
   );

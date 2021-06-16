@@ -7,9 +7,9 @@ import App from "./App";
 // import "./styles/app.css";
 // import "./styles/header.css";
 // import "./styles/font.css";
-// import "./styles/form.css";
-// import "./styles/page.css";
-// import "./styles/message.css";
+import "./styles/form.css";
+import "./styles/page.css";
+import "./styles/message.css";
 
 import { AppHOC } from "./HOC/AppHOC";
 

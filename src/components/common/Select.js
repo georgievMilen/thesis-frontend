@@ -1,5 +1,9 @@
 import React from "react";
-const Select = ({ onChange, optionsArr, name }) => {
+const Select = ({ setter, optionsArr, name, onChange }) => {
+  const defaultChange = (e) => {
+    setter(e.target.value);
+  };
+  if (!onChange) onChange = defaultChange;
   return (
     <select
       type="checkbox"

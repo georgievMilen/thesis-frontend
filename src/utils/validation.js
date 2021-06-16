@@ -34,7 +34,8 @@ const validatePost = ({
   cities,
   ageFrom,
   ageTo,
-  genders
+  genders,
+  imageName
 }) => {
   let msg = "";
 
@@ -53,6 +54,10 @@ const validatePost = ({
     if (ageTo === null) msg = "Please selecte age to!";
     if (genders.length < 1) msg = "Please selecte gender!";
   }
+  if (imageName.length < 3) {
+    msg = "Please select an image!";
+  }
+
   if (text.length < 3) {
     msg = "Text must be at least 3 characters long!";
   }

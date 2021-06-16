@@ -1,14 +1,13 @@
 import React from "react";
 import paper_plane from "../../assets/images/paper_plane.png";
 import { SLIDER_MIN, SLIDER_MAX } from "../../constants/";
-const Input = ({
-  placeholder,
-  type,
-  onChange,
-  name,
-  value,
-  checked = false
-}) => {
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+const Input = ({ placeholder, type, name, value, setter, onChange }) => {
+  const defaultChange = (e) => {
+    setter(e.target.value);
+  };
+  if (!onChange) onChange = defaultChange;
   return (
     <input
       className="form-control"
@@ -16,20 +15,50 @@ const Input = ({
       placeholder={placeholder}
       onChange={onChange}
       value={value}
-      // for type == "checkbox"
       name={name}
+    />
+  );
+};
+
+const DateInput = ({ value, onChange, setter }) => {
+  const defaultChange = (date) => {
+    console.log(typeof date + " from datepicker");
+    setter(date);
+  };
+  if (!onChange) onChange = defaultChange;
+  return (
+    <DatePicker
+      selected={value}
+      onChange={(date) => onChange(date)}
+      dateFormat="yyyy/MM/dd"
+    />
+  );
+};
+
+const CBoxInput = ({ name, checked, onChange, value }) => {
+  return (
+    <input
+      type="checkbox"
+      name={name}
+      onChange={onChange}
+      value={value}
       checked={checked}
     />
   );
 };
 
-const RangeInput = ({ value, onChange }) => {
+const RangeInput = ({ value, setter }) => {
+  const onChange = (e) => {
+    setter(parseInt(e.target.value));
+  };
+
   return (
     <input
       type="range"
       min={SLIDER_MIN}
       max={SLIDER_MAX}
       value={value}
+      valueasnumber={value}
       onChange={onChange}
     />
   );
@@ -53,14 +82,36 @@ const ChatInput = ({ message, setMessage, sendMessage }) => {
   );
 };
 
-const FileInput = React.forwardRef((props, ref) => (
-  <input
-    type="file"
-    name="file"
-    ref={ref}
-    className="form-control"
-    onChange={props.onChange}
-  />
-));
+const FileInput = ({ setSelectedImage }) => {
+  const fileSelect = (e) => {
+    e.preventDefault();
 
-export { Input, RangeInput, ChatInput, FileInput };
+    const imageFile = e.target.files[0];
+
+    if (!e.target.files[0]) {
+      alert("Please select image.");
+      e.target.value = null;
+      setSelectedImage({ name: "" });
+      return false;
+    }
+
+    if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      alert("Please select valid image.");
+      e.target.value = null;
+      setSelectedImage({ name: "" });
+      return false;
+    }
+    setSelectedImage(imageFile);
+  };
+
+  return (
+    <input
+      type="file"
+      name="file"
+      className="form-control"
+      onChange={fileSelect}
+    />
+  );
+};
+
+export { Input, RangeInput, ChatInput, FileInput, CBoxInput, DateInput };

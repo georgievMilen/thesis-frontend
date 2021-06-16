@@ -1,9 +1,8 @@
 export const ENDPOINT = "http://localhost:4000";
 export const REG_URL = "/api/v1/register";
 export const LOGIN_URL = "/api/v1/login";
-export const SEARCH_URL = "/api/v1/search/";
+export const GET_PEOPLE = "/api/v1/search/getPeople";
 export const UPDATE_PROFILE_URL = "/api/v1/profile/updateProfile";
-export const UPDATE_PROF_IMG_URL = "/api/v1/profile/updateImage";
 
 export const GET_PROFILE_INFO = "/api/v1/profile/getProfileInfo";
 export const SLIDER_MAX = 100;
@@ -13,10 +12,15 @@ export const CREATE_POSTER = "/api/v1/poster/createPoster";
 export const GET_ALL_POSTERS = "/api/v1/poster/getAllPosters";
 export const GET_MY_POSTERS = "/api/v1/poster/getMyPosters";
 export const DELETE_POSTER = "/api/v1/poster/deletePoster";
-export const CONNECTION_REQUEST = "/api/v1/connections/sendConnectionRequest";
+// REQUESTS
+export const GET_REQUESTS = "/api/v1/requests/getRequests";
+export const UPDATE_DIR_REQ = "/api/v1/requests/updateDirRequest";
+export const UPDATE_POST_REQ = "/api/v1/requests/updatePostRequest";
+export const DIR_CONNECTION_REQUEST = "/api/v1/requests/sendDirConnReq";
+export const CONNECTION_REQUEST = "/api/v1/requests/sendConnectionRequest";
+// CONNECTIONS
 export const GET_CONNECTIONS = "/api/v1/connections/getConnections";
-export const UPDATE_REQUEST = "/api/v1/connections/updateConnection";
-
+export const GET_PEOPLE_DIR_CONN = "/api/v1/search/getPeopleDirConns";
 // Arrays
 export const GENDERS = ["Male", "Female", "Other"];
 export const EYE_COLORS = ["Amber", "Blue", "Brown", "Grey", "Green", "Hazel"];
@@ -56,9 +60,10 @@ export const POST_INITIAL_STATE = Object.freeze({
     title: "",
     text: "",
     type: "",
-    image: "",
-    ageFrom: null,
-    ageTo: null,
+    imageName: "",
+    selectedImage: null,
+    ageFrom: "",
+    ageTo: "",
     genders: [],
     country: "",
     cities: []
@@ -80,3 +85,4 @@ export const WEIGHT = "Weight";
 export const HEIGHT = "Height";
 export const EYE_COLOR = "Eye Color";
 export const HAIR_COLOR = "Hair Color";
+export const ABOUT = "About";

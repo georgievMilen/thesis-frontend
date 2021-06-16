@@ -6,6 +6,7 @@ import {
   ChatPage,
   CreatePostPage,
   MyPostsPage,
+  RequestsPage,
   ConnectionsPage
 } from "../Pages";
 
@@ -46,6 +47,13 @@ export const ROUTES = [
     component: CreatePostPage
   },
   {
+    path: "/requests",
+    key: "REQUESTS",
+    exact: true,
+    private: true,
+    component: RequestsPage
+  },
+  {
     path: "/connections",
     key: "CONNECTIONS",
     exact: true,
@@ -65,4 +73,11 @@ export const ROUTES = [
     private: true,
     component: LogoutPage
   }
+  // {
+  //   path: "/",
+  //   key: "",
+  //   exact: true,
+  //   private: true,
+  //   component:
+  // },
 ];

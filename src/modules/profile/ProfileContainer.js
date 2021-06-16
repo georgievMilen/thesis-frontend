@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import moment from "moment";
 import { authenticationService } from "../../utils";
 import { ProfileComponent } from "./components/ProfileComponent";
-import {
-  GET_PROFILE_INFO,
-  UPDATE_PROFILE_URL,
-  UPDATE_PROF_IMG_URL
-} from "../../constants";
+import { GET_PROFILE_INFO, UPDATE_PROFILE_URL } from "../../constants";
 import { getAPI, postAPI } from "../services";
 import { Redirect } from "react-router-dom";
 import { Context } from "../../HOC/AppHOC";
-import { CPagination } from "@coreui/react";
 
 const ProfileContainer = () => {
   const [state, dispatch] = useContext(Context);
@@ -22,14 +18,17 @@ const ProfileContainer = () => {
   // Image
   const [imageName, setImageName] = useState("");
   // File
-  const fileRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [birthDate, setBirthDate] = useState("");
   // Email state
   const [email, setEmail] = useState("");
   const [emailIsEditable, setEmailIsEditable] = useState(false);
   // Username state
   const [username, setUsername] = useState("");
   const [usernameIsEditable, setUsernameIsEditable] = useState(false);
+  // About state
+  const [about, setAbout] = useState("");
+  const [aboutIsEditable, setAboutIsEditable] = useState(false);
   // Password state
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -56,30 +55,22 @@ const ProfileContainer = () => {
   const [hairColorIsEditable, setHairColorIsEditable] = useState(false);
   const [response, setResponse] = useState({});
 
-  const handleProfileInfo = ({
-    first_name,
-    last_name,
-    username: resUsername,
-    email: resEmail,
-    age: resAge,
-    gender: resGender,
-    eye_colour,
-    hair_colour,
-    weight: resWeight,
-    height: resHeight,
-    image
-  }) => {
-    setFirstName(first_name);
-    setLastName(last_name);
-    setEmail(resEmail);
-    setUsername(resUsername);
-    resAge ? setAge(resAge) : setAge("");
-    image ? setImageName(image) : setImageName("");
-    setGender(resGender);
-    setEyeColor(eye_colour);
-    setHairColor(hair_colour);
-    resHeight ? setHeight(resHeight) : setHeight("");
-    resWeight ? setWeight(resWeight) : setWeight("");
+  const handleProfileInfo = (props) => {
+    setFirstName(props.firstName);
+    setLastName(props.lastName);
+    // const date = moment(props.birthDate).format("YYYY-MM-DD").parseISO();
+
+    setBirthDate(new Date(props.birthDate));
+    setEmail(props.email);
+    setUsername(props.username);
+    props.about ? setAbout(props.about) : setAbout("");
+    props.age ? setAge(props.age) : setAge("");
+    props.userImage ? setImageName(props.userImage) : setImageName("");
+    setGender(props.gender);
+    setEyeColor(props.eyeColour);
+    setHairColor(props.hairColour);
+    props.height ? setHeight(props.height) : setHeight("");
+    props.weight ? setWeight(props.weight) : setWeight("");
   };
 
   useEffect(() => {
@@ -155,6 +146,21 @@ const ProfileContainer = () => {
   const handleUsernameEditCancel = (e) => {
     e.preventDefault();
     setUsernameIsEditable(false);
+  };
+
+  // About handlers
+  const handleAboutEditBtn = (e) => {
+    e.preventDefault();
+    setAboutIsEditable(true);
+  };
+  const handleAboutEditSave = ({ e, newValue }) => {
+    e.preventDefault();
+    setAbout(newValue);
+    setAboutIsEditable(false);
+  };
+  const handleAboutEditCancel = (e) => {
+    e.preventDefault();
+    setAboutIsEditable(false);
   };
   // Password handlers
   const handlePasswordEditBtn = (e) => {
@@ -279,39 +285,17 @@ const ProfileContainer = () => {
     setHairColorIsEditable(false);
   };
 
-  // File handler
-
-  const fileSelect = (e) => {
-    e.preventDefault();
-
-    const imageFile = fileRef.current.files[0];
-    const localStorageEmail = authenticationService.currentUserValue;
-
-    if (!fileRef.current.files[0]) {
-      alert("Please select image.");
-      e.target.value = null;
-      return false;
-    }
-
-    if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-      alert("Please select valid image.");
-      e.target.value = null;
-      return false;
-    }
-    setSelectedImage(imageFile);
-  };
-  // Add gender handlers
-
   // Save Btn
   const saveProfileInfo = (e) => {
     e.preventDefault();
     const localStorageEmail = authenticationService.currentUserValue;
-
+    const date = moment(birthDate).format("YYYY-MM-DD");
     const data = new FormData();
     data.append("file", selectedImage);
     data.append("email", localStorageEmail);
     data.append("firstName", firstName);
     data.append("lastName", lastName);
+    data.append("birthDate", date);
     data.append("username", username);
     data.append("age", age);
     data.append("gender", gender);
@@ -320,19 +304,8 @@ const ProfileContainer = () => {
     data.append("eyeColor", eyeColor);
     data.append("hairColor", hairColor);
     data.append("imageName", imageName);
+    data.append("about", about);
 
-    // const data = {
-    //   email: localStorageEmail,
-    //   firstName,
-    //   lastName,
-    //   username,
-    //   age,
-    //   gender,
-    //   weight,
-    //   height,
-    //   eyeColor,
-    //   hairColor
-    // };
     postAPI({
       url: UPDATE_PROFILE_URL,
       data: data
@@ -368,9 +341,11 @@ const ProfileContainer = () => {
         handleLastNameEditSave={handleLastNameEditSave}
         handleLastNameEditCancel={handleLastNameEditCancel}
         // file
-        fileRef={fileRef}
-        fileSelect={fileSelect}
+        setSelectedImage={setSelectedImage}
         imageName={imageName}
+        // birth date
+        birthDate={birthDate}
+        setBirthDate={setBirthDate}
         // email
         email={email}
         emailIsEditable={emailIsEditable}
@@ -383,6 +358,12 @@ const ProfileContainer = () => {
         handleUsernameEditBtn={handleUsernameEditBtn}
         handleUsernameEditSave={handleUsernameEditSave}
         handleUsernameEditCancel={handleUsernameEditCancel}
+        // about
+        about={about}
+        aboutIsEditable={aboutIsEditable}
+        handleAboutEditBtn={handleAboutEditBtn}
+        handleAboutEditSave={handleAboutEditSave}
+        handleAboutEditCancel={handleAboutEditCancel}
         // password
         password={password}
         newPassword={newPassword}

@@ -12,7 +12,14 @@ import {
   LogoutButton,
   FilterButton
 } from "./Buttons";
-import { Input, RangeInput, ChatInput, FileInput } from "./Input";
+import {
+  Input,
+  RangeInput,
+  ChatInput,
+  FileInput,
+  CBoxInput,
+  DateInput
+} from "./Input";
 import { DoubleLabel } from "./DoubleLabel";
 import { Paragraph } from "./Paragraph";
 import { Image } from "./Image";
@@ -32,8 +39,10 @@ export {
   ChatButton,
   LogoutButton,
   Input,
+  CBoxInput,
   Image,
   RangeInput,
+  DateInput,
   ChatInput,
   FileInput,
   Label,

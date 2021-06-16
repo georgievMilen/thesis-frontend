@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Header } from "../components/common";
+import { Footer } from "../components/common";
 import { RenderRoutes } from "../routes/helpers/renderRoutes";
 import { Sidebar } from "./Sidebar";
 const Layout = ({ routes }) => {

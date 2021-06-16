@@ -5,6 +5,10 @@ const Label = (props) => {
 };
 
 const ImportanceLabel = (props) => {
-  return <label style={{ textAlign: "end" }}>{props.children}%</label>;
+  return (
+    <label htmlFor={props.for} style={{ textAlign: "end" }}>
+      {props.children}%
+    </label>
+  );
 };
 export { Label, ImportanceLabel };

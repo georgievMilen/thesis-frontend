@@ -1,6 +1,3 @@
-import React from "react";
-import CIcon from "@coreui/icons-react";
-
 const _nav = [
   {
     _tag: "CSidebarNavDropdown",
@@ -31,6 +28,11 @@ const _nav = [
         _tag: "CSidebarNavItem",
         name: "Create post",
         to: "/create-post"
+      },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Requests",
+        to: "/requests"
       },
       {
         _tag: "CSidebarNavItem",

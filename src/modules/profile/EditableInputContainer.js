@@ -3,7 +3,8 @@ import {
   CancelButton,
   SaveButton,
   Input,
-  Label
+  Label,
+  Textarea
 } from "../../components/common";
 
 function EditableInputContainer({
@@ -48,6 +49,9 @@ function EditableInputContainer({
     <>
       {(type === "text" || type === "number") && (
         <Input type={type} onChange={handleInput} value={newValue} />
+      )}
+      {type === "textarea" && (
+        <Textarea onChange={handleInput} value={newValue} />
       )}
       {type === "checkbox" &&
         initialValue.map((value, i) => {

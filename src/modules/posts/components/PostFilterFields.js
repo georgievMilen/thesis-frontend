@@ -1,7 +1,12 @@
 import React from "react";
-import { Label, Select, Input } from "../../../components/common";
+import { Label, Select, Input, CBoxInput } from "../../../components/common";
 import { POST_TYPES, GENDERS, COUNTRIES } from "../../../constants";
-const PostsMainFields = ({ handleState, postInfo, handleArrState, cities }) => {
+const PostFilterFields = ({
+  handleState,
+  postInfo,
+  handleArrState,
+  cities
+}) => {
   return (
     <>
       <div className="search_info_holder">
@@ -16,10 +21,20 @@ const PostsMainFields = ({ handleState, postInfo, handleArrState, cities }) => {
         }}
       >
         <Label>Age from:</Label>
-        <Input name="ageFrom" onChange={handleState} type="number" />
+        <Input
+          name="ageFrom"
+          onChange={handleState}
+          type="number"
+          value={postInfo.data.ageFrom}
+        />
 
         <Label>Age to:</Label>
-        <Input name="ageTo" onChange={handleState} type="number" />
+        <Input
+          name="ageTo"
+          onChange={handleState}
+          type="number"
+          value={postInfo.data.ageTo}
+        />
         <Label>
           Gender:
           {GENDERS.map((gender, index) => {
@@ -27,8 +42,7 @@ const PostsMainFields = ({ handleState, postInfo, handleArrState, cities }) => {
               <div className="genders_checkbox" key={index}>
                 <Label>
                   {gender}
-                  <Input
-                    type="checkbox"
+                  <CBoxInput
                     onChange={handleArrState}
                     name="genders"
                     value={gender}
@@ -49,8 +63,7 @@ const PostsMainFields = ({ handleState, postInfo, handleArrState, cities }) => {
             <div className="cities_checkbox" key={index}>
               <Label>
                 {city}:
-                <Input
-                  type="checkbox"
+                <CBoxInput
                   onChange={handleArrState}
                   name="cities"
                   value={city}
@@ -65,4 +78,4 @@ const PostsMainFields = ({ handleState, postInfo, handleArrState, cities }) => {
   );
 };
 
-export { PostsMainFields };
+export { PostFilterFields };

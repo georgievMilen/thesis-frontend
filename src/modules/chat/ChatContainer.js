@@ -23,13 +23,15 @@ const ChatContainer = ({ location: { state, search } }) => {
 
     socket.current.emit("join", { name, room }, ({ error, mssgs }) => {
       if (error) alert(error);
+
       setMessages(mssgs);
     });
-  }, [ENDPOINT, search]);
+  }, [search]);
 
   socket.current.on("loadMessages", (mssgs) => setMessages(mssgs));
   useEffect(() => {
     socket.current.on("message", (mssg) => {
+      console.log(mssg);
       setMessages((msgs) => [...msgs, mssg]);
     });
 

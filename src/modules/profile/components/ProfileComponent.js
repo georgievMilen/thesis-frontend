@@ -14,7 +14,7 @@ import {
   HEIGHT,
   EYE_COLOR,
   HAIR_COLOR,
-  ENDPOINT
+  ABOUT
 } from "../../../constants";
 import { EditableInputContainer } from "../EditableInputContainer";
 import { EditableSelectContainer } from "../EditableSelectContainer";
@@ -28,7 +28,8 @@ import {
   Success,
   Error,
   FileInput,
-  Image
+  Image,
+  DateInput
 } from "../../../components/common";
 import { isEmptyObj } from "../../../utils";
 
@@ -46,9 +47,11 @@ const ProfileComponent = ({
   handleLastNameEditSave,
   handleLastNameEditCancel,
   // file
-  fileRef,
-  fileSelect,
+  setSelectedImage,
   imageName,
+  // birth date
+  birthDate,
+  setBirthDate,
   // email
   email,
   emailIsEditable,
@@ -61,6 +64,12 @@ const ProfileComponent = ({
   handleUsernameEditBtn,
   handleUsernameEditSave,
   handleUsernameEditCancel,
+  // username
+  about,
+  aboutIsEditable,
+  handleAboutEditBtn,
+  handleAboutEditSave,
+  handleAboutEditCancel,
   // password
   passwordIsEditable,
   handlePasswordEditBtn,
@@ -155,13 +164,14 @@ const ProfileComponent = ({
           )}
         </div>
         {/* Image */}
-        {imageName && <Image src={`${ENDPOINT}/${imageName}`} />}
+        {imageName && <Image src={imageName} />}
         <div className="form-group">
           <div className="profile_info_holder">
-            <FileInput ref={fileRef} onChange={fileSelect} />
+            <FileInput setSelectedImage={setSelectedImage} />
           </div>
         </div>
-
+        {/* Date */}
+        <DateInput value={birthDate} setter={setBirthDate} />
         {/* Email */}
         <div className="form-group">
           {!emailIsEditable ? (
@@ -198,6 +208,27 @@ const ProfileComponent = ({
                 initialValue={username}
                 onSave={handleUsernameEditSave}
                 onCancel={handleUsernameEditCancel}
+              />
+            </span>
+          )}
+        </div>
+        {/* About */}
+        <div className="form-group">
+          {!aboutIsEditable ? (
+            <div className="profile_info_holder">
+              <DoubleLabel first={ABOUT} second={about} />
+
+              <EditButton onClick={handleAboutEditBtn} />
+            </div>
+          ) : (
+            <span className="profile_edit_wrapper">
+              <DoubleLabel first={ABOUT} second={about} />
+
+              <EditableInputContainer
+                initialValue={about}
+                type="textarea"
+                onSave={handleAboutEditSave}
+                onCancel={handleAboutEditCancel}
               />
             </span>
           )}
