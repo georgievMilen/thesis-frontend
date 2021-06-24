@@ -81,7 +81,9 @@ const PostsContainer = ({
           </form>
         </div>
       )}
-      <List arr={filtered} Element={Post} {...other} />
+      <div className="search_result_list_wrapper">
+        <List arr={filtered} Element={Post} {...other} />
+      </div>
     </>
   );
 };

@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { DIR_CONNECTION_REQUEST } from "../../constants";
-import { Label, Image, Paragraph, SubmitButton, ChatButton } from "../common";
+import {
+  Label,
+  Image,
+  Paragraph,
+  SubmitButton,
+  ChatButton,
+  ROTextArea
+} from "../common";
 import { Redirect } from "react-router-dom";
 
 import { authenticationService } from "../../utils";
@@ -29,23 +36,28 @@ const UserCard = (props) => {
   };
   return (
     <div className="user_card">
-      <div>
+      <div className="post-text-fields">
         <Label>
           {props.firstName} {props.lastName}
         </Label>
         <Image src={props.userImage}></Image>
-        <Paragraph>{props.about}</Paragraph>
-        <Label>Gender: {props.gender}</Label>
+
+        <Label>Gender: {props.gender ? props.gender : " N/A"}</Label>
         <Label>Age: {props.age}</Label>
-        <Paragraph>About: {props.about}</Paragraph>
-        <Label>Height: {props.height}</Label>
-        <Label>Weight: {props.weight}</Label>
-        <Label>Eye color: {props.eyeColour} </Label>
-        <Label>Hair color:{props.hairColour}</Label>
+        <Label>
+          About:
+          <ROTextArea defaultValue={props.about ? props.about : " N/A"} />
+        </Label>
+        <Label>Height: {props.height ? props.height : " N/A"}</Label>
+        <Label>Weight: {props.weight ? props.weight : " N/A"}</Label>
+        <Label>Eye color: {props.eyeColour ? props.eyeColour : " N/A"} </Label>
+        <Label>Hair color:{props.hairColour ? props.hairColour : " N/A"}</Label>
       </div>
 
       {props.response === null && (
-        <SubmitButton onClick={sendRequest}>Send Request</SubmitButton>
+        <SubmitButton onClick={sendRequest} type="primary">
+          Send Request
+        </SubmitButton>
       )}
       {props.response === -1 && <Paragraph>Pending</Paragraph>}
 

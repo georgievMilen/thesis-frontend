@@ -1,7 +1,12 @@
 import React from "react";
-
+import { Typography } from "antd";
+const { Text } = Typography;
 const Label = (props) => {
-  return <label>{props.children}</label>;
+  return (
+    <Text strong style={{ display: "block" }}>
+      {props.children}
+    </Text>
+  );
 };
 
 const ImportanceLabel = (props) => {

@@ -12,4 +12,10 @@ const Textarea = ({ value, onChange }) => {
     ></textarea>
   );
 };
-export { Textarea };
+
+const ROTextArea = ({ defaultValue }) => {
+  return (
+    <textarea className="ro-textarea" readOnly defaultValue={defaultValue} />
+  );
+};
+export { Textarea, ROTextArea };

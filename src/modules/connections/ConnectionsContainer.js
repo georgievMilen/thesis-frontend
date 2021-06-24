@@ -39,8 +39,14 @@ const ConnectionsContainer = () => {
   return (
     <>
       <Label>Connections: </Label>
-      <List arr={[...dirConnArr]} Element={DirConn} handleChat={handleChat} />
-      <List arr={[...postConnArr]} Element={PostConn} handleChat={handleChat} />
+      <div className="search_result_list_wrapper">
+        <List arr={[...dirConnArr]} Element={DirConn} handleChat={handleChat} />
+        <List
+          arr={[...postConnArr]}
+          Element={PostConn}
+          handleChat={handleChat}
+        />
+      </div>
       {chat.name !== undefined && chat.roomID !== undefined && (
         <Redirect
           to={{

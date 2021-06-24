@@ -100,60 +100,68 @@ const SearchContainer = () => {
 
   return (
     <>
-      <h3>Search for a match</h3>
-
-      <FilterButton
-        onClick={() => {
-          setShowFiilter((prev) => !prev);
+      <div
+        style={{
+          boxShadow: "5px 5px 20px silver",
+          padding: "50px",
+          margin: "25px"
         }}
-      />
-
-      {filterIsShown && (
-        <PeopleFilter
-          setShowFiilter={setShowFiilter}
-          // Age
-          ageFrom={ageFrom}
-          setAgeFrom={setAgeFrom}
-          ageTo={ageTo}
-          setAgeTo={setAgeTo}
-          ageImp={ageImp}
-          setAgeImp={setAgeImp}
-          // Weight
-          weightFrom={weightFrom}
-          setWeightFrom={setWeightFrom}
-          weightTo={weightTo}
-          setWeightTo={setWeightTo}
-          weightImp={weightImp}
-          setWeightImp={setWeightImp}
-          // Height
-          heightFrom={heightFrom}
-          setHeightFrom={setHeightFrom}
-          heightTo={heightTo}
-          setHeightTo={setHeightTo}
-          heightImp={heightImp}
-          setHeightImp={setHeightImp}
-          // Hair color
-          hairColor={hairColor}
-          setHairColor={setHairColor}
-          hairColorImp={hairColorImp}
-          setHairColorImp={setHairColorImp}
-          // Eye color
-          eyeColor={eyeColor}
-          setEyeColor={setEyeColor}
-          eyeColorImp={eyeColorImp}
-          setEyeColorImp={setEyeColorImp}
-          // Search
-          onClickSearch={onClickSearch}
-        />
-      )}
-      <button
-        onClick={onClickSearch}
-        style={{ margin: "0 auto", marginTop: "50px" }}
-        type="submit"
-        className="btn btn-primary btn-block"
       >
-        Search
-      </button>
+        <h3>Search for a match</h3>
+
+        <FilterButton
+          onClick={() => {
+            setShowFiilter((prev) => !prev);
+          }}
+        />
+
+        {filterIsShown && (
+          <PeopleFilter
+            setShowFiilter={setShowFiilter}
+            // Age
+            ageFrom={ageFrom}
+            setAgeFrom={setAgeFrom}
+            ageTo={ageTo}
+            setAgeTo={setAgeTo}
+            ageImp={ageImp}
+            setAgeImp={setAgeImp}
+            // Weight
+            weightFrom={weightFrom}
+            setWeightFrom={setWeightFrom}
+            weightTo={weightTo}
+            setWeightTo={setWeightTo}
+            weightImp={weightImp}
+            setWeightImp={setWeightImp}
+            // Height
+            heightFrom={heightFrom}
+            setHeightFrom={setHeightFrom}
+            heightTo={heightTo}
+            setHeightTo={setHeightTo}
+            heightImp={heightImp}
+            setHeightImp={setHeightImp}
+            // Hair color
+            hairColor={hairColor}
+            setHairColor={setHairColor}
+            hairColorImp={hairColorImp}
+            setHairColorImp={setHairColorImp}
+            // Eye color
+            eyeColor={eyeColor}
+            setEyeColor={setEyeColor}
+            eyeColorImp={eyeColorImp}
+            setEyeColorImp={setEyeColorImp}
+            // Search
+            onClickSearch={onClickSearch}
+          />
+        )}
+        <button
+          onClick={onClickSearch}
+          style={{ margin: "0 auto", marginTop: "50px" }}
+          type="submit"
+          className="btn btn-primary btn-block"
+        >
+          Search
+        </button>
+      </div>
       <div className="search_result_list_wrapper">
         <List arr={resultArr} Element={UserCard} />
       </div>

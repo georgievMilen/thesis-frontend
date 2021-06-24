@@ -1,7 +1,7 @@
 import { Header } from "./Header";
 import { Select } from "./Select";
 import { Label, ImportanceLabel } from "./Label";
-import { Textarea } from "./Textarea";
+import { Textarea, ROTextArea } from "./Textarea";
 import { Success } from "./Success";
 import {
   EditButton,
@@ -48,6 +48,7 @@ export {
   Label,
   List,
   Paragraph,
+  ROTextArea,
   ImportanceLabel,
   DoubleLabel,
   Error,

@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import { ROUTES } from "./routes/routes";
 
 import "./scss/style.scss";
+import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 
 import { LoginPage, SignupPage, NotFoundPage } from "./Pages";
 

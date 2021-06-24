@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "antd";
 
 const CancelButton = ({ onClick, children = "Cancel" }) => {
   return (
@@ -25,19 +26,40 @@ const SaveButton = ({ onClick, children = "Save" }) => {
 
 const FilterButton = ({ onClick }) => {
   return (
-    <button className="btn btn-primary " onClick={onClick}>
+    <Button
+      type="primary"
+      style={{
+        backgroundColor: "#337ab7",
+        color: "#fff"
+      }}
+      onClick={onClick}
+    >
       Filter
-    </button>
+    </Button>
+    // <button
+    //   className="btn btn-primary "
+    //   onClick={onClick}
+    //   style={{
+    //     width: "100%"
+    //   }}
+    // >
+    //   Filter
+    // </button>
   );
 };
 
-const SubmitButton = ({ onClick, children = "Save", disabled }) => {
+const SubmitButton = ({
+  onClick,
+  children = "Save",
+  disabled,
+  type = "btn-block"
+}) => {
   return (
     <button
       disabled={disabled}
       style={{ margin: "0 auto", marginTop: "50px" }}
       type="submit"
-      className="btn btn-primary btn-block"
+      className={`btn btn-primary ${type}`}
       onClick={onClick}
     >
       {children}

@@ -42,7 +42,12 @@ const PeopleFilter = ({
   setEyeColorImp
 }) => {
   return (
-    <div className="form_wrapper">
+    <div
+      className="form_wrapper"
+      style={{
+        boxShadow: "5px 5px 20px silver"
+      }}
+    >
       <form>
         <div className="h_holder">
           <h4>Importance</h4>
