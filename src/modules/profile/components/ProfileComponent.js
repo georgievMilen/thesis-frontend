@@ -29,7 +29,8 @@ import {
   Error,
   FileInput,
   Image,
-  DateInput
+  DateInput,
+  Label
 } from "../../../components/common";
 import { isEmptyObj } from "../../../utils";
 
@@ -122,56 +123,66 @@ const ProfileComponent = ({
   return (
     <div className="form_wrapper">
       <form>
-        <h3>Profile</h3>
-        {/* First Name */}
-        <div className="form-group">
-          {!firstNameIsEditable ? (
-            <div className="profile_info_holder">
-              <DoubleLabel first={FIRST_NAME} second={firstName} />
-
-              <EditButton onClick={handleFirstNameEditBtn} />
+        <h3 className="profile_h3">Profile</h3>
+        <div className="profile_sec_1">
+          <div className="profile_image">
+            {/* Image */}
+            {imageName && <Image src={imageName} />}
+            <div className="form-group">
+              <div className="profile_info_holder">
+                <FileInput setSelectedImage={setSelectedImage} />
+              </div>
             </div>
-          ) : (
-            <span className="profile_edit_wrapper">
-              <DoubleLabel first={FIRST_NAME} second={firstName} />
+          </div>
+          <div className="profile_sec_1.1">
+            {/* First Name */}
+            <div className="form-group">
+              {!firstNameIsEditable ? (
+                <div className="profile_info_holder">
+                  <DoubleLabel first={FIRST_NAME} second={firstName} />
 
-              <EditableInputContainer
-                initialValue={firstName}
-                onSave={handleFirstNameEditSave}
-                onCancel={handleFirstNameEditCancel}
-              />
-            </span>
-          )}
-        </div>
-        {/* Last Name */}
-        <div className="form-group">
-          {!lastNameIsEditable ? (
-            <div className="profile_info_holder">
-              <DoubleLabel first={LAST_NAME} second={lastName} />
+                  <EditButton onClick={handleFirstNameEditBtn} />
+                </div>
+              ) : (
+                <div className="profile_edit_wrapper ">
+                  <DoubleLabel first={FIRST_NAME} second={firstName} />
 
-              <EditButton onClick={handleLastNameEditBtn} />
+                  <EditableInputContainer
+                    initialValue={firstName}
+                    onSave={handleFirstNameEditSave}
+                    onCancel={handleFirstNameEditCancel}
+                  />
+                </div>
+              )}
             </div>
-          ) : (
-            <span className="profile_edit_wrapper">
-              <DoubleLabel first={LAST_NAME} second={lastName} />
+            {/* Last Name */}
+            <div className="form-group">
+              {!lastNameIsEditable ? (
+                <div className="profile_info_holder">
+                  <DoubleLabel first={LAST_NAME} second={lastName} />
 
-              <EditableInputContainer
-                initialValue={lastName}
-                onSave={handleLastNameEditSave}
-                onCancel={handleLastNameEditCancel}
-              />
-            </span>
-          )}
-        </div>
-        {/* Image */}
-        {imageName && <Image src={imageName} />}
-        <div className="form-group">
-          <div className="profile_info_holder">
-            <FileInput setSelectedImage={setSelectedImage} />
+                  <EditButton onClick={handleLastNameEditBtn} />
+                </div>
+              ) : (
+                <span className="profile_edit_wrapper">
+                  <DoubleLabel first={LAST_NAME} second={lastName} />
+
+                  <EditableInputContainer
+                    initialValue={lastName}
+                    onSave={handleLastNameEditSave}
+                    onCancel={handleLastNameEditCancel}
+                  />
+                </span>
+              )}
+            </div>
           </div>
         </div>
+
         {/* Date */}
-        <DateInput value={birthDate} setter={setBirthDate} />
+        <Label>
+          Date of birth:
+          <DateInput value={birthDate} setter={setBirthDate} />
+        </Label>
         {/* Email */}
         <div className="form-group">
           {!emailIsEditable ? (

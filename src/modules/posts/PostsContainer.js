@@ -67,18 +67,16 @@ const PostsContainer = ({
       <FilterButton onClick={showFilter} />
       {filterIsVisible && (
         <div className="form_wrapper">
-          <form>
-            <div className="h_holder">
-              <h3>Filter posts</h3>
-            </div>
-            <PostFilterFields
-              postInfo={postInfo}
-              handleState={handleState}
-              handleArrState={handleArrState}
-              cities={cities}
-            />
-            <SubmitButton onClick={filterPosts}>Apply filter</SubmitButton>
-          </form>
+          <div className="h_holder">
+            <h3>Filter posts</h3>
+          </div>
+          <PostFilterFields
+            postInfo={postInfo}
+            handleState={handleState}
+            handleArrState={handleArrState}
+            cities={cities}
+          />
+          <SubmitButton onClick={filterPosts}>Apply filter</SubmitButton>
         </div>
       )}
       <div className="search_result_list_wrapper">

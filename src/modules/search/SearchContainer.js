@@ -153,14 +153,6 @@ const SearchContainer = () => {
             onClickSearch={onClickSearch}
           />
         )}
-        <button
-          onClick={onClickSearch}
-          style={{ margin: "0 auto", marginTop: "50px" }}
-          type="submit"
-          className="btn btn-primary btn-block"
-        >
-          Search
-        </button>
       </div>
       <div className="search_result_list_wrapper">
         <List arr={resultArr} Element={UserCard} />

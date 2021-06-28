@@ -1,13 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  Label,
-  Image,
-  Paragraph,
-  ROTextArea,
-  SubmitButton,
-  Error,
-  Textarea
-} from "../common";
+import { Label, Image, ROTextArea, SubmitButton, Error } from "../common";
 import { authenticationService } from "../../utils";
 import { postAPI, deleteAPI } from "../../modules/services";
 import { CONNECTION_REQUEST, DELETE_POSTER } from "../../constants";

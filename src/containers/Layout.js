@@ -14,7 +14,7 @@ const styles = {
 
 const Layout = ({ routes }) => {
   return (
-    <AntdLayout style={{ height: "100vh" }}>
+    <AntdLayout style={{ minHeight: "100vh" }}>
       <Sider style={styles.sider}>
         <Sidebar />
       </Sider>

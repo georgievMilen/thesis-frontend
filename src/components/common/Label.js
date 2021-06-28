@@ -3,9 +3,11 @@ import { Typography } from "antd";
 const { Text } = Typography;
 const Label = (props) => {
   return (
-    <Text strong style={{ display: "block" }}>
-      {props.children}
-    </Text>
+    <div>
+      <Text strong style={{ display: "block" }}>
+        {props.children}
+      </Text>
+    </div>
   );
 };
 

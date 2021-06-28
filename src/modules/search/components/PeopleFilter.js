@@ -4,7 +4,9 @@ import {
   RangeInput,
   ImportanceLabel,
   Input,
-  Label
+  Label,
+  SubmitButton,
+  H4
 } from "../../../components/common";
 import { EYE_COLORS, HAIR_COLORS } from "../../../constants/index";
 
@@ -39,51 +41,53 @@ const PeopleFilter = ({
   eyeColor,
   setEyeColor,
   eyeColorImp,
-  setEyeColorImp
+  setEyeColorImp,
+  // Search
+  onClickSearch
 }) => {
   return (
-    <div
-      className="form_wrapper"
-      style={{
-        boxShadow: "5px 5px 20px silver"
-      }}
-    >
-      <form>
-        <div className="h_holder">
-          <h4>Importance</h4>
-        </div>
-        {/* Age */}
-        <div className="form-group">
-          <div className="search_info_holder">
-            <div className="search_label_holder">
-              <h5>Age</h5>
-              <Label>From </Label>
+    <div className="people_filter_wrapper">
+      <div className="h_holder">
+        <H4>Property</H4>
+        <H4> Importance</H4>
+      </div>
+      {/* Age */}
+      <div className="form-group">
+        <div className="search_info_holder">
+          <div className="search_label_holder">
+            <div className="s_label_1">
+              <Label>Age From </Label>
               <Input
                 type="number"
                 value={ageFrom}
                 name="ageFrom"
                 setter={setAgeFrom}
               />
-              <Label> years old.</Label>
-              <Label>To </Label>
+              <Label> yo.</Label>
+            </div>
+            <div className="s_label_2">
+              <Label>Age To </Label>
               <Input
                 type="number"
                 value={ageTo}
                 name="ageTo"
                 setter={setAgeTo}
               />
-              <Label> years old.</Label>
+              <Label> yo.</Label>
             </div>
+          </div>
+          <div>
             <ImportanceLabel>{ageImp}</ImportanceLabel>
             <RangeInput value={ageImp} name="ageImp" setter={setAgeImp} />
           </div>
         </div>
-        {/* Weight */}
-        <div className="form-group">
-          <div className="search_info_holder">
-            <div className="search_label_holder">
-              <h5>Weight</h5>
-              <Label>From</Label>
+      </div>
+      {/* Weight */}
+      <div className="form-group">
+        <div className="search_info_holder">
+          <div className="search_label_holder">
+            <div className="s_label_1">
+              <Label>Weight From</Label>
               <Input
                 type="number"
                 value={weightFrom}
@@ -91,7 +95,9 @@ const PeopleFilter = ({
                 setter={setWeightFrom}
               />
               <Label> kg.</Label>
-              <Label>To</Label>
+            </div>
+            <div className="s_label_2">
+              <Label>Weight To</Label>
               <Input
                 type="number"
                 value={weightTo}
@@ -100,6 +106,8 @@ const PeopleFilter = ({
               />
               <Label> kg.</Label>
             </div>
+          </div>
+          <div>
             <ImportanceLabel>{weightImp}</ImportanceLabel>
             <RangeInput
               value={weightImp}
@@ -108,13 +116,14 @@ const PeopleFilter = ({
             />
           </div>
         </div>
+      </div>
 
-        {/* Height */}
-        <div className="form-group">
-          <div className="search_info_holder">
-            <div className="search_label_holder">
-              <h5>Height</h5>
-              <Label>From</Label>
+      {/* Height */}
+      <div className="form-group">
+        <div className="search_info_holder">
+          <div className="search_label_holder">
+            <div className="s_label_1">
+              <Label>Height From</Label>
               <Input
                 type="number"
                 value={heightFrom}
@@ -122,7 +131,9 @@ const PeopleFilter = ({
                 setter={setHeightFrom}
               />
               <Label> cm.</Label>
-              <Label>To</Label>
+            </div>
+            <div className="s_label_2">
+              <Label>Height To </Label>
               <Input
                 type="number"
                 value={heightTo}
@@ -131,6 +142,8 @@ const PeopleFilter = ({
               />
               <Label> cm.</Label>
             </div>
+          </div>
+          <div>
             <ImportanceLabel for="heightImp">{heightImp}</ImportanceLabel>
             <RangeInput
               value={heightImp}
@@ -139,19 +152,26 @@ const PeopleFilter = ({
             />
           </div>
         </div>
+      </div>
 
-        {/* Eyes */}
-        <div className="form-group">
-          <div className="search_info_holder">
-            <div className="search_label_holder">
-              <h5>Eye color</h5>
-              <Label>{eyeColor}</Label>
+      {/* Eyes */}
+      <div className="form-group">
+        <div className="search_info_holder">
+          <div className="search_label_holder">
+            <div className="s_label_1">
+              <Label>Eye color</Label>
+            </div>
+            <div className="s_label_2">
+              <Label>{eyeColor ? eyeColor : "No color selected"}</Label>
+
               <Select
                 setter={setEyeColor}
                 name="eyeColor"
                 optionsArr={EYE_COLORS}
               />
             </div>
+          </div>
+          <div>
             <ImportanceLabel>{eyeColorImp}</ImportanceLabel>
             <RangeInput
               value={eyeColorImp}
@@ -160,15 +180,22 @@ const PeopleFilter = ({
             />
           </div>
         </div>
+      </div>
 
-        {/* Hair */}
-        <div className="form-group">
-          <div className="search_info_holder">
-            <div className="search_label_holder">
-              <h5>Hair color</h5>
-              <Label>{hairColor}</Label>
+      {/* Hair */}
+      <div className="form-group">
+        <div className="search_info_holder">
+          <div className="search_label_holder">
+            <div className="s_label_1">
+              <Label>Hair color {hairColor}</Label>
+            </div>
+            <div className="s_label_2">
+              <Label> {hairColor ? hairColor : "No color selected"}</Label>
+
               <Select setter={setHairColor} optionsArr={HAIR_COLORS} />
             </div>
+          </div>
+          <div>
             <ImportanceLabel>{hairColorImp}</ImportanceLabel>
             <RangeInput
               value={hairColorImp}
@@ -177,7 +204,15 @@ const PeopleFilter = ({
             />
           </div>
         </div>
-      </form>
+      </div>
+      <div
+        className="people_s_btn"
+        style={{ paddingBottom: "30px", display: "flex" }}
+      >
+        <SubmitButton onClick={onClickSearch} type="submit">
+          Search
+        </SubmitButton>
+      </div>
     </div>
   );
 };

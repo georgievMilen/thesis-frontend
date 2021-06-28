@@ -28,8 +28,10 @@ const RequestsContainer = () => {
   return (
     <>
       <Label>Requests:</Label>
-      <List arr={dirReqArr} Element={DirReq} url={UPDATE_DIR_REQ} />
-      <List arr={postReqArr} Element={PostReq} url={UPDATE_POST_REQ} />
+      <div className="search_result_list_wrapper">
+        <List arr={dirReqArr} Element={DirReq} url={UPDATE_DIR_REQ} />
+        <List arr={postReqArr} Element={PostReq} url={UPDATE_POST_REQ} />
+      </div>
     </>
   );
 };

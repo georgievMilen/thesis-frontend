@@ -5,21 +5,23 @@ const Select = ({ setter, optionsArr, name, onChange }) => {
   };
   if (!onChange) onChange = defaultChange;
   return (
-    <select
-      type="checkbox"
-      className="form-control"
-      onChange={onChange}
-      name={name}
-    >
-      <option value="" className="select">
-        Select
-      </option>
-      {optionsArr.map((value, index) => (
-        <option type="checkbox" value={value} key={index}>
-          {value}
+    <div>
+      <select
+        type="checkbox"
+        className="form-control"
+        onChange={onChange}
+        name={name}
+      >
+        <option value="" className="select">
+          Select
         </option>
-      ))}
-    </select>
+        {optionsArr.map((value, index) => (
+          <option type="checkbox" value={value} key={index}>
+            {value}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 export { Select };

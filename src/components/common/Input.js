@@ -1,49 +1,50 @@
 import React from "react";
 import paper_plane from "../../assets/images/paper_plane.png";
+import { Checkbox } from "antd";
 import { SLIDER_MIN, SLIDER_MAX } from "../../constants/";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 const Input = ({ placeholder, type, name, value, setter, onChange }) => {
   const defaultChange = (e) => {
     setter(e.target.value);
   };
   if (!onChange) onChange = defaultChange;
   return (
-    <input
-      className="form-control"
-      type={type}
-      placeholder={placeholder}
-      onChange={onChange}
-      value={value}
-      name={name}
-    />
+    <div>
+      <input
+        className="form-control"
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
+        name={name}
+      />
+    </div>
   );
 };
 
 const DateInput = ({ value, onChange, setter }) => {
   const defaultChange = (date) => {
-    console.log(typeof date + " from datepicker");
     setter(date);
   };
   if (!onChange) onChange = defaultChange;
   return (
-    <DatePicker
-      selected={value}
-      onChange={(date) => onChange(date)}
-      dateFormat="yyyy/MM/dd"
-    />
+    <div className="customDatePickerWidth">
+      <DatePicker
+        selected={value}
+        onChange={(date) => onChange(date)}
+        dateFormat="yyyy/MM/dd"
+      />
+    </div>
   );
 };
 
-const CBoxInput = ({ name, checked, onChange, value }) => {
+const CheckBoxInput = ({ name, checked, onChange, value, children }) => {
   return (
-    <input
-      type="checkbox"
-      name={name}
-      onChange={onChange}
-      value={value}
-      checked={checked}
-    />
+    <Checkbox name={name} onChange={onChange} value={value} checked={checked}>
+      {children}
+    </Checkbox>
   );
 };
 
@@ -109,9 +110,10 @@ const FileInput = ({ setSelectedImage }) => {
       type="file"
       name="file"
       className="form-control"
+      style={{ marginTop: "10px" }}
       onChange={fileSelect}
     />
   );
 };
 
-export { Input, RangeInput, ChatInput, FileInput, CBoxInput, DateInput };
+export { Input, RangeInput, ChatInput, FileInput, DateInput, CheckBoxInput };

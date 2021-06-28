@@ -75,7 +75,12 @@ const CreatePostContainer = ({
         handleArrState={handleArrState}
         handleFileState={handleFileState}
       />
-      <SubmitButton onClick={createPost}>Create Post</SubmitButton>
+      <div
+        className="people_s_btn"
+        style={{ paddingTop: "30px", display: "flex" }}
+      >
+        <SubmitButton onClick={createPost}>Create Post</SubmitButton>
+      </div>
     </div>
   );
 };

@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  CCreateElement,
-  CSidebar,
-  CSidebarBrand,
-  CSidebarNav,
-  CSidebarNavDivider,
-  CSidebarNavTitle,
-  CSidebarMinimizer,
-  CSidebarNavDropdown,
-  CSidebarNavItem
-} from "@coreui/react";
-import CIcon from "@coreui/icons-react";
+
 import { Menu } from "antd";
 import {
   AppstoreOutlined,
@@ -18,20 +7,14 @@ import {
   CloudOutlined,
   ShopOutlined,
   TeamOutlined,
-  UserOutlined,
   UploadOutlined,
   VideoCameraOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-import { _nav } from "./_nav";
-
 const Sidebar = () => {
-  // const dispatch = useDispatch()
-  // const show = useSelector(state => state.sidebarShow)
-
   return (
-    <Menu theme="light" mode="inline" defaultSelectedKeys={["4"]}>
+    <Menu theme="light" mode="inline">
       <Menu.Item key="1" icon={<AppstoreOutlined />}>
         <Link to="/posts">Posts</Link>
       </Menu.Item>
@@ -57,35 +40,6 @@ const Sidebar = () => {
         <Link to="/logout">Logout</Link>
       </Menu.Item>
     </Menu>
-    // <CSidebar
-    //   show={true}
-    //   // onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
-    // >
-    //   <CSidebarBrand className="d-md-down-none" to="/">
-    //     <CIcon
-    //       className="c-sidebar-brand-full"
-    //       name="logo-negative"
-    //       height={35}
-    //     />
-    //     <CIcon
-    //       className="c-sidebar-brand-minimized"
-    //       name="sygnet"
-    //       height={35}
-    //     />
-    //   </CSidebarBrand>
-    //   <CSidebarNav>
-    //     <CCreateElement
-    //       items={_nav}
-    //       components={{
-    //         CSidebarNavDivider,
-    //         CSidebarNavDropdown,
-    //         CSidebarNavItem,
-    //         CSidebarNavTitle
-    //       }}
-    //     />
-    //   </CSidebarNav>
-    //   <CSidebarMinimizer className="c-d-md-down-none" />
-    // </CSidebar>
   );
 };
 

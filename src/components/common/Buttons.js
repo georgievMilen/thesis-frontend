@@ -36,34 +36,19 @@ const FilterButton = ({ onClick }) => {
     >
       Filter
     </Button>
-    // <button
-    //   className="btn btn-primary "
-    //   onClick={onClick}
-    //   style={{
-    //     width: "100%"
-    //   }}
-    // >
-    //   Filter
-    // </button>
   );
 };
 
-const SubmitButton = ({
-  onClick,
-  children = "Save",
-  disabled,
-  type = "btn-block"
-}) => {
+const SubmitButton = ({ onClick, children = "Save", disabled }) => {
   return (
-    <button
+    <Button
       disabled={disabled}
-      style={{ margin: "0 auto", marginTop: "50px" }}
-      type="submit"
-      className={`btn btn-primary ${type}`}
+      style={{ margin: "0 auto" }}
+      type="primary"
       onClick={onClick}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
@@ -83,9 +68,9 @@ const LogoutButton = ({ onClick, children = "Log out" }) => {
 
 const ChatButton = ({ onClick, children = "Chat" }) => {
   return (
-    <button className="btn btn-primary btn-block" onClick={onClick}>
+    <Button type="primary" onClick={onClick}>
       {children}
-    </button>
+    </Button>
   );
 };
 
