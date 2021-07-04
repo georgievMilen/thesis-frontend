@@ -31,6 +31,7 @@ const SearchContainer = () => {
 
   useEffect(() => {
     const currUser = authenticationService.currentUserValue;
+
     getAPI({
       url: GET_PEOPLE,
       params: currUser

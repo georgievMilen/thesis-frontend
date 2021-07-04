@@ -54,7 +54,7 @@ const PostReq = (props) => {
   return (
     <>
       <div className="req_conn">
-        <PostFields />
+        <PostFields {...props} />
         <div className="req_btns">
           <SaveButton
             onClick={() =>

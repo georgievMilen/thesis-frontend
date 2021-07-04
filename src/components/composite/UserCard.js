@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { DIR_CONNECTION_REQUEST } from "../../constants";
 import {
   Label,
-  Image,
   Paragraph,
   SubmitButton,
   ChatButton,
-  ROTextArea
+  ROTextArea,
+  ProfileImage
 } from "../common";
 import { Redirect } from "react-router-dom";
 
@@ -40,7 +40,8 @@ const UserCard = (props) => {
         <Label>
           {props.firstName} {props.lastName}
         </Label>
-        <Image src={props.userImage}></Image>
+
+        <ProfileImage src={props.userImage} />
 
         <Label>Gender: {props.gender ? props.gender : " N/A"}</Label>
         <Label>Age: {props.age}</Label>

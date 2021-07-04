@@ -24,15 +24,15 @@ const CreatePostContainer = ({
       type: "form/failure",
       payload: errs
     });
-    if (errs) return;
 
+    if (errs) return;
     const data = new FormData();
     data.append("email", localStorageEmail);
     data.append("file", postInfo.data.selectedImage);
     data.append("title", postInfo.data.title);
     data.append("text", postInfo.data.text);
     data.append("type", postInfo.data.type);
-    if ([postInfo.data.ageFrom === ""]) data.append("age_from", null);
+    if (postInfo.data.ageFrom === "") data.append("age_from", null);
     else data.append("age_from", postInfo.data.ageFrom);
     if (postInfo.data.ageTo === "") data.append("age_to", null);
     else data.append("age_to", postInfo.data.ageTo);
@@ -50,9 +50,9 @@ const CreatePostContainer = ({
           type: "form/success",
           payload: res.data
         });
-        dispatch({
-          type: "form/reset"
-        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((err) => {
         dispatch({
@@ -75,10 +75,7 @@ const CreatePostContainer = ({
         handleArrState={handleArrState}
         handleFileState={handleFileState}
       />
-      <div
-        className="people_s_btn"
-        style={{ paddingTop: "30px", display: "flex" }}
-      >
+      <div className="people_s_btn">
         <SubmitButton onClick={createPost}>Create Post</SubmitButton>
       </div>
     </div>

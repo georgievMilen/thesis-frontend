@@ -22,7 +22,7 @@ import {
 } from "./Input";
 import { DoubleLabel } from "./DoubleLabel";
 import { Paragraph } from "./Paragraph";
-import { Image } from "./Image";
+import { Image, ProfileImage } from "./Image";
 import { List } from "./List";
 import { Error } from "./Error";
 import { Footer } from "./Footer";
@@ -40,6 +40,7 @@ export {
   LogoutButton,
   Input,
   Image,
+  ProfileImage,
   RangeInput,
   DateInput,
   ChatInput,

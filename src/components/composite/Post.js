@@ -5,35 +5,20 @@ import { postAPI, deleteAPI } from "../../modules/services";
 import { CONNECTION_REQUEST, DELETE_POSTER } from "../../constants";
 import { Context } from "../../HOC/AppHOC";
 
-const Post = ({
-  id,
-  ageFrom,
-  ageTo,
-  cities,
-  country,
-  email,
-  firstName,
-  genders,
-  image,
-  lastName,
-  text,
-  title,
-  type,
-  dispatch,
-  isMyPost
-}) => {
+const Post = (props) => {
   const [error, setErr] = useState("");
   const [state] = useContext(Context);
 
   const sendRequest = () => {
     const localStorageEmail = authenticationService.currentUserValue;
-    const data = { email: localStorageEmail, postId: id };
+    const data = { email: localStorageEmail, postId: props.postId };
     postAPI({ url: CONNECTION_REQUEST, data: data })
       .then((res) => {
-        dispatch({
+        props.dispatch({
           type: "form/success",
           payload: res.data
         });
+        window.location.reload();
       })
       .catch((error) => {
         setErr(error);
@@ -41,7 +26,7 @@ const Post = ({
   };
 
   const deleteRequest = () => {
-    deleteAPI({ url: DELETE_POSTER, params: id })
+    deleteAPI({ url: DELETE_POSTER, params: props.postId })
       .then((res) => {
         window.location.reload();
       })
@@ -53,24 +38,24 @@ const Post = ({
 
   return (
     <div className="post-wrapper">
-      <Image src={image} />
+      <Image src={props.image} />
       <div className="post-text-fields">
-        <Error>{error}</Error>
-        <Label>Title: {title}</Label>
-        <Label>Type: {type}</Label>
+        {error && <Error>{error}</Error>}
+        <Label>Title: {props.title}</Label>
+        <Label>Type: {props.type}</Label>
         <Label>
-          From: {firstName} {lastName}
+          From: {props.firstName} {props.lastName}
         </Label>
         <Label>
-          About: <ROTextArea defaultValue={text} />
+          About: <ROTextArea defaultValue={props.text} />
         </Label>
-        <Label>Age From: {ageFrom ? ageFrom : "N/A"}</Label>
-        <Label>Age to: {ageTo ? ageTo : "N/A"}</Label>
-        <Label>Country: {country ? country : "N/A"}</Label>
+        <Label>Age From: {props.ageFrom ? props.ageFrom : "N/A"}</Label>
+        <Label>Age to: {props.ageTo ? props.ageTo : "N/A"}</Label>
+        <Label>Country: {props.country ? props.country : "N/A"}</Label>
         <Label>
           Cities:
-          {cities.length > 0
-            ? cities.map((city, index) => {
+          {props.cities.length > 0
+            ? props.cities.map((city, index) => {
                 return <span key={index}> {city} </span>;
               })
             : " N/A"}
@@ -78,19 +63,22 @@ const Post = ({
 
         <Label>
           Genders:
-          {genders.length > 0
-            ? genders.map((gender, index) => {
+          {props.genders.length > 0
+            ? props.genders.map((gender, index) => {
                 return <span key={index}> {gender} </span>;
               })
             : " N/A"}
         </Label>
 
-        {isMyPost === false && (
-          <SubmitButton onClick={sendRequest} disabled={state.logged === email}>
+        {props.isMyPost === false && (
+          <SubmitButton
+            onClick={sendRequest}
+            disabled={state.logged === props.email || props.conn_res === -1}
+          >
             Send Request
           </SubmitButton>
         )}
-        {isMyPost === true && (
+        {props.isMyPost === true && (
           <SubmitButton onClick={deleteRequest}>Delete</SubmitButton>
         )}
       </div>

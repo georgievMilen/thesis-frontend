@@ -394,8 +394,10 @@ const ProfileComponent = ({
         ) : (
           <Error>{response.data}</Error>
         )}
-        <SubmitButton onClick={saveProfileInfo} />
-        <LogoutButton onClick={logoutProfile} />
+        <div className="profile_p_btns">
+          <SubmitButton onClick={saveProfileInfo} />
+          <LogoutButton onClick={logoutProfile} />
+        </div>
       </form>
     </div>
   );

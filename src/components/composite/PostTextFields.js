@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, Image, ROTextArea } from "../common";
+import { Label, Image, ROTextArea, ProfileImage } from "../common";
 
 const DirFields = (props) => {
   return (
@@ -8,7 +8,7 @@ const DirFields = (props) => {
         Name: {props.firstName} {props.lastName}
       </Label>
 
-      <Image src={props.userImage}></Image>
+      <ProfileImage src={props.userImage}></ProfileImage>
 
       <Label>Email: {props.email ? props.email : " N/A"}</Label>
       <Label>Eye colour: {props.eyeColour ? props.eyeColour : " N/A"}</Label>

@@ -38,7 +38,7 @@ const validatePost = ({
   imageName
 }) => {
   let msg = "";
-
+  console.log(ageFrom);
   // Must update email validation to use regex
   if (cities.length < 1) {
     msg = "Please select a at least one city!";
@@ -50,9 +50,10 @@ const validatePost = ({
     msg = "Please select a type!";
   }
   if (type === "Acquaintance") {
-    if (ageFrom === null) msg = "Please selecte age from!";
-    if (ageTo === null) msg = "Please selecte age to!";
-    if (genders.length < 1) msg = "Please selecte gender!";
+    if (genders.length < 1) msg = "Please select gender!";
+    if (ageFrom > ageTo) msg = '"Age from" must be less than "age to"';
+    if (!ageTo) msg = "Please select age to!";
+    if (!ageFrom) msg = "Please select age from!";
   }
   if (imageName.length < 3) {
     msg = "Please select an image!";
@@ -67,4 +68,12 @@ const validatePost = ({
   return msg;
 };
 
-export { validateSignin, validatePost };
+const validateLogin = (email, password) => {
+  let msg = "";
+
+  if (password.length < 6) msg = "Password must be at least 6 characters long!";
+  if (email.length < 5) msg = "Please enter valid email!";
+  return msg;
+};
+
+export { validateSignin, validatePost, validateLogin };

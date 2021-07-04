@@ -31,7 +31,6 @@ const ChatContainer = ({ location: { state, search } }) => {
   socket.current.on("loadMessages", (mssgs) => setMessages(mssgs));
   useEffect(() => {
     socket.current.on("message", (mssg) => {
-      console.log(mssg);
       setMessages((msgs) => [...msgs, mssg]);
     });
 

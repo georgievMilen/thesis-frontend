@@ -65,7 +65,7 @@ const LoginComponent = ({
                         onChange={hanglePasswordInput}
                       />
                     </CInputGroup>
-                    {error && <Error>{error.msg}</Error>}
+                    {error && <Error>{error}</Error>}
                     <CRow>
                       <CCol xs="6">
                         <CButton
@@ -74,11 +74,6 @@ const LoginComponent = ({
                           onClick={handleSubmit}
                         >
                           Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
                         </CButton>
                       </CCol>
                     </CRow>
@@ -92,11 +87,7 @@ const LoginComponent = ({
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </p>
+                    <p>Don't have an account?</p>
                     <Link to="/signup">
                       <CButton
                         color="primary"

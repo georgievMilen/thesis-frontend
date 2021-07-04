@@ -205,10 +205,7 @@ const PeopleFilter = ({
           </div>
         </div>
       </div>
-      <div
-        className="people_s_btn"
-        style={{ paddingBottom: "30px", display: "flex" }}
-      >
+      <div className="people_s_btn">
         <SubmitButton onClick={onClickSearch} type="submit">
           Search
         </SubmitButton>

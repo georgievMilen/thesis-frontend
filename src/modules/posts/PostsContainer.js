@@ -19,7 +19,7 @@ const PostsContainer = ({
   const [filterIsVisible, setFilterIsVisible] = useState(false);
 
   const handlePosts = (data) => {
-    const [posters, genders, regions] = data;
+    const [posters, genders, regions, connections] = data;
     const populatedPosts = posters.map((poster) => {
       Object.assign(poster, { genders: [] }, { country: "" }, { cities: [] });
 
@@ -31,6 +31,11 @@ const PostsContainer = ({
         if (region.poster_id === poster.postId) {
           poster.country = region.country;
           poster.cities.push(region.city);
+        }
+      });
+      connections.forEach((connection) => {
+        if (connection.poster_id === poster.postId) {
+          poster.conn_res = connection.response;
         }
       });
       return poster;
@@ -55,7 +60,7 @@ const PostsContainer = ({
     getAPI({ url: url, params: localStorageEmail })
       .then((res) => {
         const data = [...res.data];
-
+        console.log(data);
         handlePosts(data);
       })
       .catch((error) => {

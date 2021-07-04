@@ -12,4 +12,15 @@ const Image = ({ src }) => {
   );
 };
 
-export { Image };
+const ProfileImage = ({ src }) => {
+  return (
+    <img
+      src={`${ENDPOINT}/${src ? src : "avatar.png"}`}
+      alt="Shouldn't see this text..."
+      className="post-image"
+      width="350px"
+    />
+  );
+};
+
+export { Image, ProfileImage };

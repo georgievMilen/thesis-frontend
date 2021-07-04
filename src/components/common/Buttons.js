@@ -41,28 +41,32 @@ const FilterButton = ({ onClick }) => {
 
 const SubmitButton = ({ onClick, children = "Save", disabled }) => {
   return (
-    <Button
-      disabled={disabled}
-      style={{ margin: "0 auto" }}
-      type="primary"
-      onClick={onClick}
-    >
-      {children}
-    </Button>
+    <div className="submit_btn">
+      <Button
+        disabled={disabled}
+        style={{ margin: "0 auto" }}
+        type="primary"
+        onClick={onClick}
+      >
+        {children}
+      </Button>
+    </div>
   );
 };
 
 const LogoutButton = ({ onClick, children = "Log out" }) => {
   return (
-    <button
-      style={{ margin: "0 auto", marginTop: "50px", marginBottom: "25px" }}
-      type="button"
-      className="btn btn-default btn-block"
-      onClick={onClick}
-    >
-      <span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>{" "}
-      {children}
-    </button>
+    <div className="logout_btn">
+      <Button
+        // style={{ margin: "0 auto", marginTop: "50px", marginBottom: "25px" }}
+        type="button"
+        // className="btn btn-default btn-block"
+        onClick={onClick}
+      >
+        <span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>{" "}
+        {children}
+      </Button>
+    </div>
   );
 };
 

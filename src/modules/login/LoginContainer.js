@@ -5,7 +5,7 @@ import { postAPI } from "../services";
 import { LOGIN_URL } from "../../constants";
 import { authenticationService } from "../../utils";
 import { Context } from "../../HOC/AppHOC";
-
+import { validateLogin } from "../../utils";
 const LoginContainer = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -19,14 +19,18 @@ const LoginContainer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+
+    const errs = validateLogin(email, password);
+    setError(errs);
+    console.log(errs);
+    if (errs) return;
     postAPI({ url: LOGIN_URL, data: { email, password } })
-      .then((response) => {
+      .then(() => {
         authenticationService.login(email);
         dispatch({ type: "login", payload: true });
       })
       .catch((err) => {
-        setError({ msg: err.data });
+        setError(err.data);
       });
   };
 
