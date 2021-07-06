@@ -3,7 +3,12 @@ import { PeopleFilter } from "./components/PeopleFilter";
 import { UserCard } from "../../components/composite/UserCard";
 import { List, FilterButton } from "../../components/common";
 import { GET_PEOPLE } from "../../constants";
-import { quickSort, comparator, authenticationService } from "../../utils/";
+import {
+  quickSort,
+  comparator,
+  authenticationService,
+  validatePeopleFilter
+} from "../../utils/";
 import { getAPI } from "../services";
 
 const SearchContainer = () => {
@@ -26,7 +31,7 @@ const SearchContainer = () => {
   // Hair color state
   const [hairColor, setHairColor] = useState("");
   const [hairColorImp, setHairColorImp] = useState(0);
-
+  const [error, setError] = useState("");
   const [resultArr, setResultArr] = useState([]);
 
   useEffect(() => {
@@ -64,13 +69,26 @@ const SearchContainer = () => {
     const resWithPoints = arr.filter((el) => {
       let points = 0;
 
-      if (ageTo >= el.age && el.age >= ageFrom) points += ageImp;
-      if (heightTo >= el.height && el.height >= heightFrom) points += heightImp;
-      if (weightTo >= el.weight && el.weight >= el.weightFrom)
-        points += weightImp;
-      if (el.eyeColour === eyeColor) points += eyeColorImp;
-      if (el.hairColour === hairColor) points += hairColorImp;
+      const ageTonCond = ageTo > 0 ? ageTo >= el.age : true;
+      const ageFromCond = ageFrom > 0 ? el.age >= ageFrom : true;
+
+      const heightToCond = heightTo > 0 ? heightTo >= el.height : true;
+      const heightFromCond = heightFrom ? el.height >= heightFrom : true;
+
+      const weightToCond = weightTo ? weightTo >= el.weight : true;
+      const weightFromCond = weightFrom ? el.weight >= weightFrom : true;
+
+      const eyeColourCond = eyeColor ? el.eyeColour === eyeColor : true;
+      const hairColourCond = hairColor ? el.hairColour === hairColor : true;
+
+      if (ageTonCond && ageFromCond) points += ageImp;
+      if (heightToCond && heightFromCond) points += heightImp;
+      if (weightToCond && weightFromCond) points += weightImp;
+      if (eyeColourCond) points += eyeColorImp;
+      if (hairColourCond) points += hairColorImp;
+
       el.points = points;
+
       if (ageImp + heightImp + weightImp + eyeColorImp + hairColorImp < 1)
         return el;
       return el.points > 0;
@@ -78,10 +96,35 @@ const SearchContainer = () => {
     return resWithPoints;
   };
 
+  const clearFilter = () => {
+    setAgeFrom(0);
+    setAgeTo(0);
+    setAgeImp(0);
+    setWeightFrom(0);
+    setWeightTo(0);
+    setWeightImp(0);
+    setHeightFrom(0);
+    setHeightTo(0);
+    setHeightImp(0);
+    setEyeColor("");
+    setEyeColorImp(0);
+    setHairColor("");
+    setHairColorImp(0);
+  };
+
   const onClickSearch = (e) => {
     e.preventDefault();
     const currUser = authenticationService.currentUserValue;
-
+    const err = validatePeopleFilter(
+      ageFrom,
+      ageTo,
+      weightTo,
+      weightFrom,
+      heightTo,
+      heightFrom
+    );
+    setError(err);
+    if (err) return;
     getAPI({
       url: GET_PEOPLE,
       params: currUser
@@ -152,6 +195,8 @@ const SearchContainer = () => {
             setEyeColorImp={setEyeColorImp}
             // Search
             onClickSearch={onClickSearch}
+            clearFilter={clearFilter}
+            error={error}
           />
         )}
       </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import moment from "moment";
+
 import { authenticationService } from "../../utils";
 import { ProfileComponent } from "./components/ProfileComponent";
 import { GET_PROFILE_INFO, UPDATE_PROFILE_URL } from "../../constants";
@@ -19,7 +19,7 @@ const ProfileContainer = () => {
   const [imageName, setImageName] = useState("");
   // File
   const [selectedImage, setSelectedImage] = useState(null);
-  const [birthDate, setBirthDate] = useState("");
+
   // Email state
   const [email, setEmail] = useState("");
   const [emailIsEditable, setEmailIsEditable] = useState(false);
@@ -29,11 +29,6 @@ const ProfileContainer = () => {
   // About state
   const [about, setAbout] = useState("");
   const [aboutIsEditable, setAboutIsEditable] = useState(false);
-  // Password state
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordRepeated, setNewPasswordRepeated] = useState("");
-  const [passwordIsEditable, setPasswordIsEditable] = useState(false);
   // Age state
   const [age, setAge] = useState(0);
   const [ageIsEditable, setAgeIsEditable] = useState(false);
@@ -58,9 +53,6 @@ const ProfileContainer = () => {
   const handleProfileInfo = (props) => {
     setFirstName(props.firstName);
     setLastName(props.lastName);
-    // const date = moment(props.birthDate).format("YYYY-MM-DD").parseISO();
-
-    setBirthDate(new Date(props.birthDate));
     setEmail(props.email);
     setUsername(props.username);
     props.about ? setAbout(props.about) : setAbout("");
@@ -162,39 +154,6 @@ const ProfileContainer = () => {
     e.preventDefault();
     setAboutIsEditable(false);
   };
-  // Password handlers
-  const handlePasswordEditBtn = (e) => {
-    e.preventDefault();
-    setPasswordIsEditable(true);
-  };
-  const handlePasswordEdit = ({ target }) => {
-    setPassword(target.value);
-  };
-  const handleNewPasswordEdit = ({ target }) => {
-    setNewPassword(target.value);
-  };
-  const handleNewPasswordRepeatedEdit = ({ target }) => {
-    setNewPasswordRepeated(target.value);
-  };
-  const handlePasswordEditOK = (e) => {
-    e.preventDefault();
-    // Check if password is correct
-
-    // Check it newPassword and newPasswordRepeated are matching
-
-    // Update newPassword in DB
-
-    setNewPassword("");
-    setNewPasswordRepeated("");
-    setPasswordIsEditable(false);
-  };
-  const handlePasswordEditCancel = (e) => {
-    e.preventDefault();
-    setPasswordIsEditable(false);
-    setPassword("");
-    setNewPassword("");
-    setNewPasswordRepeated("");
-  };
 
   // Age handlers
   const handleAgeEditBtn = (e) => {
@@ -289,13 +248,11 @@ const ProfileContainer = () => {
   const saveProfileInfo = (e) => {
     e.preventDefault();
     const localStorageEmail = authenticationService.currentUserValue;
-    const date = moment(birthDate).format("YYYY-MM-DD");
     const data = new FormData();
     data.append("file", selectedImage);
     data.append("email", localStorageEmail);
     data.append("firstName", firstName);
     data.append("lastName", lastName);
-    data.append("birthDate", date);
     data.append("username", username);
     data.append("age", age);
     data.append("gender", gender);
@@ -321,8 +278,10 @@ const ProfileContainer = () => {
 
   // Logout Btn
   const logoutProfile = (e) => {
-    authenticationService.logout();
-    dispatch({ type: "logout", payload: false });
+    if (window.confirm("Are you sure you want to logout?")) {
+      authenticationService.logout();
+      dispatch({ type: "logout", payload: false });
+    }
   };
 
   return (
@@ -343,9 +302,6 @@ const ProfileContainer = () => {
         // file
         setSelectedImage={setSelectedImage}
         imageName={imageName}
-        // birth date
-        birthDate={birthDate}
-        setBirthDate={setBirthDate}
         // email
         email={email}
         emailIsEditable={emailIsEditable}
@@ -364,17 +320,6 @@ const ProfileContainer = () => {
         handleAboutEditBtn={handleAboutEditBtn}
         handleAboutEditSave={handleAboutEditSave}
         handleAboutEditCancel={handleAboutEditCancel}
-        // password
-        password={password}
-        newPassword={newPassword}
-        newPasswordRepeated={newPasswordRepeated}
-        passwordIsEditable={passwordIsEditable}
-        handlePasswordEditBtn={handlePasswordEditBtn}
-        handlePasswordEdit={handlePasswordEdit}
-        handleNewPasswordEdit={handleNewPasswordEdit}
-        handleNewPasswordRepeatedEdit={handleNewPasswordRepeatedEdit}
-        handlePasswordEditOK={handlePasswordEditOK}
-        handlePasswordEditCancel={handlePasswordEditCancel}
         // age
         age={age}
         ageIsEditable={ageIsEditable}

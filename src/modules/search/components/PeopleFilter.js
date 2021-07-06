@@ -6,7 +6,9 @@ import {
   Input,
   Label,
   SubmitButton,
-  H4
+  H4,
+  EditButton,
+  Error
 } from "../../../components/common";
 import { EYE_COLORS, HAIR_COLORS } from "../../../constants/index";
 
@@ -43,7 +45,9 @@ const PeopleFilter = ({
   eyeColorImp,
   setEyeColorImp,
   // Search
-  onClickSearch
+  onClickSearch,
+  clearFilter,
+  error
 }) => {
   return (
     <div className="people_filter_wrapper">
@@ -205,10 +209,14 @@ const PeopleFilter = ({
           </div>
         </div>
       </div>
+      <Error>{error}</Error>
       <div className="people_s_btn">
         <SubmitButton onClick={onClickSearch} type="submit">
           Search
         </SubmitButton>
+        <div>
+          <EditButton onClick={clearFilter}>Clear filter</EditButton>
+        </div>
       </div>
     </div>
   );

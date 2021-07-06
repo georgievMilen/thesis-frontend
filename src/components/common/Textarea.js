@@ -17,7 +17,14 @@ const Textarea = ({ value, onChange }) => {
 
 const ROTextArea = ({ defaultValue }) => {
   return (
-    <textarea className="ro-textarea" readOnly defaultValue={defaultValue} />
+    <div className="texarea_div">
+      <textarea
+        className="ro-textarea"
+        readOnly
+        defaultValue={defaultValue}
+        rows="4"
+      />
+    </div>
   );
 };
 export { Textarea, ROTextArea };

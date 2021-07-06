@@ -26,6 +26,27 @@ const validateSignin = ({
   return msg;
 };
 
+const validatePeopleFilter = (
+  ageFrom,
+  ageTo,
+  weightTo,
+  weightFrom,
+  heightTo,
+  heightFrom
+) => {
+  let msg = "";
+
+  if (heightFrom > heightTo)
+    msg = '"Height from" must be less than "Height to"!';
+
+  if (weightFrom > weightTo)
+    msg = '"Weight from" must be less than "Weight to"!';
+
+  if (ageFrom > ageTo) msg = '"Age from" must be less than "Age to"!';
+
+  return msg;
+};
+
 const validatePost = ({
   title,
   text,
@@ -38,8 +59,7 @@ const validatePost = ({
   imageName
 }) => {
   let msg = "";
-  console.log(ageFrom);
-  // Must update email validation to use regex
+
   if (cities.length < 1) {
     msg = "Please select a at least one city!";
   }
@@ -70,10 +90,10 @@ const validatePost = ({
 
 const validateLogin = (email, password) => {
   let msg = "";
-
+  const emailRegex = /\S+@\S+\.\S+/;
   if (password.length < 6) msg = "Password must be at least 6 characters long!";
-  if (email.length < 5) msg = "Please enter valid email!";
+  if (!emailRegex.test(email)) msg = "Please enter valid email!";
   return msg;
 };
 
-export { validateSignin, validatePost, validateLogin };
+export { validateSignin, validatePost, validateLogin, validatePeopleFilter };

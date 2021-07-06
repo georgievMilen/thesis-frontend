@@ -54,15 +54,14 @@ html,
   align-items: center;
   width: 100%;
 }
+.profile_label_holder label {
+  width: 100%;
+  max-width: 100px;
+}
 
 label {
   margin: 10px;
   width: 150px;
-}
-
-.profile_label_holder label {
-  width: 100%;
-  max-width: 100px;
 }
 
 .search_label_holder label {
@@ -168,6 +167,10 @@ p {
   input {
   width: 100%;
 } */
+
+.select_image {
+  margin: 7px 0px;
+}
 
 .search_result_list_wrapper {
   grid-template-columns: 33% 33% 33%;
@@ -398,7 +401,7 @@ footer.c-footer {
 .people_s_btn {
   padding-bottom: 30px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   margin: 10px 0px;
 }
 
@@ -409,4 +412,5 @@ textarea.ro-textarea {
 
 .texarea_div textarea {
   width: 100%;
+  margin: 10px;
 }

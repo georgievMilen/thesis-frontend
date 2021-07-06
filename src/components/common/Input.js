@@ -19,6 +19,7 @@ const Input = ({ placeholder, type, name, value, setter, onChange }) => {
         onChange={onChange}
         value={value}
         name={name}
+        min="0"
       />
     </div>
   );
@@ -106,13 +107,15 @@ const FileInput = ({ setSelectedImage }) => {
   };
 
   return (
-    <input
-      type="file"
-      name="file"
-      className="form-control"
-      style={{ marginTop: "10px" }}
-      onChange={fileSelect}
-    />
+    <div>
+      <input
+        type="file"
+        name="file"
+        className="form-control"
+        style={{ marginTop: "10px" }}
+        onChange={fileSelect}
+      />
+    </div>
   );
 };
 

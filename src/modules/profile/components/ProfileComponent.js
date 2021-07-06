@@ -7,7 +7,6 @@ import {
   LAST_NAME,
   USERNAME,
   EMAIL_ADDRESS,
-  PASSWORD,
   AGE,
   GENDER,
   WEIGHT,
@@ -18,7 +17,6 @@ import {
 } from "../../../constants";
 import { EditableInputContainer } from "../EditableInputContainer";
 import { EditableSelectContainer } from "../EditableSelectContainer";
-import { EditablePasswordContainer } from "../EditablePasswordContainer";
 
 import {
   EditButton,
@@ -29,8 +27,8 @@ import {
   Error,
   FileInput,
   Image,
-  DateInput,
-  Label
+  Label,
+  ROTextArea
 } from "../../../components/common";
 import { isEmptyObj } from "../../../utils";
 
@@ -50,9 +48,6 @@ const ProfileComponent = ({
   // file
   setSelectedImage,
   imageName,
-  // birth date
-  birthDate,
-  setBirthDate,
   // email
   email,
   emailIsEditable,
@@ -71,11 +66,7 @@ const ProfileComponent = ({
   handleAboutEditBtn,
   handleAboutEditSave,
   handleAboutEditCancel,
-  // password
-  passwordIsEditable,
-  handlePasswordEditBtn,
-  handlePasswordEditSave,
-  handlePasswordEditCancel,
+
   // age
   age,
   ageIsEditable,
@@ -129,6 +120,9 @@ const ProfileComponent = ({
             {/* Image */}
             {imageName && <Image src={imageName} />}
             <div className="form-group">
+              <div className="select_image">
+                <Label>Select Image:</Label>
+              </div>
               <div className="profile_info_holder">
                 <FileInput setSelectedImage={setSelectedImage} />
               </div>
@@ -178,11 +172,6 @@ const ProfileComponent = ({
           </div>
         </div>
 
-        {/* Date */}
-        <Label>
-          Date of birth:
-          <DateInput value={birthDate} setter={setBirthDate} />
-        </Label>
         {/* Email */}
         <div className="form-group">
           {!emailIsEditable ? (
@@ -227,42 +216,26 @@ const ProfileComponent = ({
         <div className="form-group">
           {!aboutIsEditable ? (
             <div className="profile_info_holder">
-              <DoubleLabel first={ABOUT} second={about} />
+              <div className="profile_label_holder">
+                <label>{ABOUT} </label>
+
+                <ROTextArea defaultValue={about} />
+              </div>
 
               <EditButton onClick={handleAboutEditBtn} />
             </div>
           ) : (
-            <span className="profile_edit_wrapper">
-              <DoubleLabel first={ABOUT} second={about} />
-
+            <div className="profile_edit_wrapper">
               <EditableInputContainer
                 initialValue={about}
                 type="textarea"
                 onSave={handleAboutEditSave}
                 onCancel={handleAboutEditCancel}
               />
-            </span>
-          )}
-        </div>
-        {/* Password */}
-        <div className="form-group">
-          {!passwordIsEditable ? (
-            <div className="profile_info_holder">
-              <DoubleLabel first={PASSWORD} second="" />
-
-              <EditButton onClick={handlePasswordEditBtn} />
             </div>
-          ) : (
-            <span className="profile_edit_wrapper">
-              <DoubleLabel first={PASSWORD} second="" />
-
-              <EditablePasswordContainer
-                onSave={handlePasswordEditSave}
-                onCancel={handlePasswordEditCancel}
-              />
-            </span>
           )}
         </div>
+
         {/* Age  */}
         <div className="form-group">
           {!ageIsEditable ? (

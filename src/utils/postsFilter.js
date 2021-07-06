@@ -27,7 +27,7 @@ const postsFilter = (allPosts, postInfo) => {
     allPosts.forEach((post) => {
       let genderIncluded = false;
       postInfo.data.genders.forEach((gender) => {
-        if (post.genders.includes(gender)) genderIncluded = true;
+        if (post.gender === gender) genderIncluded = true;
       });
 
       if (genderIncluded === false) spliceIDs.push(post.postId);
