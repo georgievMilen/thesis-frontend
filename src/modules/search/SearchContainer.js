@@ -25,6 +25,9 @@ const SearchContainer = () => {
   const [heightFrom, setHeightFrom] = useState(0);
   const [heightTo, setHeightTo] = useState(0);
   const [heightImp, setHeightImp] = useState(0);
+  // Gender state
+  const [gender, setGender] = useState("");
+  const [genderImp, setGenderImp] = useState(0);
   // Eye color state
   const [eyeColor, setEyeColor] = useState("");
   const [eyeColorImp, setEyeColorImp] = useState(0);
@@ -43,6 +46,7 @@ const SearchContainer = () => {
     })
       .then((res) => {
         const merged = mergeUsersConn(res.data.users, res.data.dirConnections);
+
         setResultArr(merged);
       })
       .catch((err) => {
@@ -78,21 +82,31 @@ const SearchContainer = () => {
       const weightToCond = weightTo ? weightTo >= el.weight : true;
       const weightFromCond = weightFrom ? el.weight >= weightFrom : true;
 
+      const genderCond = gender ? el.gender === gender : false;
       const eyeColourCond = eyeColor ? el.eyeColour === eyeColor : true;
       const hairColourCond = hairColor ? el.hairColour === hairColor : true;
 
       if (ageTonCond && ageFromCond) points += ageImp;
       if (heightToCond && heightFromCond) points += heightImp;
       if (weightToCond && weightFromCond) points += weightImp;
+      if (genderCond) points += genderImp;
       if (eyeColourCond) points += eyeColorImp;
       if (hairColourCond) points += hairColorImp;
 
       el.points = points;
-
-      if (ageImp + heightImp + weightImp + eyeColorImp + hairColorImp < 1)
+      if (
+        ageImp +
+          heightImp +
+          weightImp +
+          eyeColorImp +
+          hairColorImp +
+          genderImp <
+        1
+      )
         return el;
       return el.points > 0;
     });
+    console.log(resWithPoints);
     return resWithPoints;
   };
 
@@ -106,6 +120,8 @@ const SearchContainer = () => {
     setHeightFrom(0);
     setHeightTo(0);
     setHeightImp(0);
+    setGender("");
+    setGenderImp(0);
     setEyeColor("");
     setEyeColorImp(0);
     setHairColor("");
@@ -183,6 +199,11 @@ const SearchContainer = () => {
             setHeightTo={setHeightTo}
             heightImp={heightImp}
             setHeightImp={setHeightImp}
+            // Gender
+            gender={gender}
+            setGender={setGender}
+            genderImp={genderImp}
+            setGenderImp={setGenderImp}
             // Hair color
             hairColor={hairColor}
             setHairColor={setHairColor}

@@ -10,7 +10,7 @@ import {
   EditButton,
   Error
 } from "../../../components/common";
-import { EYE_COLORS, HAIR_COLORS } from "../../../constants/index";
+import { EYE_COLORS, GENDERS, HAIR_COLORS } from "../../../constants/index";
 
 const PeopleFilter = ({
   // Age
@@ -34,6 +34,11 @@ const PeopleFilter = ({
   setHeightTo,
   heightImp,
   setHeightImp,
+  // Gender
+  gender,
+  setGender,
+  genderImp,
+  setGenderImp,
   // Hair color
   hairColor,
   setHairColor,
@@ -153,6 +158,30 @@ const PeopleFilter = ({
               value={heightImp}
               name="heightImp"
               setter={setHeightImp}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Eyes */}
+      <div className="form-group">
+        <div className="search_info_holder">
+          <div className="search_label_holder">
+            <div className="s_label_1">
+              <Label>Gender</Label>
+            </div>
+            <div className="s_label_2">
+              <Label>{gender ? gender : "No gender selected"}</Label>
+
+              <Select setter={setGender} name="gender" optionsArr={GENDERS} />
+            </div>
+          </div>
+          <div>
+            <ImportanceLabel>{genderImp}</ImportanceLabel>
+            <RangeInput
+              value={genderImp}
+              name="eyeColorImp"
+              setter={setGenderImp}
             />
           </div>
         </div>

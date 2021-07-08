@@ -20,7 +20,7 @@ const PostsContainer = ({
 
   const handlePosts = (data) => {
     const [posters, genders, regions, connections] = data;
-
+    console.log(posters);
     const populatedPosts = posters.map((poster) => {
       Object.assign(poster, { genders: [] }, { country: "" }, { cities: [] });
 
@@ -41,6 +41,7 @@ const PostsContainer = ({
       });
       return poster;
     });
+
     setAllPosts(populatedPosts);
     setFiltered(populatedPosts);
   };
