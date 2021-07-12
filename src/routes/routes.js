@@ -1,17 +1,16 @@
 import {
   PostsPage,
-  LoginPage,
   LogoutPage,
   ProfilePage,
-  SignupPage,
   SearchPage,
   ChatPage,
   CreatePostPage,
   MyPostsPage,
+  RequestsPage,
   ConnectionsPage
 } from "../Pages";
 
-export const LOGGED_IN_ROUTES_MENU = [
+export const ROUTES = [
   {
     path: "/posts",
     key: "POSTS",
@@ -48,55 +47,11 @@ export const LOGGED_IN_ROUTES_MENU = [
     component: CreatePostPage
   },
   {
-    path: "/connections",
-    key: "CONNECTIONS",
+    path: "/requests",
+    key: "REQUESTS",
     exact: true,
     private: true,
-    component: ConnectionsPage
-  },
-  {
-    path: "/logout",
-    key: "LOGOUT",
-    private: true,
-    component: LogoutPage
-  }
-];
-
-export const LOGGED_IN_ROUTES = [
-  {
-    path: "/posts",
-    key: "POSTS",
-    exact: true,
-    private: true,
-    component: PostsPage
-  },
-  {
-    path: "/my-posts",
-    key: "MY POSTS",
-    exact: true,
-    private: true,
-    component: MyPostsPage
-  },
-  {
-    path: "/profile",
-    key: "PROFILE",
-    exact: true,
-    private: true,
-    component: ProfilePage
-  },
-  {
-    path: "/search",
-    key: "FIND PEOPLE",
-    exact: true,
-    private: true,
-    component: SearchPage
-  },
-  {
-    path: "/create-post",
-    key: "CREATE POST",
-    exact: true,
-    private: true,
-    component: CreatePostPage
+    component: RequestsPage
   },
   {
     path: "/connections",
@@ -118,20 +73,11 @@ export const LOGGED_IN_ROUTES = [
     private: true,
     component: LogoutPage
   }
-];
-export const ROUTES = [
-  {
-    path: "/login",
-    key: "LOGIN",
-    exact: true,
-    private: false,
-    component: LoginPage
-  },
-  {
-    path: "/signup",
-    key: "SIGNUP",
-    exact: true,
-    private: false,
-    component: SignupPage
-  }
+  // {
+  //   path: "/",
+  //   key: "",
+  //   exact: true,
+  //   private: true,
+  //   component:
+  // },
 ];

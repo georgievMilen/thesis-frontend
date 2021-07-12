@@ -1,27 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { PostsComponent } from "./components/PostsComponent";
 import { Post } from "../../components/composite";
+import { FilterButton, SubmitButton } from "../../components/common";
+import { List } from "../../components/common";
+import { PostFilterFields } from "./components/PostFilterFields";
 import { getAPI } from "../services/";
-import { authenticationService } from "../../utils";
+import { authenticationService, postsFilter } from "../../utils";
 
-const PostsContainer = ({ postInfo, cities, url, ...other }) => {
+const PostsContainer = ({
+  postInfo,
+  cities,
+  url,
+  handleState,
+  handleArrState,
+  ...other
+}) => {
   const [allPosts, setAllPosts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [filterIsVisible, setFilterIsVisible] = useState(false);
 
   const handlePosts = (data) => {
-    const [posters, genders, regions] = data;
+    const [posters, genders, regions, connections] = data;
+    console.log(posters);
     const populatedPosts = posters.map((poster) => {
       Object.assign(poster, { genders: [] }, { country: "" }, { cities: [] });
 
-      genders.filter((gender) => {
-        if (gender.poster_id === poster.id)
+      genders.forEach((gender) => {
+        if (gender.poster_id === poster.postId)
           return poster.genders.push(gender.name);
       });
-      regions.filter((region) => {
-        if (region.poster_id === poster.id) {
+      regions.forEach((region) => {
+        if (region.poster_id === poster.postId) {
           poster.country = region.country;
           poster.cities.push(region.city);
+        }
+      });
+      connections.forEach((connection) => {
+        if (connection.poster_id === poster.postId) {
+          poster.conn_res = connection.response;
         }
       });
       return poster;
@@ -31,9 +46,18 @@ const PostsContainer = ({ postInfo, cities, url, ...other }) => {
     setFiltered(populatedPosts);
   };
 
+  const filterPosts = (e) => {
+    e.preventDefault();
+    const tempFiltered = postsFilter(allPosts, postInfo);
+    setFiltered(tempFiltered);
+  };
+
+  const showFilter = () => {
+    setFilterIsVisible((prevState) => !prevState);
+  };
+
   useEffect(() => {
     const localStorageEmail = authenticationService.currentUserValue;
-
     getAPI({ url: url, params: localStorageEmail })
       .then((res) => {
         const data = [...res.data];
@@ -43,86 +67,27 @@ const PostsContainer = ({ postInfo, cities, url, ...other }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-  const filterPosts = (e) => {
-    e.preventDefault();
-    const tempFiltered = [...allPosts];
-    const spliceIDs = [];
-
-    if (postInfo.data.type !== "") {
-      allPosts.forEach((post) => {
-        if (post.type !== postInfo.data.type) spliceIDs.push(post.id);
-      });
-    }
-
-    if (postInfo.data.ageFrom !== null) {
-      const ageFrom = parseInt(postInfo.data.ageFrom);
-      allPosts.forEach((post) => {
-        if (post.age_from < ageFrom) spliceIDs.push(post.id);
-      });
-    }
-
-    if (postInfo.data.ageTo !== null) {
-      const ageTo = parseInt(postInfo.data.ageTo);
-
-      allPosts.forEach((post) => {
-        if (post.age_to > ageTo) spliceIDs.push(post.id);
-      });
-    }
-
-    if (postInfo.data.genders.length > 0) {
-      allPosts.forEach((post) => {
-        let genderIncluded = false;
-        postInfo.data.genders.forEach((gender) => {
-          if (post.genders.includes(gender)) genderIncluded = true;
-        });
-
-        if (genderIncluded === false) spliceIDs.push(post.id);
-      });
-    }
-
-    if (postInfo.data.country !== "") {
-      allPosts.forEach((post) => {
-        if (post.country !== postInfo.data.country) spliceIDs.push(post.id);
-      });
-    }
-
-    if (postInfo.data.cities.length > 0) {
-      allPosts.forEach((post) => {
-        let cityIncluded = false;
-        postInfo.data.cities.forEach((city) => {
-          if (post.cities.includes(city)) cityIncluded = true;
-        });
-
-        if (cityIncluded === false) spliceIDs.push(post.id);
-      });
-    }
-
-    spliceIDs.forEach((id) => {
-      const index = tempFiltered.findIndex((post) => post.id === id);
-      if (index > -1) tempFiltered.splice(index, 1);
-    });
-
-    setFiltered(tempFiltered);
-  };
-
-  const showFilter = () => {
-    setFilterIsVisible((prevState) => !prevState);
-  };
-
+  }, [url]);
   return (
     <>
-      <PostsComponent
-        showFilter={showFilter}
-        filterIsVisible={filterIsVisible}
-        filterPosts={filterPosts}
-        postInfo={postInfo}
-        cities={cities}
-        filtered={filtered}
-        Element={Post}
-        {...other}
-      />
+      <FilterButton onClick={showFilter} />
+      {filterIsVisible && (
+        <div className="form_wrapper">
+          <div className="h_holder">
+            <h3>Filter posts</h3>
+          </div>
+          <PostFilterFields
+            postInfo={postInfo}
+            handleState={handleState}
+            handleArrState={handleArrState}
+            cities={cities}
+          />
+          <SubmitButton onClick={filterPosts}>Apply filter</SubmitButton>
+        </div>
+      )}
+      <div className="search_result_list_wrapper">
+        <List arr={filtered} Element={Post} {...other} />
+      </div>
     </>
   );
 };

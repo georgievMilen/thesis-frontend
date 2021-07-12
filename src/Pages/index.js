@@ -1,25 +1,29 @@
 import { HomePage } from "./homePage";
 import { LoginPage } from "./loginPage";
-import { ProfilePage } from "./profilePage";
 import { SignupPage } from "./signupPage";
-import { SearchPage } from "./searchPage";
-import { ChatPage } from "./chatPage";
 import { PostsPage } from "./postsPage";
-import { CreatePostPage } from "./createPostPage";
-import { LogoutPage } from "./logoutPage";
 import { MyPostsPage } from "./myPostsPage";
+import { CreatePostPage } from "./createPostPage";
+import { ProfilePage } from "./profilePage";
+import { SearchPage } from "./searchPage";
+import { RequestsPage } from "./requestsPage";
 import { ConnectionsPage } from "./connectionsPage";
+import { ChatPage } from "./chatPage";
+import { LogoutPage } from "./logoutPage";
+import { NotFoundPage } from "./notFoundPage";
 
 export {
   HomePage,
   LoginPage,
-  LogoutPage,
-  ProfilePage,
   SignupPage,
-  SearchPage,
-  ChatPage,
   PostsPage,
   MyPostsPage,
   CreatePostPage,
-  ConnectionsPage
+  ProfilePage,
+  SearchPage,
+  RequestsPage,
+  ConnectionsPage,
+  ChatPage,
+  LogoutPage,
+  NotFoundPage
 };

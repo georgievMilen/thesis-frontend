@@ -54,7 +54,7 @@ const SignupContainer = () => {
       });
   };
   return (
-    <div className="form_wrapper signup_component">
+    <>
       <SignupComponent
         handleUsername={handleUsername}
         handleEmail={handleEmail}
@@ -65,7 +65,7 @@ const SignupContainer = () => {
         errors={errors}
       />
       {successfulReg && <Redirect to="/login" />}
-    </div>
+    </>
   );
 };
 export { SignupContainer };

@@ -1,41 +1,24 @@
 import React, { useState, useContext } from "react";
-import { Label, Image, Paragraph, SubmitButton, Error } from "../common";
+import { Label, Image, ROTextArea, SubmitButton, Error } from "../common";
 import { authenticationService } from "../../utils";
 import { postAPI, deleteAPI } from "../../modules/services";
 import { CONNECTION_REQUEST, DELETE_POSTER } from "../../constants";
 import { Context } from "../../HOC/AppHOC";
-const Post = ({
-  element: {
-    id,
-    age_from,
-    age_to,
-    user_id,
-    cities,
-    country,
-    email,
-    first_name,
-    genders,
-    image,
-    last_name,
-    text,
-    title,
-    type
-  },
-  dispatch,
-  isMyPost
-}) => {
+
+const Post = (props) => {
   const [error, setErr] = useState("");
   const [state] = useContext(Context);
 
   const sendRequest = () => {
     const localStorageEmail = authenticationService.currentUserValue;
-    const data = { email: localStorageEmail, postId: id };
+    const data = { email: localStorageEmail, postId: props.postId };
     postAPI({ url: CONNECTION_REQUEST, data: data })
       .then((res) => {
-        dispatch({
+        props.dispatch({
           type: "form/success",
           payload: res.data
         });
+        window.location.reload();
       })
       .catch((error) => {
         setErr(error);
@@ -43,7 +26,7 @@ const Post = ({
   };
 
   const deleteRequest = () => {
-    deleteAPI({ url: DELETE_POSTER, params: id })
+    deleteAPI({ url: DELETE_POSTER, params: props.postId })
       .then((res) => {
         window.location.reload();
       })
@@ -55,40 +38,50 @@ const Post = ({
 
   return (
     <div className="post-wrapper">
-      <Error>{error}</Error>
-      <Label>Title: {title}</Label>
-      <Label>Type: {type}</Label>
-      <Label>
-        From: {first_name} {last_name}
-      </Label>
-      <Image src={image} />
-      <Paragraph>Text: {text}</Paragraph>
-      {age_from && <Label>Age From: {age_from}</Label>}
-      {age_to && <Label>Age to: {age_to}</Label>}
-      <Label>Country: {country}</Label>
+      <Image src={props.image} />
+      <div className="post-text-fields">
+        {error && <Error>{error}</Error>}
+        <Label>Title: {props.title}</Label>
+        <Label>Type: {props.type}</Label>
+        <Label>
+          From: {props.firstName} {props.lastName}
+        </Label>
+        <Label>
+          About: <ROTextArea defaultValue={props.text} />
+        </Label>
+        <Label>Age From: {props.ageFrom ? props.ageFrom : "N/A"}</Label>
+        <Label>Age to: {props.ageTo ? props.ageTo : "N/A"}</Label>
+        <Label>Country: {props.country ? props.country : "N/A"}</Label>
+        <Label>
+          Cities:
+          {props.cities.length > 0
+            ? props.cities.map((city, index) => {
+                return <span key={index}> {city} </span>;
+              })
+            : " N/A"}
+        </Label>
 
-      <Label>
-        Cities:
-        {cities.map((city, index) => {
-          return <span key={index}> {city}; </span>;
-        })}
-      </Label>
-      {genders.length > 0 && (
         <Label>
           Genders:
-          {genders.map((gender, index) => {
-            return <span key={index}> {gender}; </span>;
-          })}
+          {props.genders.length > 0
+            ? props.genders.map((gender, index) => {
+                return <span key={index}> {gender} </span>;
+              })
+            : " N/A"}
         </Label>
-      )}
-      {isMyPost === false && (
-        <SubmitButton onClick={sendRequest} disabled={state.logged === email}>
-          Send Request
-        </SubmitButton>
-      )}
-      {isMyPost === true && (
-        <SubmitButton onClick={deleteRequest}>Delete Request</SubmitButton>
-      )}
+
+        {props.isMyPost === false && (
+          <SubmitButton
+            onClick={sendRequest}
+            disabled={state.logged === props.email || props.conn_res === -1}
+          >
+            Send Request
+          </SubmitButton>
+        )}
+        {props.isMyPost === true && (
+          <SubmitButton onClick={deleteRequest}>Delete</SubmitButton>
+        )}
+      </div>
     </div>
   );
 };

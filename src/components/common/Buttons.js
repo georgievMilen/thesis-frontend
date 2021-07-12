@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "antd";
 
 const CancelButton = ({ onClick, children = "Cancel" }) => {
   return (
@@ -25,45 +26,55 @@ const SaveButton = ({ onClick, children = "Save" }) => {
 
 const FilterButton = ({ onClick }) => {
   return (
-    <button className="btn btn-primary " onClick={onClick}>
+    <Button
+      type="primary"
+      style={{
+        backgroundColor: "#337ab7",
+        color: "#fff"
+      }}
+      onClick={onClick}
+    >
       Filter
-    </button>
+    </Button>
   );
 };
 
 const SubmitButton = ({ onClick, children = "Save", disabled }) => {
   return (
-    <button
-      disabled={disabled}
-      style={{ margin: "0 auto", marginTop: "50px" }}
-      type="submit"
-      className="btn btn-primary btn-block"
-      onClick={onClick}
-    >
-      {children}
-    </button>
+    <div className="submit_btn">
+      <Button
+        disabled={disabled}
+        style={{ margin: "0 auto" }}
+        type="primary"
+        onClick={onClick}
+      >
+        {children}
+      </Button>
+    </div>
   );
 };
 
 const LogoutButton = ({ onClick, children = "Log out" }) => {
   return (
-    <button
-      style={{ margin: "0 auto", marginTop: "50px", marginBottom: "25px" }}
-      type="button"
-      className="btn btn-default btn-block"
-      onClick={onClick}
-    >
-      <span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>{" "}
-      {children}
-    </button>
+    <div className="logout_btn">
+      <Button
+        // style={{ margin: "0 auto", marginTop: "50px", marginBottom: "25px" }}
+        type="button"
+        // className="btn btn-default btn-block"
+        onClick={onClick}
+      >
+        <span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>{" "}
+        {children}
+      </Button>
+    </div>
   );
 };
 
 const ChatButton = ({ onClick, children = "Chat" }) => {
   return (
-    <button className="btn btn-primary btn-block" onClick={onClick}>
+    <Button type="primary" onClick={onClick}>
       {children}
-    </button>
+    </Button>
   );
 };
 

@@ -1,12 +1,10 @@
 import React, { useReducer, useState } from "react";
-
-import { POST_INITIAL_STATE } from "../../constants";
 import { CITIES_BG, CITIES_BR } from "../../constants";
 import { formReducer } from "../../utils/Reducer";
 
-const HOCPostContainer = (Component) => {
+const HOCPostContainer = (Component, initial_state) => {
   const NewComponent = ({ ...props }) => {
-    const [postInfo, dispatch] = useReducer(formReducer, POST_INITIAL_STATE);
+    const [postInfo, dispatch] = useReducer(formReducer, initial_state);
     const [cities, setCities] = useState([]);
 
     const handleType = () => {
@@ -36,11 +34,8 @@ const HOCPostContainer = (Component) => {
         }
       });
 
-      // let tempState = state;
       if (target.name === "type") handleType();
       if (target.name === "country") changeCitiesDisplay(target);
-      // tempState[target.name] = target.value;
-      // setState(tempState);
     };
 
     const handleArrState = ({ target }) => {
@@ -53,6 +48,17 @@ const HOCPostContainer = (Component) => {
       });
     };
 
+    const handleFileState = (props) => {
+      dispatch({
+        type: "form/enter-data",
+        payload: { fieldName: "imageName", value: props.name }
+      });
+      dispatch({
+        type: "form/enter-data",
+        payload: { fieldName: "selectedImage", value: props }
+      });
+    };
+
     return (
       <Component
         postInfo={postInfo}
@@ -60,6 +66,7 @@ const HOCPostContainer = (Component) => {
         handleArrState={handleArrState}
         handleState={handleState}
         dispatch={dispatch}
+        handleFileState={handleFileState}
         {...props}
       />
     );

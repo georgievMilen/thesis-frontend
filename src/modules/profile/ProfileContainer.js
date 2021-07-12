@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+
 import { authenticationService } from "../../utils";
 import { ProfileComponent } from "./components/ProfileComponent";
 import { GET_PROFILE_INFO, UPDATE_PROFILE_URL } from "../../constants";
@@ -14,17 +15,20 @@ const ProfileContainer = () => {
   // Last name state
   const [lastName, setLastName] = useState("");
   const [lastNameIsEditable, setLastNameIsEditable] = useState(false);
+  // Image
+  const [imageName, setImageName] = useState("");
+  // File
+  const [selectedImage, setSelectedImage] = useState(null);
+
   // Email state
   const [email, setEmail] = useState("");
   const [emailIsEditable, setEmailIsEditable] = useState(false);
   // Username state
   const [username, setUsername] = useState("");
   const [usernameIsEditable, setUsernameIsEditable] = useState(false);
-  // Password state
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordRepeated, setNewPasswordRepeated] = useState("");
-  const [passwordIsEditable, setPasswordIsEditable] = useState(false);
+  // About state
+  const [about, setAbout] = useState("");
+  const [aboutIsEditable, setAboutIsEditable] = useState(false);
   // Age state
   const [age, setAge] = useState(0);
   const [ageIsEditable, setAgeIsEditable] = useState(false);
@@ -45,28 +49,20 @@ const ProfileContainer = () => {
   const [hairColor, setHairColor] = useState("");
   const [hairColorIsEditable, setHairColorIsEditable] = useState(false);
   const [response, setResponse] = useState({});
-  const handleProfileInfo = ({
-    first_name,
-    last_name,
-    username: resUsername,
-    email: resEmail,
-    age: resAge,
-    gender: resGender,
-    eye_colour,
-    hair_colour,
-    weight: resWeight,
-    height: resHeight
-  }) => {
-    setFirstName(first_name);
-    setLastName(last_name);
-    setEmail(resEmail);
-    setUsername(resUsername);
-    resAge ? setAge(resAge) : setAge("");
-    setGender(resGender);
-    setEyeColor(eye_colour);
-    setHairColor(hair_colour);
-    resHeight ? setHeight(resHeight) : setHeight("");
-    resWeight ? setWeight(resWeight) : setWeight("");
+
+  const handleProfileInfo = (props) => {
+    setFirstName(props.firstName);
+    setLastName(props.lastName);
+    setEmail(props.email);
+    setUsername(props.username);
+    props.about ? setAbout(props.about) : setAbout("");
+    props.age ? setAge(props.age) : setAge("");
+    props.userImage ? setImageName(props.userImage) : setImageName("");
+    setGender(props.gender);
+    setEyeColor(props.eyeColour);
+    setHairColor(props.hairColour);
+    props.height ? setHeight(props.height) : setHeight("");
+    props.weight ? setWeight(props.weight) : setWeight("");
   };
 
   useEffect(() => {
@@ -143,38 +139,20 @@ const ProfileContainer = () => {
     e.preventDefault();
     setUsernameIsEditable(false);
   };
-  // Password handlers
-  const handlePasswordEditBtn = (e) => {
-    e.preventDefault();
-    setPasswordIsEditable(true);
-  };
-  const handlePasswordEdit = ({ target }) => {
-    setPassword(target.value);
-  };
-  const handleNewPasswordEdit = ({ target }) => {
-    setNewPassword(target.value);
-  };
-  const handleNewPasswordRepeatedEdit = ({ target }) => {
-    setNewPasswordRepeated(target.value);
-  };
-  const handlePasswordEditOK = (e) => {
-    e.preventDefault();
-    // Check if password is correct
 
-    // Check it newPassword and newPasswordRepeated are matching
-
-    // Update newPassword in DB
-
-    setNewPassword("");
-    setNewPasswordRepeated("");
-    setPasswordIsEditable(false);
-  };
-  const handlePasswordEditCancel = (e) => {
+  // About handlers
+  const handleAboutEditBtn = (e) => {
     e.preventDefault();
-    setPasswordIsEditable(false);
-    setPassword("");
-    setNewPassword("");
-    setNewPasswordRepeated("");
+    setAboutIsEditable(true);
+  };
+  const handleAboutEditSave = ({ e, newValue }) => {
+    e.preventDefault();
+    setAbout(newValue);
+    setAboutIsEditable(false);
+  };
+  const handleAboutEditCancel = (e) => {
+    e.preventDefault();
+    setAboutIsEditable(false);
   };
 
   // Age handlers
@@ -266,30 +244,32 @@ const ProfileContainer = () => {
     setHairColorIsEditable(false);
   };
 
-  // Add gender handlers
-
   // Save Btn
   const saveProfileInfo = (e) => {
     e.preventDefault();
     const localStorageEmail = authenticationService.currentUserValue;
-    const data = {
-      email: localStorageEmail,
-      firstName,
-      lastName,
-      username,
-      age,
-      gender,
-      weight,
-      height,
-      eyeColor,
-      hairColor
-    };
+    const data = new FormData();
+    data.append("file", selectedImage);
+    data.append("email", localStorageEmail);
+    data.append("firstName", firstName);
+    data.append("lastName", lastName);
+    data.append("username", username);
+    data.append("age", age);
+    data.append("gender", gender);
+    data.append("weight", weight);
+    data.append("height", height);
+    data.append("eyeColor", eyeColor);
+    data.append("hairColor", hairColor);
+    data.append("imageName", imageName);
+    data.append("about", about);
+
     postAPI({
       url: UPDATE_PROFILE_URL,
       data: data
     })
       .then((res) => {
-        setResponse(res);
+        // setResponse(res);
+        window.location.reload();
       })
       .catch((err) => {
         setResponse(err);
@@ -298,8 +278,10 @@ const ProfileContainer = () => {
 
   // Logout Btn
   const logoutProfile = (e) => {
-    authenticationService.logout();
-    dispatch({ type: "logout", payload: false });
+    if (window.confirm("Are you sure you want to logout?")) {
+      authenticationService.logout();
+      dispatch({ type: "logout", payload: false });
+    }
   };
 
   return (
@@ -317,6 +299,9 @@ const ProfileContainer = () => {
         handleLastNameEditBtn={handleLastNameEditBtn}
         handleLastNameEditSave={handleLastNameEditSave}
         handleLastNameEditCancel={handleLastNameEditCancel}
+        // file
+        setSelectedImage={setSelectedImage}
+        imageName={imageName}
         // email
         email={email}
         emailIsEditable={emailIsEditable}
@@ -329,17 +314,12 @@ const ProfileContainer = () => {
         handleUsernameEditBtn={handleUsernameEditBtn}
         handleUsernameEditSave={handleUsernameEditSave}
         handleUsernameEditCancel={handleUsernameEditCancel}
-        // password
-        password={password}
-        newPassword={newPassword}
-        newPasswordRepeated={newPasswordRepeated}
-        passwordIsEditable={passwordIsEditable}
-        handlePasswordEditBtn={handlePasswordEditBtn}
-        handlePasswordEdit={handlePasswordEdit}
-        handleNewPasswordEdit={handleNewPasswordEdit}
-        handleNewPasswordRepeatedEdit={handleNewPasswordRepeatedEdit}
-        handlePasswordEditOK={handlePasswordEditOK}
-        handlePasswordEditCancel={handlePasswordEditCancel}
+        // about
+        about={about}
+        aboutIsEditable={aboutIsEditable}
+        handleAboutEditBtn={handleAboutEditBtn}
+        handleAboutEditSave={handleAboutEditSave}
+        handleAboutEditCancel={handleAboutEditCancel}
         // age
         age={age}
         ageIsEditable={ageIsEditable}

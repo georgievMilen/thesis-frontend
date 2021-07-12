@@ -3,12 +3,8 @@
   box-sizing: border-box;
 } */
 body {
-  background: linear-gradient(
-    to bottom,
-    rgb(255, 255, 255),
-    rgba(117, 81, 184, 0.2)
-  );
-  min-height: 100vh;
+  background: rgb(233, 233, 240);
+  margin: 0;
   display: block;
   font-weight: 400;
   font-family: "Fira Sans", sans-serif;
@@ -25,13 +21,26 @@ html,
 .start-image {
   width: 300px;
 }
-
+/* 
 .form_wrapper {
   grid-area: form;
+} */
+
+.genders_checkbox {
+  display: flex;
+}
+
+.genders_checkbox div {
+  margin: 1px 10px;
 }
 
 .start-image {
   grid-area: image;
+}
+
+.post_filter_wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .profile_info_holder {
@@ -45,15 +54,14 @@ html,
   align-items: center;
   width: 100%;
 }
+.profile_label_holder label {
+  width: 100%;
+  max-width: 100px;
+}
 
 label {
   margin: 10px;
   width: 150px;
-}
-
-.profile_label_holder label {
-  width: 100%;
-  max-width: 100px;
 }
 
 .search_label_holder label {
@@ -89,19 +97,43 @@ p {
 .search_label_holder {
   width: 100%;
   min-width: 200px;
-  max-width: 350px;
+  max-width: 450px;
+}
+
+.search_label_holder div {
+  padding: 0px 3px;
 }
 
 .search_info_holder {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0px 20px;
+}
+
+.post_filter_wrapper div {
+  margin: 2px;
+}
+
+.people_filter_wrapper {
+  box-shadow: silver 5px 5px 20px;
+  margin: 10px;
+}
+
+.page-wrapper {
+  min-height: 100%;
+  margin-bottom: -50px;
 }
 
 .search_info_holder div {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.h_holder {
+  display: flex;
+  justify-content: space-around;
 }
 
 .select {
@@ -112,7 +144,6 @@ p {
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: flex-end;
-  display: flex;
 }
 
 .search_result_element_wrapper {
@@ -125,12 +156,82 @@ p {
   display: grid;
 }
 
-.search_result_list_wrapper {
-  display: table;
+/* .customDatePickerWidth,
+.customDatePickerWidth > div.react-datepicker-wrapper,
+.customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  .customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  input {
   width: 100%;
-  max-width: 350px;
-  margin: 0 auto;
-  margin-right: auto;
+} */
+
+.select_image {
+  margin: 7px 0px;
+}
+
+.search_result_list_wrapper {
+  grid-template-columns: 33% 33% 33%;
+  display: grid;
+  margin: 25px;
+  width: 100%;
+}
+.search_result_list_wrapper .user_card,
+.search_result_list_wrapper .dir_conn,
+.search_result_list_wrapper .post_conn,
+.search_result_list_wrapper .post-wrapper,
+.search_result_list_wrapper .req_conn,
+.form_wrapper {
+  margin: 12px;
+  padding: 12px;
+  box-shadow: 0 5px 5px 5px silver;
+}
+
+.profile_sec_1 {
+  display: flex;
+  justify-content: space-around;
+}
+
+.input_edit_btns {
+  display: flex;
+}
+
+.req_btns {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-evenly;
+}
+
+.search_result_list_wrapper .user_card img,
+.search_result_list_wrapper .post_conn img,
+.search_result_list_wrapper .dir_conn img,
+.search_result_list_wrapper .req_conn img,
+.post-wrapper img {
+  width: 100%;
+  height: 200px;
+}
+
+.post-text-fields {
+  padding: 5px 10px;
+}
+
+.post-text-fields span {
+  padding: 4px 0px;
+}
+
+.post-wrapper button {
+  align-items: baseline;
+}
+
+.post-wrapper textarea,
+.dir_conn textarea,
+.post_conn textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  background-color: rgba(209, 218, 209, 0.21);
 }
 
 .error {
@@ -285,8 +386,31 @@ select:focus {
   }
 }
 
-.post-wrapper {
+.body-container {
+  padding: 50px;
+}
+
+footer.c-footer {
+  margin-top: 20px;
+}
+
+.profile_p_btns div {
+  padding: 4px 0px;
+}
+
+.people_s_btn {
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0px;
+}
+
+textarea.ro-textarea {
+  resize: none;
+  width: 100%;
+}
+
+.texarea_div textarea {
+  width: 100%;
   margin: 10px;
-  border: #000;
-  border-style: solid;
 }

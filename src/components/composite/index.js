@@ -1,4 +1,6 @@
 import { Post } from "./Post";
-import { User } from "./User";
+import { DirReq, PostReq } from "./Request";
+import { UserCard } from "./UserCard";
+import { DirConn, PostConn } from "./Connection";
 
-export { Post, User };
+export { Post, DirReq, PostReq, UserCard, DirConn, PostConn };

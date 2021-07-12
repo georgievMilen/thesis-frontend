@@ -43,9 +43,10 @@ const enterData = (postInfo, action) => {
       ...postInfo.data,
       [fieldName]: value
     };
+
     if (fieldName === "type") {
-      data.ageFrom = null;
-      data.ageTo = null;
+      data.ageFrom = "";
+      data.ageTo = "";
       data.genders = [];
     }
     return {
@@ -58,6 +59,7 @@ const enterData = (postInfo, action) => {
 
 const handleArr = (postInfo, action) => {
   const { fieldName, value } = action.payload || {};
+
   let newArr = [...postInfo.data[fieldName]];
 
   // Update data property values

@@ -4,31 +4,39 @@ import {
   Textarea,
   Label,
   Input,
-  SubmitButton,
   Error,
-  Success
+  Success,
+  FileInput
 } from "../../../components/common";
-import { PostsMainFields } from "./PostsMainFields";
-const CreatePostComponent = ({
+import { PostFilterFields } from "./PostFilterFields";
+const PostFormComponent = ({
   postInfo,
   handleState,
   handleArrState,
-  createPost,
-  cities
+  cities,
+  handleFileState
 }) => {
   return (
     <div className="form_wrapper">
       <form>
-        <div className="h_holder">
-          <h3>Create a post</h3>
-        </div>
         <Label>Title:</Label>
-        <Input name="title" onChange={handleState} />
+        <Input
+          name="title"
+          type="text"
+          value={postInfo.data.title}
+          onChange={handleState}
+        />
 
         <Label>Text:</Label>
-        <Textarea onChange={handleState} />
+        <Textarea value={postInfo.data.text} onChange={handleState} />
 
-        <PostsMainFields
+        <div className="form-group">
+          <div className="profile_info_holder">
+            <FileInput setSelectedImage={handleFileState} />
+          </div>
+        </div>
+
+        <PostFilterFields
           handleState={handleState}
           postInfo={postInfo}
           handleArrState={handleArrState}
@@ -36,10 +44,9 @@ const CreatePostComponent = ({
         />
         {postInfo.error && <Error>{postInfo.error}</Error>}
         {postInfo.response && <Success>{postInfo.response}</Success>}
-        <SubmitButton onClick={createPost}>Create Post</SubmitButton>
       </form>
     </div>
   );
 };
 
-export { CreatePostComponent };
+export { PostFormComponent };

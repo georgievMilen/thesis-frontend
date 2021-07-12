@@ -3,7 +3,8 @@ import {
   CancelButton,
   SaveButton,
   Input,
-  Label
+  Label,
+  Textarea
 } from "../../components/common";
 
 function EditableInputContainer({
@@ -46,27 +47,34 @@ function EditableInputContainer({
 
   return (
     <>
-      {(type === "text" || type === "number") && (
-        <Input type={type} onChange={handleInput} value={newValue} />
-      )}
-      {type === "checkbox" &&
-        initialValue.map((value, i) => {
-          const { name, checked } = value;
-          return (
-            <Label key={i}>
-              {`${value.name}:`}
-              <Input
-                type={type}
-                onChange={handleCheckboxInput}
-                name={name}
-                checked={checked}
-              />
-            </Label>
-          );
-        })}
-      <SaveButton onClick={handleSave} />
+      <div className="input_edit">
+        {(type === "text" || type === "number") && (
+          <Input type={type} onChange={handleInput} value={newValue} />
+        )}
+        {type === "textarea" && (
+          <Textarea onChange={handleInput} value={newValue} />
+        )}
+        {type === "checkbox" &&
+          initialValue.map((value, i) => {
+            const { name, checked } = value;
+            return (
+              <Label key={i}>
+                {`${value.name}:`}
+                <Input
+                  type={type}
+                  onChange={handleCheckboxInput}
+                  name={name}
+                  checked={checked}
+                />
+              </Label>
+            );
+          })}
+      </div>
+      <div className="input_edit_btns">
+        <SaveButton onClick={handleSave} />
 
-      <CancelButton onClick={handleCancel} />
+        <CancelButton onClick={handleCancel} />
+      </div>
     </>
   );
 }

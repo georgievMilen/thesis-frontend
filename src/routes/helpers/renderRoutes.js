@@ -17,9 +17,9 @@ function RouteWithSubRoutes(route) {
         />
       ) : (
         <PrivateRoute
-          component={route.component}
           path={route.path}
           exact={route.exact}
+          component={route.component}
         />
       )}
     </div>

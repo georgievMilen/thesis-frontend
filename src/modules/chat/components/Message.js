@@ -1,7 +1,7 @@
 import React from "react";
 
 const Message = ({
-  message: { email, text, first_name, last_name },
+  message: { email, text, firstName, lastName },
   currUser
 }) => {
   let isSentByCurrentUser = false;
@@ -10,7 +10,7 @@ const Message = ({
 
   return isSentByCurrentUser ? (
     <div className="messageContainer justifyEnd">
-      <span className="sentText pr-10">{first_name + " " + last_name}</span>
+      <span className="sentText pr-10">{firstName + " " + lastName}</span>
       <div className="messageBox backgroundBlue">
         <span className="messageText colorWhite">{text}</span>
       </div>
@@ -20,7 +20,7 @@ const Message = ({
       <div className="messageBox backgroundLight">
         <span className="messageText colorDark">{text}</span>
       </div>
-      <span className="sentText pl-10">{first_name + " " + last_name}</span>
+      <span className="sentText pl-10">{firstName + " " + lastName}</span>
     </div>
   );
 };

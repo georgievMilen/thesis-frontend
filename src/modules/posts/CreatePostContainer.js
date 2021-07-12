@@ -1,5 +1,6 @@
 import React from "react";
-import { CreatePostComponent } from "./components/CreatePostComponent";
+import { PostFormComponent } from "./components/PostFormComponent";
+import { SubmitButton } from "../../components/common";
 import { authenticationService, validatePost } from "../../utils";
 import { CREATE_POSTER } from "../../constants";
 
@@ -10,29 +11,36 @@ const CreatePostContainer = ({
   cities,
   handleState,
   handleArrState,
-  dispatch
+  dispatch,
+  handleFileState
 }) => {
   const createPost = (e) => {
     e.preventDefault();
+
     const errs = validatePost(postInfo.data);
+    const localStorageEmail = authenticationService.currentUserValue;
+
     dispatch({
       type: "form/failure",
       payload: errs
     });
+
     if (errs) return;
-    const localStorageEmail = authenticationService.currentUserValue;
-    const data = {
-      email: localStorageEmail,
-      title: postInfo.data.title,
-      text: postInfo.data.text,
-      type: postInfo.data.type,
-      age_from: postInfo.data.ageFrom,
-      age_to: postInfo.data.ageTo,
-      image: postInfo.data.image,
-      genders: postInfo.data.genders,
-      country: postInfo.data.country,
-      cities: postInfo.data.cities
-    };
+    const data = new FormData();
+    data.append("email", localStorageEmail);
+    data.append("file", postInfo.data.selectedImage);
+    data.append("title", postInfo.data.title);
+    data.append("text", postInfo.data.text);
+    data.append("type", postInfo.data.type);
+    if (postInfo.data.ageFrom === "") data.append("age_from", null);
+    else data.append("age_from", postInfo.data.ageFrom);
+    if (postInfo.data.ageTo === "") data.append("age_to", null);
+    else data.append("age_to", postInfo.data.ageTo);
+    data.append("genders", postInfo.data.genders);
+
+    data.append("imageName", postInfo.data.imageName);
+    data.append("country", postInfo.data.country);
+    data.append("cities", [...postInfo.data.cities]);
     postAPI({
       url: CREATE_POSTER,
       data: data
@@ -42,9 +50,9 @@ const CreatePostContainer = ({
           type: "form/success",
           payload: res.data
         });
-        // dispatch({
-        //   type: "form/reset"
-        // });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((err) => {
         dispatch({
@@ -57,13 +65,19 @@ const CreatePostContainer = ({
 
   return (
     <div>
-      <CreatePostComponent
+      <div className="h_holder">
+        <h3>Create a post</h3>
+      </div>
+      <PostFormComponent
         postInfo={postInfo}
         cities={cities}
         handleState={handleState}
         handleArrState={handleArrState}
-        createPost={createPost}
+        handleFileState={handleFileState}
       />
+      <div className="people_s_btn">
+        <SubmitButton onClick={createPost}>Create Post</SubmitButton>
+      </div>
     </div>
   );
 };

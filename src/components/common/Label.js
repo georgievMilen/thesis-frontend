@@ -1,10 +1,21 @@
 import React from "react";
-
+import { Typography } from "antd";
+const { Text } = Typography;
 const Label = (props) => {
-  return <label>{props.children}</label>;
+  return (
+    <div>
+      <Text strong style={{ display: "block" }}>
+        {props.children}
+      </Text>
+    </div>
+  );
 };
 
 const ImportanceLabel = (props) => {
-  return <label style={{ textAlign: "end" }}>{props.children}%</label>;
+  return (
+    <label htmlFor={props.for} style={{ textAlign: "end" }}>
+      {props.children}%
+    </label>
+  );
 };
 export { Label, ImportanceLabel };

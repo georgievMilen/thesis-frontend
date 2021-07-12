@@ -3,6 +3,8 @@
   grid-gap: 10px;
   grid-template-columns: 2fr 1fr;
   margin: 0 auto;
+  min-height: 100%;
+  margin-bottom: -50px;
 }
 
 .login-page SignupContainer {

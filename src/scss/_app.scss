@@ -1,0 +1,7 @@
+.c-app {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  min-height: 100vh;
+}
